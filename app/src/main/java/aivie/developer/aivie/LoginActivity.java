@@ -71,20 +71,60 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d("richc", "signInWithEmail:success");
 
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            if (user != null) {
-                                Log.i("richc", "getDisplayName: " + user.getDisplayName());
-                                Log.i("richc", "getPhotoUrl: " + user.getPhotoUrl().toString());
-                                Toast.makeText(LoginActivity.this, "Welcome " + user.getDisplayName(), Toast.LENGTH_LONG).show();
+                            Log.i("richc", "getDisplayName: " + user.getDisplayName());
+                            Log.i("richc", "getPhotoUrl: " + user.getPhotoUrl().toString());
+                            Toast.makeText(LoginActivity.this, "Welcome " + user.getDisplayName(), Toast.LENGTH_LONG).show();
 
-                                getUserDataFromFirestore(user.getUid());
-                            }
+                            ///// Get user data from Firestore database /////
+                            DocumentReference docRefUser = db.collection("users").document(user.getUid());
+                            docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+
+                                        DocumentSnapshot documentUser = task.getResult();
+                                        if (documentUser.exists()) {
+                                            Log.d("richc", "DocumentSnapshot data: " + documentUser.getData());
+
+                                            ///// Get participatant study of user /////
+                                            DocumentReference docRefStudy = (DocumentReference) documentUser.getData().get("PatientOfStudy");
+                                            docRefStudy.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                                    if (task.isSuccessful()) {
+
+                                                        DocumentSnapshot documentVisit = task.getResult();
+                                                        if (documentVisit.exists()) {
+
+                                                            studyName = documentVisit.get("Name").toString();
+                                                            visitsPlan = (List<Timestamp>) documentVisit.getData().get("visits");
+                                                            Log.i("richc", "Study Name: " + studyName);
+                                                            Log.i("richc", "Visit Plan: " + visitsPlan);
+
+                                                            Log.d("richc", "GO TO INTENT");
+                                                            Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                                                            startActivity(intent);
+                                                        } else {
+                                                            Log.d("richc", "No such document");
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                        } else {
+                                            Log.d("richc", "No such document");
+                                        }
+                                    } else {
+                                        Log.d("richc", "get failed with ", task.getException());
+                                    }
+                                }
+                            });
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w("richc", "createUserWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.\r\n", Toast.LENGTH_LONG).show();
                         }
