@@ -26,14 +26,21 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    String userId;
+    String displayName;
+    String photoUri;
+    String birthday;
     String studyName;
-    List<Timestamp> visitsPlan;
+    List<String> visitPlan = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +82,14 @@ public class LoginActivity extends AppCompatActivity {
 
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            Log.i("richc", "getDisplayName: " + user.getDisplayName());
-                            Log.i("richc", "getPhotoUrl: " + user.getPhotoUrl().toString());
-                            Toast.makeText(LoginActivity.this, "Welcome " + user.getDisplayName(), Toast.LENGTH_LONG).show();
+                            userId = user.getUid();
+                            displayName = user.getDisplayName();
+                            photoUri = user.getPhotoUrl().toString();
+
+                            Toast.makeText(LoginActivity.this, "Welcome " + displayName, Toast.LENGTH_LONG).show();
 
                             ///// Get user data from Firestore database /////
-                            DocumentReference docRefUser = db.collection("users").document(user.getUid());
+                            DocumentReference docRefUser = db.collection("users").document(userId);
                             docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
                                 @Override
@@ -103,13 +112,26 @@ public class LoginActivity extends AppCompatActivity {
                                                         if (documentVisit.exists()) {
 
                                                             studyName = documentVisit.get("Name").toString();
-                                                            visitsPlan = (List<Timestamp>) documentVisit.getData().get("visits");
-                                                            Log.i("richc", "Study Name: " + studyName);
-                                                            Log.i("richc", "Visit Plan: " + visitsPlan);
 
-                                                            Log.d("richc", "GO TO INTENT");
-                                                            Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                                                            List<Timestamp> visitsDate = (List<Timestamp>) documentVisit.getData().get("visits");
+                                                            SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
+                                                            Log.i("richc", "Visits Date: " + visitsDate);
+
+                                                            for (int i=0; i<visitsDate.size(); i++) {
+                                                                Timestamp tm = (Timestamp) visitsDate.get(i);
+                                                                Date date = tm.toDate();
+                                                                visitPlan.add(sfd.format(date).toString());
+                                                            }
+                                                            Log.i("richc", "Visits Plan: " + visitPlan);
+
+                                                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                                            intent.putExtra("UserID", userId);
+                                                            intent.putExtra("DisplayName", displayName);
+                                                            intent.putExtra("PhotoUrl", photoUri);
+                                                            intent.putExtra("PatientOfStudy", studyName);
+                                                            intent.putStringArrayListExtra("VisitPlan", (ArrayList<String>) visitPlan);
                                                             startActivity(intent);
+
                                                         } else {
                                                             Log.d("richc", "No such document");
                                                         }
@@ -130,56 +152,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-    }
-
-    public void getUserDataFromFirestore (String userId) {
-
-        DocumentReference docRef = db.collection("users").document(userId);
-
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d("richc", "DocumentSnapshot data: " + document.getData());
-
-                        getStudyDataFromFirestoreByRef((DocumentReference) document.getData().get("PatientOfStudy"));
-
-                    } else {
-                        Log.d("richc", "No such document");
-                    }
-                } else {
-                    Log.d("richc", "get failed with ", task.getException());
-                }
-            }
-        });
-    }
-
-    public void getStudyDataFromFirestoreByRef (DocumentReference docRef) {
-
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-
-                    DocumentSnapshot documentVisit = task.getResult();
-                    if (documentVisit.exists()) {
-
-                        studyName = documentVisit.get("Name").toString();
-                        visitsPlan = (List<Timestamp>) documentVisit.getData().get("visits");
-                        
-                        Log.i("richc", "Study Name: " + studyName);
-                        Log.i("richc", "Visit Plan: " + visitsPlan);
-                    } else {
-                        Log.d("richc", "No such document");
-                    }
-                }
-            }
-        });
-
     }
 
     public  void goSignupActivity (View view) {
