@@ -19,3 +19,9 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# When using Firebase Authentication in your app along with ProGuard
+# add the following flags to your proguard-rules.pro file
+# to ensure that your app works correctly
+-keepattributes Signature
+-keepattributes *Annotation*
