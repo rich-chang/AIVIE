@@ -18,13 +18,22 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    String studyName;
+    List<Timestamp> visitsPlan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         sp2.setSpan(new UnderlineSpan(), 0, sp2.length(), 0);
         textView.setText(TextUtils.concat(sp1, " ", sp2));
 
+        db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -70,6 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.i("richc", "getDisplayName: " + user.getDisplayName());
                                 Log.i("richc", "getPhotoUrl: " + user.getPhotoUrl().toString());
                                 Toast.makeText(LoginActivity.this, "Welcome " + user.getDisplayName(), Toast.LENGTH_LONG).show();
+
+                                getUserDataFromFirestore(user.getUid());
                             }
                         } else {
                             // If sign in fails, display a message to the user.
@@ -78,6 +90,56 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void getUserDataFromFirestore (String userId) {
+
+        DocumentReference docRef = db.collection("users").document(userId);
+
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("richc", "DocumentSnapshot data: " + document.getData());
+
+                        getStudyDataFromFirestoreByRef((DocumentReference) document.getData().get("PatientOfStudy"));
+
+                    } else {
+                        Log.d("richc", "No such document");
+                    }
+                } else {
+                    Log.d("richc", "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+
+    public void getStudyDataFromFirestoreByRef (DocumentReference docRef) {
+
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    DocumentSnapshot documentVisit = task.getResult();
+                    if (documentVisit.exists()) {
+
+                        studyName = documentVisit.get("Name").toString();
+                        visitsPlan = (List<Timestamp>) documentVisit.getData().get("visits");
+                        
+                        Log.i("richc", "Study Name: " + studyName);
+                        Log.i("richc", "Visit Plan: " + visitsPlan);
+                    } else {
+                        Log.d("richc", "No such document");
+                    }
+                }
+            }
+        });
+
     }
 
     public  void goSignupActivity (View view) {
