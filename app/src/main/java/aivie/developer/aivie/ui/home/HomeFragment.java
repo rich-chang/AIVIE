@@ -29,6 +29,7 @@ public class HomeFragment extends Fragment {
     String userId;
     String displayName;
     String photoUri;
+    String birthday;
     String studyName;
     private ArrayList<String> visitPlan = new ArrayList<String>();
 
@@ -51,18 +52,22 @@ public class HomeFragment extends Fragment {
         userId = result.getString("UserID");
         displayName = result.getString("DisplayName");
         photoUri = result.getString("PhotoUrl");
+        birthday = result.getString("Birthday");
         studyName = result.getString("PatientOfStudy");
         visitPlan = result.getStringArrayList("VisitPlan");
 
-        Log.i("richc", "HomeFrag Visits Plan: " + visitPlan.toString());
-
         TextView textViewDisplayName = root.findViewById(R.id.textViewDisplayName);
+        TextView textViewBirthday = root.findViewById(R.id.textViewBirthday);
         TextView textViewStudyName = root.findViewById(R.id.textViewStudyName);
         textViewDisplayName.setText(displayName);
+        textViewBirthday.setText(birthday);
         textViewStudyName.setText(studyName);
 
         /// Add date into linear layout
-        LinearLayout llVisitPlan = (LinearLayout) root.findViewById(R.id.linearLayoutVisitDate);
+        LinearLayout llVisitPlan = root.findViewById(R.id.linearLayoutVisitDate);
+        Log.i("richc", String.format("llView Count: %d", llVisitPlan.getChildCount()));
+        llVisitPlan.removeAllViews();
+        llVisitPlan.invalidate();
         for (int i=0; i<visitPlan.size(); i++) {
             TextView textViewVisitPlan = new TextView(getActivity());
             textViewVisitPlan.setText(visitPlan.get(i));

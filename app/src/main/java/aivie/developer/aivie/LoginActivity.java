@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             Toast.makeText(LoginActivity.this, "Welcome " + displayName, Toast.LENGTH_LONG).show();
 
-                            ///// Get user data from Firestore database /////
+                            ///// Get data of user from Firestore database /////
                             DocumentReference docRefUser = db.collection("users").document(userId);
                             docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
@@ -96,11 +96,16 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
 
-                                        DocumentSnapshot documentUser = task.getResult();
+                                        final DocumentSnapshot documentUser = task.getResult();
                                         if (documentUser.exists()) {
                                             Log.d("richc", "DocumentSnapshot data: " + documentUser.getData());
 
-                                            ///// Get participatant study of user /////
+                                            SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
+                                            Timestamp tsBirthday = (Timestamp) documentUser.get("Birthday");
+                                            Date dateBirthday = tsBirthday.toDate();
+                                            birthday = sfd.format(dateBirthday);
+
+                                            ///// Get PatientOfStudy of user from Firestore database/////
                                             DocumentReference docRefStudy = (DocumentReference) documentUser.getData().get("PatientOfStudy");
                                             docRefStudy.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override
@@ -113,21 +118,19 @@ public class LoginActivity extends AppCompatActivity {
 
                                                             studyName = documentVisit.get("Name").toString();
 
-                                                            List<Timestamp> visitsDate = (List<Timestamp>) documentVisit.getData().get("visits");
                                                             SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
-                                                            Log.i("richc", "Visits Date: " + visitsDate);
-
+                                                            List<Timestamp> visitsDate = (List<Timestamp>) documentVisit.getData().get("visits");
                                                             for (int i=0; i<visitsDate.size(); i++) {
                                                                 Timestamp tm = (Timestamp) visitsDate.get(i);
                                                                 Date date = tm.toDate();
                                                                 visitPlan.add(sfd.format(date).toString());
                                                             }
-                                                            Log.i("richc", "Visits Plan: " + visitPlan);
 
                                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                                             intent.putExtra("UserID", userId);
                                                             intent.putExtra("DisplayName", displayName);
                                                             intent.putExtra("PhotoUrl", photoUri);
+                                                            intent.putExtra("Birthday", birthday);
                                                             intent.putExtra("PatientOfStudy", studyName);
                                                             intent.putStringArrayListExtra("VisitPlan", (ArrayList<String>) visitPlan);
                                                             startActivity(intent);

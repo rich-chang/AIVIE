@@ -81,7 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="1980-04-10"
+            android:text="1900-01-01"
             android:textSize="18sp" />
 
     </LinearLayout>
