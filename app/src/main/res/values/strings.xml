@@ -12,8 +12,8 @@
     <string name="prompt_create_displayname">Name</string>
     <string name="prompt_create_email">Email</string>
     <string name="prompt_create_password">Password</string>
-    <string name="action_signup">SIGN UP</string>
-    <string name="have_account">Already have an account? </string>
+    <string name="action_signup">CREATE ACCOUNT</string>
+    <string name="have_account">Have an account? </string>
     <string name="have_account_log_in">LOG IN</string>
 
     <string name="title_activity_home">HomeActivity</string>

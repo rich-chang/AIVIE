@@ -54,10 +54,13 @@
 
     <Button
         android:id="@+id/login"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="28dp"
+        android:layout_marginEnd="24dp"
         android:onClick="logIn"
+        android:padding="12dp"
         android:text="@string/action_login"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
