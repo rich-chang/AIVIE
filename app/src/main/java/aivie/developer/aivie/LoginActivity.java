@@ -61,6 +61,14 @@ public class LoginActivity extends AppCompatActivity {
 
     public void logIn (View view) {
 
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if (user == null) {
+            Log.i("richc", "Login-user is null");
+        } else {
+            Log.i("richc", "Login-user: " + user.getUid());
+        }
+
         EditText editTextEmail = findViewById(R.id.username);
         EditText editTextPassword = findViewById(R.id.password);
 

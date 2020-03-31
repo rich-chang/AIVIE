@@ -60,9 +60,10 @@ public class HomeActivity extends AppCompatActivity {
 
         return bundle;
     }
-    
+
     @Override
     public void onBackPressed() {
+        // empty so nothing happens
         Log.i("richc", "HomeAct-onBackPressed");
     }
 }
