@@ -86,8 +86,6 @@ public class LoginActivity extends AppCompatActivity {
                             displayName = user.getDisplayName();
                             photoUri = user.getPhotoUrl().toString();
 
-                            Toast.makeText(LoginActivity.this, "Welcome " + displayName, Toast.LENGTH_LONG).show();
-
                             ///// Get data of user from Firestore database /////
                             DocumentReference docRefUser = db.collection("users").document(userId);
                             docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -112,6 +110,8 @@ public class LoginActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                                                     if (task.isSuccessful()) {
+
+                                                        Toast.makeText(LoginActivity.this, "Welcome " + displayName, Toast.LENGTH_LONG).show();
 
                                                         DocumentSnapshot documentVisit = task.getResult();
                                                         if (documentVisit.exists()) {
