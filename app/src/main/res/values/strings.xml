@@ -23,4 +23,8 @@
 
     <string name="avatar">Avatar</string>
 
+    <string name="firestore_studies_id">Id</string>
+    <string name="firestore_studies_study_title">StudyTitle</string>
+    <string name="firestore_studies_visit_plan">VisitPlan</string>
+
 </resources>

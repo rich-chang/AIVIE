@@ -124,10 +124,10 @@ public class LoginActivity extends AppCompatActivity {
                                                         DocumentSnapshot documentVisit = task.getResult();
                                                         if (documentVisit.exists()) {
 
-                                                            studyName = documentVisit.get("Name").toString();
+                                                            studyName = documentVisit.get(getString(R.string.firestore_studies_study_title)).toString();
 
                                                             SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
-                                                            List<Timestamp> visitsDate = (List<Timestamp>) documentVisit.getData().get("visits");
+                                                            List<Timestamp> visitsDate = (List<Timestamp>) documentVisit.getData().get(getString(R.string.firestore_studies_visit_plan));
                                                             for (int i=0; i<visitsDate.size(); i++) {
                                                                 Timestamp tm = (Timestamp) visitsDate.get(i);
                                                                 Date date = tm.toDate();

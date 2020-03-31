@@ -103,12 +103,12 @@
             android:textAlignment="viewEnd" />
 
         <TextView
-            android:id="@+id/textViewStudyName"
+            android:id="@+id/textViewStudyTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="STUDY NAME"
-            android:textSize="18sp" />
+            android:text="@string/firestore_studies_study_title"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
