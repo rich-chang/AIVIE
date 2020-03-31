@@ -43,7 +43,7 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     String displayName;
-    private String photoUriString = "https://ui-avatars.com/api/?size=128&rounded=true&background=0D8ABC&color=fff&name=";
+    private String photoUriString = "https://ui-avatars.com/api/?size=80&rounded=true&background=0D8ABC&color=fff&name=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/imageViewAvatar"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:contentDescription="@string/avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
