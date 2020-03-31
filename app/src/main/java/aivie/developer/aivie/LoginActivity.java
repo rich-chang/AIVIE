@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     Button loginButton;
+    private ProgressBar pbLogin;
     String userId;
     String displayName;
     String photoUri;
@@ -61,11 +63,13 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         loginButton = findViewById(R.id.login);
+        pbLogin = findViewById(R.id.progressBarLogin);
     }
 
     public void logIn (View view) {
 
         loginButton.setEnabled(false);
+        pbLogin.setVisibility(view.VISIBLE);
 
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -77,7 +81,6 @@ public class LoginActivity extends AppCompatActivity {
 
         EditText editTextEmail = findViewById(R.id.username);
         EditText editTextPassword = findViewById(R.id.password);
-
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
@@ -132,7 +135,8 @@ public class LoginActivity extends AppCompatActivity {
                                                         DocumentSnapshot documentVisit = task.getResult();
                                                         if (documentVisit.exists()) {
 
-                                                            loginButton.setEnabled(true);
+                                                            //loginButton.setEnabled(true);
+                                                            pbLogin.setVisibility(View.GONE);
 
                                                             studyName = documentVisit.get(getString(R.string.firestore_studies_study_title)).toString();
 
@@ -166,11 +170,13 @@ public class LoginActivity extends AppCompatActivity {
                                             Log.d("richc", "No such document");
 
                                             loginButton.setEnabled(true);
+                                            pbLogin.setVisibility(View.GONE);
                                         }
                                     } else {
                                         Log.d("richc", "get failed with ", task.getException());
 
                                         loginButton.setEnabled(true);
+                                        pbLogin.setVisibility(View.GONE);
                                     }
                                 }
                             });
@@ -179,6 +185,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Authentication failed.\r\n", Toast.LENGTH_LONG).show();
 
                             loginButton.setEnabled(true);
+                            pbLogin.setVisibility(View.GONE);
                         }
                     }
                 });
