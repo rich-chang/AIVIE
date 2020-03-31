@@ -99,8 +99,10 @@ public class SignupActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Log.d("richc", "User profile updated.");
-
                                                 Toast.makeText(SignupActivity.this, "Create account successfully", Toast.LENGTH_LONG).show();
+
+                                                FirebaseAuth.getInstance().signOut();
+
                                                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                                 startActivity(intent);
                                             }
