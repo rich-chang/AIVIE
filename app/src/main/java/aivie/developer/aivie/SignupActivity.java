@@ -125,18 +125,18 @@ public class SignupActivity extends AppCompatActivity {
 
         Map<String, Object> userData = new HashMap<>();
 
-        userData.put("DisplayName", displayName);
-        userData.put("FirstName", tempFirstName.get(new Random().nextInt(tempFirstName.size())));
-        userData.put("LastName", tempLastName.get(new Random().nextInt(tempLastName.size())));
-        userData.put("Birthday", new Timestamp(new Date()));
-        userData.put("Gender", db.collection("gender").document("0"));
-        userData.put("Role", db.collection("roles").document("0"));
-        userData.put("PatientOfStudy", db.collection("studies").document("000001"));
-        userData.put("SignedICF", db.collection("icf").document("0001"));
+        userData.put(getString(R.string.firestore_users_display_name), displayName);
+        userData.put(getString(R.string.firestore_users_first_name), tempFirstName.get(new Random().nextInt(tempFirstName.size())));
+        userData.put(getString(R.string.firestore_users_last_name), tempLastName.get(new Random().nextInt(tempLastName.size())));
+        userData.put(getString(R.string.firestore_users_birthday), new Timestamp(new Date()));
+        userData.put(getString(R.string.firestore_users_gender), db.collection(getString(R.string.firestore_gender)).document("0"));
+        userData.put(getString(R.string.firestore_users_role), db.collection(getString(R.string.firestore_roles)).document("0"));
+        userData.put(getString(R.string.firestore_users_patient_of_study), db.collection(getString(R.string.firestore_studies)).document("000001"));
+        userData.put(getString(R.string.firestore_users_signed_icf), db.collection(getString(R.string.firestore_icf)).document("0001"));
 
         Log.i("richc", userData.toString());
 
-        db.collection("users").document(userId).set(userData)
+        db.collection(getString(R.string.firestore_users)).document(userId).set(userData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
 
                     @Override

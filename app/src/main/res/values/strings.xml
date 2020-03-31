@@ -23,6 +23,24 @@
 
     <string name="avatar">Avatar</string>
 
+    <!-- Firestore Collection name -->
+    <string name="firestore_users">users</string>
+    <string name="firestore_gender">gender</string>
+    <string name="firestore_roles">roles</string>
+    <string name="firestore_studies">studies</string>
+    <string name="firestore_icf">icf</string>
+
+    <!-- Firestore Columns in collection "users" -->
+    <string name="firestore_users_display_name">DisplayName</string>
+    <string name="firestore_users_first_name">FirstName</string>
+    <string name="firestore_users_last_name">LastName</string>
+    <string name="firestore_users_birthday">Birthday</string>
+    <string name="firestore_users_gender">Gender</string>
+    <string name="firestore_users_role">Role</string>
+    <string name="firestore_users_signed_icf">SignedICF</string>
+    <string name="firestore_users_patient_of_study">PatientOfStudy</string>
+
+    <!-- Firestore Columns in collection "studies" -->
     <string name="firestore_studies_id">Id</string>
     <string name="firestore_studies_study_title">StudyTitle</string>
     <string name="firestore_studies_visit_plan">VisitPlan</string>

@@ -95,7 +95,8 @@ public class LoginActivity extends AppCompatActivity {
                             photoUri = user.getPhotoUrl().toString();
 
                             ///// Get data of user from Firestore database /////
-                            DocumentReference docRefUser = db.collection("users").document(userId);
+                            DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(userId);
+
                             docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
                                 @Override
@@ -106,13 +107,14 @@ public class LoginActivity extends AppCompatActivity {
                                         if (documentUser.exists()) {
                                             Log.d("richc", "DocumentSnapshot data: " + documentUser.getData());
 
+                                            // Get user birthday
                                             SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
-                                            Timestamp tsBirthday = (Timestamp) documentUser.get("Birthday");
+                                            Timestamp tsBirthday = (Timestamp) documentUser.get(getString(R.string.firestore_users_birthday));
                                             Date dateBirthday = tsBirthday.toDate();
                                             birthday = sfd.format(dateBirthday);
 
                                             ///// Get PatientOfStudy of user from Firestore database/////
-                                            DocumentReference docRefStudy = (DocumentReference) documentUser.getData().get("PatientOfStudy");
+                                            DocumentReference docRefStudy = (DocumentReference) documentUser.getData().get(getString(R.string.firestore_users_patient_of_study));
                                             docRefStudy.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -128,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                                             SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
                                                             List<Timestamp> visitsDate = (List<Timestamp>) documentVisit.getData().get(getString(R.string.firestore_studies_visit_plan));
+
                                                             for (int i=0; i<visitsDate.size(); i++) {
                                                                 Timestamp tm = (Timestamp) visitsDate.get(i);
                                                                 Date date = tm.toDate();
