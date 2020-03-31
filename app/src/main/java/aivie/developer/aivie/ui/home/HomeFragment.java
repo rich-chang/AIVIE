@@ -48,6 +48,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // Add option menu
+        setHasOptionsMenu(true);
+
         HomeActivity activity = (HomeActivity)getActivity();
         Bundle result = activity.getHomeActivityData();
 
