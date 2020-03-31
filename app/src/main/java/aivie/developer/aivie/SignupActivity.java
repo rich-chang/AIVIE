@@ -115,8 +115,6 @@ public class SignupActivity extends AppCompatActivity {
                                                 Log.d("richc", "User profile updated.");
                                                 Toast.makeText(SignupActivity.this, "Create account successfully", Toast.LENGTH_LONG).show();
 
-                                                FirebaseAuth.getInstance().signOut();
-
                                                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                                 startActivity(intent);
                                             }
