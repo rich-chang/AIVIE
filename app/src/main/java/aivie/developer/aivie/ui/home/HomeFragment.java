@@ -63,17 +63,13 @@ public class HomeFragment extends Fragment {
         textViewBirthday.setText(birthday);
         textViewStudyName.setText(studyName);
 
-        /// Add date into linear layout
-        LinearLayout llVisitPlan = root.findViewById(R.id.linearLayoutVisitDate);
-        Log.i("richc", String.format("llView Count: %d", llVisitPlan.getChildCount()));
-        llVisitPlan.removeAllViews();
-        llVisitPlan.invalidate();
+        TextView textViewVisitPlan = root.findViewById(R.id.textViewVisitPlan);;
+        StringBuilder sb = new StringBuilder("");
+        textViewVisitPlan.setText("");
         for (int i=0; i<visitPlan.size(); i++) {
-            TextView textViewVisitPlan = new TextView(getActivity());
-            textViewVisitPlan.setText(visitPlan.get(i));
-            textViewVisitPlan.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            llVisitPlan.addView(textViewVisitPlan);
+            sb.append(visitPlan.get(i) + "\r\n");
         }
+        textViewVisitPlan.setText(sb.toString());
 
         ImageView imageViewAvatar = (ImageView)root.findViewById(R.id.imageViewAvatar);
         Glide.with(this).load(photoUri).into(imageViewAvatar);
