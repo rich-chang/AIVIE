@@ -13,6 +13,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    Button signupButton;
     String displayName;
     private String photoUriString = "https://ui-avatars.com/api/?size=80&rounded=true&background=0D8ABC&color=fff&name=";
 
@@ -60,9 +62,13 @@ public class SignupActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+
+        signupButton = findViewById(R.id.signup);
     }
 
     public void signUp (View view) {
+
+        signupButton.setEnabled(false);
 
         EditText editTextDisplayName = findViewById(R.id.displayname);
         EditText editTextEmail = findViewById(R.id.username);
@@ -98,6 +104,9 @@ public class SignupActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
+
+                                                signupButton.setEnabled(true);
+
                                                 Log.d("richc", "User profile updated.");
                                                 Toast.makeText(SignupActivity.this, "Create account successfully", Toast.LENGTH_LONG).show();
 
@@ -115,6 +124,8 @@ public class SignupActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             Log.w("richc", "createUserWithEmail:failure", task.getException());
                             Toast.makeText(SignupActivity.this, "Authentication failed.\r\n", Toast.LENGTH_LONG).show();
+
+                            signupButton.setEnabled(true);
                         }
                     }
                 });

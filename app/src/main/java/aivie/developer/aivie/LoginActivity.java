@@ -12,6 +12,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    Button loginButton;
     String userId;
     String displayName;
     String photoUri;
@@ -57,9 +59,13 @@ public class LoginActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+
+        loginButton = findViewById(R.id.login);
     }
 
     public void logIn (View view) {
+
+        loginButton.setEnabled(false);
 
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -126,6 +132,8 @@ public class LoginActivity extends AppCompatActivity {
                                                         DocumentSnapshot documentVisit = task.getResult();
                                                         if (documentVisit.exists()) {
 
+                                                            loginButton.setEnabled(true);
+
                                                             studyName = documentVisit.get(getString(R.string.firestore_studies_study_title)).toString();
 
                                                             SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
@@ -148,21 +156,29 @@ public class LoginActivity extends AppCompatActivity {
 
                                                         } else {
                                                             Log.d("richc", "No such document");
+
+                                                            loginButton.setEnabled(true);
                                                         }
                                                     }
                                                 }
                                             });
                                         } else {
                                             Log.d("richc", "No such document");
+
+                                            loginButton.setEnabled(true);
                                         }
                                     } else {
                                         Log.d("richc", "get failed with ", task.getException());
+
+                                        loginButton.setEnabled(true);
                                     }
                                 }
                             });
                         } else {
                             Log.w("richc", "createUserWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.\r\n", Toast.LENGTH_LONG).show();
+
+                            loginButton.setEnabled(true);
                         }
                     }
                 });
