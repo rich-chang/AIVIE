@@ -42,6 +42,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    String displayName;
     private String photoUriString = "https://ui-avatars.com/api/?size=128&rounded=true&background=0D8ABC&color=fff&name=";
 
     @Override
@@ -67,7 +68,7 @@ public class SignupActivity extends AppCompatActivity {
         EditText editTextEmail = findViewById(R.id.username);
         EditText editTextPassword = findViewById(R.id.password);
 
-        String displayName = editTextDisplayName.getText().toString();
+        displayName = editTextDisplayName.getText().toString();
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
@@ -98,6 +99,10 @@ public class SignupActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Log.d("richc", "User profile updated.");
+
+                                                Toast.makeText(SignupActivity.this, "Create account successfully", Toast.LENGTH_LONG).show();
+                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                                startActivity(intent);
                                             }
                                         }
                                     });
@@ -120,6 +125,7 @@ public class SignupActivity extends AppCompatActivity {
 
         Map<String, Object> userData = new HashMap<>();
 
+        userData.put("DisplayName", displayName);
         userData.put("FirstName", tempFirstName.get(new Random().nextInt(tempFirstName.size())));
         userData.put("LastName", tempLastName.get(new Random().nextInt(tempLastName.size())));
         userData.put("Birthday", new Timestamp(new Date()));
