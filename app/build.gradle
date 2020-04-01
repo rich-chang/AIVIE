@@ -3,14 +3,6 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'com.google.firebase.crashlytics'
 
-// Creates a variable called keystorePropertiesFile, and initializes it to the
-// keystore.properties file.
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-// Initializes a new Properties() object called keystoreProperties.
-def keystoreProperties = new Properties()
-// Loads the keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -32,6 +24,13 @@ android {
             buildConfigField("String","APP_CENTER_KEY","\"${System.env.APP_CENTER_KEY}\"")
         }
         debug {
+            // Creates a variable called keystorePropertiesFile, and initializes it to the keystore.properties file.
+            def keystorePropertiesFile = rootProject.file("keystore.properties")
+            // Initializes a new Properties() object called keystoreProperties.
+            def keystoreProperties = new Properties()
+            // Loads the keystore.properties file into the keystoreProperties object.
+            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
             buildConfigField("String","APP_CENTER_KEY", keystoreProperties['APP_CENTER_KEY'])
         }
     }
