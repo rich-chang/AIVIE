@@ -22,11 +22,9 @@ public class MainActivity extends AppCompatActivity {
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         
-        AppCenter.start(getApplication(), "a0aeb136-9ca9-4f08-9502-f81f0d39a301", Analytics.class, Crashes.class);
+        AppCenter.start(getApplication(), BuildConfig.APP_CENTER_KEY, Analytics.class, Crashes.class);
 
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
-
-
     }
 }
