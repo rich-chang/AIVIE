@@ -35,6 +35,8 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static boolean DEBUG = BuildConfig.DEBUG;
+    private static String TAG = "richc";
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     Button loginButton;
@@ -74,9 +76,9 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (user == null) {
-            Log.i("richc", "Login-user is null");
+            if(DEBUG) Log.i(TAG, "Login-user is null");
         } else {
-            Log.i("richc", "Login-user: " + user.getUid());
+            if(DEBUG) Log.i(TAG, "Login-user: " + user.getUid());
         }
 
         EditText editTextEmail = findViewById(R.id.username);
@@ -95,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()) {
-                            Log.d("richc", "signInWithEmail:success");
+                            if(DEBUG) Log.d(TAG, "signInWithEmail:success");
 
                             FirebaseUser user = mAuth.getCurrentUser();
 
@@ -114,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         final DocumentSnapshot documentUser = task.getResult();
                                         if (documentUser.exists()) {
-                                            Log.d("richc", "DocumentSnapshot data: " + documentUser.getData());
+                                            if(DEBUG) Log.d(TAG, "DocumentSnapshot data: " + documentUser.getData());
 
                                             // Get user birthday
                                             SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
@@ -159,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                                                             startActivity(intent);
 
                                                         } else {
-                                                            Log.d("richc", "No such document");
+                                                            if(DEBUG) Log.d(TAG, "No such document");
 
                                                             loginButton.setEnabled(true);
                                                         }
@@ -167,13 +169,13 @@ public class LoginActivity extends AppCompatActivity {
                                                 }
                                             });
                                         } else {
-                                            Log.d("richc", "No such document");
+                                            if(DEBUG) Log.d(TAG, "No such document");
 
                                             loginButton.setEnabled(true);
                                             pbLogin.setVisibility(View.GONE);
                                         }
                                     } else {
-                                        Log.d("richc", "get failed with ", task.getException());
+                                        if(DEBUG) Log.d(TAG, "get failed with ", task.getException());
 
                                         loginButton.setEnabled(true);
                                         pbLogin.setVisibility(View.GONE);
@@ -181,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             });
                         } else {
-                            Log.w("richc", "createUserWithEmail:failure", task.getException());
+                            if(DEBUG) Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.\r\n", Toast.LENGTH_LONG).show();
 
                             loginButton.setEnabled(true);
