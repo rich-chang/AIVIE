@@ -27,6 +27,8 @@
     <string name="firestore_users">users</string>
     <string name="firestore_gender">gender</string>
     <string name="firestore_roles">roles</string>
+    <string name="firestore_race">race</string>
+    <string name="firestore_ethnicity">ethnicity</string>
     <string name="firestore_studies">studies</string>
     <string name="firestore_icf">icf</string>
 
@@ -34,11 +36,17 @@
     <string name="firestore_users_display_name">DisplayName</string>
     <string name="firestore_users_first_name">FirstName</string>
     <string name="firestore_users_last_name">LastName</string>
-    <string name="firestore_users_birthday">Birthday</string>
+    <string name="firestore_users_birthday">DOB</string>
+    <string name="firestore_users_email">Email</string>
+    <string name="firestore_users_age">Age</string>
     <string name="firestore_users_gender">Gender</string>
+    <string name="firestore_users_race">Race</string>
+    <string name="firestore_users_ethnicity">Ethnicity</string>
     <string name="firestore_users_role">Role</string>
     <string name="firestore_users_signed_icf">SignedICF</string>
     <string name="firestore_users_patient_of_study">PatientOfStudy</string>
+    <string name="firestore_users_subject_num">SubjectNumber</string>
+    <string name="firestore_users_site">Site</string>
 
     <!-- Firestore Columns in collection "studies" -->
     <string name="firestore_studies_id">Id</string>
