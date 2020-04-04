@@ -21,7 +21,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String","APP_CENTER_KEY","\"${System.env.APP_CENTER_KEY}\"")
+            buildConfigField("String", "APP_CENTER_KEY", "\"${System.env.APP_CENTER_KEY}\"")
         }
         debug {
             /*
@@ -34,7 +34,7 @@ android {
 
             buildConfigField("String","APP_CENTER_KEY", keystoreProperties['APP_CENTER_KEY'])
             */
-            buildConfigField("String","APP_CENTER_KEY","\"${System.env.APP_CENTER_KEY}\"")
+            buildConfigField("String", "APP_CENTER_KEY", "\"${System.env.APP_CENTER_KEY}\"")
         }
     }
 
