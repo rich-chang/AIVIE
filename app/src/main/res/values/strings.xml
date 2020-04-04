@@ -20,9 +20,13 @@
     <string name="have_account">Have an account? </string>
     <string name="have_account_log_in">LOG IN</string>
 
+    <!-- Profile Activity -->
+    <string name="update_profile">Please update patient profile and demographics data</string>
+
     <!-- Home Activity -->
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">Home</string>
+    <string name="title_profile">Profile</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
