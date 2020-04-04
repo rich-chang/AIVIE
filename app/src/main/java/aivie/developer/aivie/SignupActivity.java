@@ -46,6 +46,8 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     Button signupButton;
     private ProgressBar pbSignup;
+    String firstName;
+    String lastName;
     String displayName;
     private String photoUriString = "https://ui-avatars.com/api/?size=80&rounded=true&background=0D8ABC&color=fff&name=";
 
@@ -74,10 +76,14 @@ public class SignupActivity extends AppCompatActivity {
         signupButton.setEnabled(false);
         pbSignup.setVisibility(view.VISIBLE);
 
+        EditText editTextFirstName = findViewById(R.id.firstName);
+        EditText editTextLastName = findViewById(R.id.lastName);
         EditText editTextDisplayName = findViewById(R.id.displayname);
         EditText editTextEmail = findViewById(R.id.username);
         EditText editTextPassword = findViewById(R.id.password);
 
+        firstName = editTextFirstName.getText().toString();
+        lastName = editTextLastName.getText().toString();
         displayName = editTextDisplayName.getText().toString();
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
@@ -137,14 +143,11 @@ public class SignupActivity extends AppCompatActivity {
 
     public void createTempDataInFirestore (String userId) {
 
-        List<String> tempFirstName = Arrays.asList("Adam", "Emily", "Jasper", "Leana", "Lily", "Bowen", "Dimitra", "Emre");
-        List<String> tempLastName = Arrays.asList("Harris", "Petit", "Ingvaldsen", "Meunier", "Wood", "Stinger", "Barendrecht", "Okumuş");
-
         Map<String, Object> userData = new HashMap<>();
 
         userData.put(getString(R.string.firestore_users_display_name), displayName);
-        userData.put(getString(R.string.firestore_users_first_name), tempFirstName.get(new Random().nextInt(tempFirstName.size())));
-        userData.put(getString(R.string.firestore_users_last_name), tempLastName.get(new Random().nextInt(tempLastName.size())));
+        userData.put(getString(R.string.firestore_users_first_name), firstName);
+        userData.put(getString(R.string.firestore_users_last_name), lastName);
         userData.put(getString(R.string.firestore_users_birthday), new Timestamp(new Date()));
         userData.put(getString(R.string.firestore_users_gender), db.collection(getString(R.string.firestore_gender)).document("0"));
         userData.put(getString(R.string.firestore_users_role), db.collection(getString(R.string.firestore_roles)).document("0"));

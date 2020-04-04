@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AIVIE</string>
 
+    <!-- Log in Activity -->
     <string name="log_into_account">Log into your account</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -8,20 +9,29 @@
     <string name="need_account">Need an account? </string>
     <string name="need_account_sign_up">SIGN UP</string>
 
+    <!-- Sign up Activity -->
     <string name="create_account">Create an account</string>
-    <string name="prompt_create_displayname">Name</string>
+    <string name="prompt_create_last_name">Last Name</string>
+    <string name="prompt_create_first_name">First Name</string>
+    <string name="prompt_create_display_name">Display Name (Optional)</string>
     <string name="prompt_create_email">Email</string>
     <string name="prompt_create_password">Password</string>
     <string name="action_signup">CREATE ACCOUNT</string>
     <string name="have_account">Have an account? </string>
     <string name="have_account_log_in">LOG IN</string>
 
+    <!-- Home Activity -->
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
+    <!-- Home Frag -->
     <string name="avatar">Avatar</string>
+    <string name="display_name">Display Name</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="study_title">Study Title</string>
+    <string name="visit_plan">Visit Plan</string>
 
     <!-- Firestore Collection name -->
     <string name="firestore_users">users</string>

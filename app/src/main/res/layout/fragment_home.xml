@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:layout_weight="2"
-            android:text="@string/prompt_create_displayname"
+            android:text="@string/display_name"
             android:textAlignment="viewEnd" />
 
         <TextView
@@ -52,7 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="@string/prompt_create_displayname"
+            android:text="@string/display_name"
             android:textSize="18sp" />
 
     </LinearLayout>
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:layout_weight="2"
-            android:text="Birthday"
+            android:text="@string/date_of_birth"
             android:textAlignment="viewEnd" />
 
         <TextView
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:layout_weight="2"
-            android:text="Participate Study"
+            android:text="@string/study_title"
             android:textAlignment="viewEnd" />
 
         <TextView
@@ -125,7 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:layout_weight="2"
-            android:text="Visit Plan"
+            android:text="@string/visit_plan"
             android:textAlignment="viewEnd" />
 
         <TextView
