@@ -64,6 +64,5 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // empty so nothing happens
-        Log.i("richc", "HomeAct-onBackPressed");
     }
 }
