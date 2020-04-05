@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
     String userId;
     String displayName;
     String photoUri;
-    String birthday;
     String studyName;
     List<String> visitPlan = new ArrayList<String>();
 
@@ -123,11 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                                         if (documentUser.exists()) {
                                             if(DEBUG) Log.d(TAG, "DocumentSnapshot data: " + documentUser.getData());
 
-                                            // Get user birthday
-                                            SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
-                                            Timestamp tsBirthday = (Timestamp) documentUser.get(getString(R.string.firestore_users_birthday));
-                                            Date dateBirthday = tsBirthday.toDate();
-                                            birthday = sfd.format(dateBirthday);
+
 
                                             ///// Get PatientOfStudy of user from Firestore database/////
                                             DocumentReference docRefStudy = (DocumentReference) documentUser.getData().get(getString(R.string.firestore_users_patient_of_study));
@@ -159,7 +154,6 @@ public class LoginActivity extends AppCompatActivity {
                                                             intent.putExtra("UserID", userId);
                                                             intent.putExtra("DisplayName", displayName);
                                                             intent.putExtra("PhotoUrl", photoUri);
-                                                            intent.putExtra("Birthday", birthday);
                                                             intent.putExtra("PatientOfStudy", studyName);
                                                             intent.putStringArrayListExtra("VisitPlan", (ArrayList<String>) visitPlan);
                                                             startActivity(intent);
