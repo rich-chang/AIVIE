@@ -3,6 +3,7 @@ package aivie.developer.aivie.ui.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,10 +20,19 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import aivie.developer.aivie.BuildConfig;
 import aivie.developer.aivie.HomeActivity;
 import aivie.developer.aivie.LoginActivity;
 import aivie.developer.aivie.R;
@@ -30,10 +40,17 @@ import aivie.developer.aivie.R;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    String userId;
-    String displayName;
-    String photoUri;
-    String studyName;
+    private static boolean DEBUG = BuildConfig.DEBUG;
+    private static String TAG = "richc";
+    private FirebaseFirestore db;
+    private TextView textViewName;
+    private TextView textViewRole;
+    private String userId;
+    private String photoUri;
+    private String firstName;
+    private String lastName;
+    private String studyName;
+    private String role;
     private ArrayList<String> visitPlan = new ArrayList<String>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -56,14 +73,13 @@ public class HomeFragment extends Fragment {
         Bundle result = activity.getHomeActivityData();
 
         userId = result.getString("UserID");
-        displayName = result.getString("DisplayName");
         photoUri = result.getString("PhotoUrl");
         studyName = result.getString("PatientOfStudy");
         visitPlan = result.getStringArrayList("VisitPlan");
 
-        TextView textViewDisplayName = root.findViewById(R.id.textViewDisplayName);
+        textViewName = root.findViewById(R.id.textViewName);
+        textViewRole = root.findViewById(R.id.textViewRole);
         TextView textViewStudyName = root.findViewById(R.id.textViewStudyTitle);
-        textViewDisplayName.setText(displayName);
         textViewStudyName.setText(studyName);
 
         TextView textViewVisitPlan = root.findViewById(R.id.textViewVisitPlan);;
@@ -77,7 +93,63 @@ public class HomeFragment extends Fragment {
         ImageView imageViewAvatar = (ImageView)root.findViewById(R.id.imageViewAvatar);
         Glide.with(this).load(photoUri).into(imageViewAvatar);
 
+        db = FirebaseFirestore.getInstance();
+
+        getUserProfileFromFirestore(userId);
+
         return root;
+    }
+
+    private void getUserProfileFromFirestore (String userId) {
+
+        DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(userId);
+
+        docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    DocumentSnapshot documentUser = task.getResult();
+                    if (documentUser.exists()) {
+
+                        lastName = (String) documentUser.get(getString(R.string.firestore_users_last_name));
+                        firstName = (String) documentUser.get(getString(R.string.firestore_users_first_name));
+
+                        UpdateUI();
+
+                        DocumentReference docRefRole = (DocumentReference) documentUser.get(getString(R.string.firestore_users_role));
+                        docRefRole.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+
+                                    DocumentSnapshot documentGender = task.getResult();
+                                    role = (String) documentGender.get("Title");
+
+                                    UpdateUI();
+
+                                } else {
+                                    if(DEBUG) Log.d(TAG, "task get failed with ", task.getException());
+                                }
+                            }
+                        });
+                    } else {
+                        if(DEBUG) Log.d(TAG, "No such document");
+                    }
+                } else {
+                    if(DEBUG) Log.d(TAG, "task get failed with ", task.getException());
+                }
+            }
+        });
+    }
+
+    private void UpdateUI () {
+
+        if (role != null) textViewRole.setText(role);
+        if (lastName != null && firstName != null) {
+            String name = firstName + "  " + lastName;
+            textViewName.setText(name);
+        }
     }
 
     @Override

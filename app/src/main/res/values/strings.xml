@@ -32,6 +32,7 @@
 
     <!-- Home Frag -->
     <string name="avatar">Avatar</string>
+    <string name="name">Name</string>
     <string name="study_title">Study Title</string>
     <string name="visit_plan">Visit Plan</string>
     <!-- Profile Frag -->
