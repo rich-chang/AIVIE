@@ -24,7 +24,6 @@ public class HomeActivity extends AppCompatActivity {
     String userId;
     String displayName;
     String photoUri;
-    String birthday;
     String studyName;
     private ArrayList<String> visitPlan = new ArrayList<String>();
 
@@ -49,7 +48,6 @@ public class HomeActivity extends AppCompatActivity {
         userId = intent.getStringExtra("UserID");
         displayName = intent.getStringExtra("DisplayName");
         photoUri = intent.getStringExtra("PhotoUrl");
-        birthday = intent.getStringExtra("Birthday");
         studyName = intent.getStringExtra("PatientOfStudy");
         visitPlan = getIntent().getStringArrayListExtra("VisitPlan");
     }
@@ -60,7 +58,6 @@ public class HomeActivity extends AppCompatActivity {
         bundle.putString("UserID", userId);
         bundle.putString("DisplayName", displayName);
         bundle.putString("PhotoUrl", photoUri);
-        bundle.putString("Birthday", birthday);
         bundle.putString("PatientOfStudy", studyName);
         bundle.putStringArrayList("VisitPlan", visitPlan);
 
