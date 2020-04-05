@@ -257,6 +257,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:enabled="true"
+                android:focusable="false"
                 android:hint="@string/race"
                 android:importantForAutofill="no"
                 android:inputType="textPersonName" />

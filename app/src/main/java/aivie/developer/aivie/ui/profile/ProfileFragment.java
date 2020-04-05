@@ -1,9 +1,12 @@
 package aivie.developer.aivie.ui.profile;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
@@ -32,7 +35,9 @@ import java.util.Locale;
 
 import aivie.developer.aivie.BuildConfig;
 import aivie.developer.aivie.HomeActivity;
+import aivie.developer.aivie.LoginActivity;
 import aivie.developer.aivie.R;
+import aivie.developer.aivie.RaceSelectionActivity;
 
 public class ProfileFragment extends Fragment {
 
@@ -61,6 +66,7 @@ public class ProfileFragment extends Fragment {
     private String ethnicity;
     private final Calendar myCalendar = Calendar.getInstance();
 
+    @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel =
@@ -96,6 +102,21 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        editTextRace = root.findViewById(R.id.race);
+        editTextRace.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                updateRace();
+                return false;
+            }
+        });
+        editTextRace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
 
         HomeActivity activity = (HomeActivity)getActivity();
         Bundle result = activity.getHomeActivityData();
@@ -107,13 +128,13 @@ public class ProfileFragment extends Fragment {
         editTextDisplayName = root.findViewById(R.id.displayName);
         editTextAge = root.findViewById(R.id.age);
         editTextGender = root.findViewById(R.id.gender);
-        editTextRace = root.findViewById(R.id.race);
+
         editTextEthnicity = root.findViewById(R.id.ethnicity);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        getUserProfileFromFirestore(userId);
+        //getUserProfileFromFirestore(userId);
 
         return root;
     }
@@ -238,5 +259,10 @@ public class ProfileFragment extends Fragment {
             age = 0;
 
         return age;
+    }
+
+    private void updateRace () {
+        Intent intent = new Intent((HomeActivity)getActivity(), RaceSelectionActivity.class);
+        startActivity(intent);
     }
 }
