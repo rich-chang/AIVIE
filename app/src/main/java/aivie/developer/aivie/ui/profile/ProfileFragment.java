@@ -41,15 +41,15 @@ public class ProfileFragment extends Fragment {
     private static String TAG = "richc";
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    private TextView textViewSubjectNum;
-    private TextView textViewLastName;
-    private TextView textViewFirstName;
-    private TextView textViewDisplayName;
+    private EditText editTextViewSubjectNum;
+    private EditText editTextLastName;
+    private EditText editTextFirstName;
+    private EditText editTextDisplayName;
     private EditText editTextdateOfBirth;
-    private TextView textViewAge;
-    private TextView textViewGender;
-    private TextView textViewRace;
-    private TextView textViewEthnicity;
+    private EditText editTextAge;
+    private EditText editTextGender;
+    private EditText editTextRace;
+    private EditText editTextEthnicity;
     private String userId;
     private String subjectNum;
     private String firstName;
@@ -101,14 +101,14 @@ public class ProfileFragment extends Fragment {
         Bundle result = activity.getHomeActivityData();
         userId = result.getString("UserID");
 
-        textViewSubjectNum = root.findViewById(R.id.subjectNum);
-        textViewLastName = root.findViewById(R.id.lastName);
-        textViewFirstName = root.findViewById(R.id.firstName);
-        textViewDisplayName = root.findViewById(R.id.displayName);
-        textViewAge = root.findViewById(R.id.age);
-        textViewGender = root.findViewById(R.id.gender);
-        textViewRace = root.findViewById(R.id.race);
-        textViewEthnicity = root.findViewById(R.id.ethnicity);
+        editTextViewSubjectNum = root.findViewById(R.id.subjectNum);
+        editTextLastName = root.findViewById(R.id.lastName);
+        editTextFirstName = root.findViewById(R.id.firstName);
+        editTextDisplayName = root.findViewById(R.id.displayName);
+        editTextAge = root.findViewById(R.id.age);
+        editTextGender = root.findViewById(R.id.gender);
+        editTextRace = root.findViewById(R.id.race);
+        editTextEthnicity = root.findViewById(R.id.ethnicity);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -192,13 +192,13 @@ public class ProfileFragment extends Fragment {
 
     private void UpdateUI () {
 
-        if (subjectNum != null) textViewSubjectNum.setText(subjectNum);
-        if (lastName != null) textViewLastName.setText(lastName);
-        if (firstName != null) textViewFirstName.setText(firstName);
-        if (displayName != null) textViewDisplayName.setText(displayName);
-        if (gender != null) textViewGender.setText(gender);
-        if (race != null) textViewRace.setText(race);
-        if (ethnicity != null) textViewEthnicity.setText(ethnicity);
+        if (subjectNum != null) editTextViewSubjectNum.setText(subjectNum);
+        if (lastName != null) editTextLastName.setText(lastName);
+        if (firstName != null) editTextFirstName.setText(firstName);
+        if (displayName != null) editTextDisplayName.setText(displayName);
+        if (gender != null) editTextGender.setText(gender);
+        if (race != null) editTextRace.setText(race);
+        if (ethnicity != null) editTextEthnicity.setText(ethnicity);
 
         updateDateOfBirthAndAge(dateOfBirth);
     }
@@ -213,8 +213,7 @@ public class ProfileFragment extends Fragment {
         editTextdateOfBirth.setText(dobString);
 
         // Also update Age
-        String age = getString(R.string.age) + " : " + updateAge(dobString);
-        textViewAge.setText(age);
+        editTextAge.setText(Integer.valueOf(updateAge(dobString)).toString());
     }
 
     private int updateAge (String dobString) {

@@ -6,140 +6,268 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileFragment">
 
-<ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/subjectNum"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewSubjectNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/subject_number"
+                android:textAlignment="viewEnd" />
+
+            <EditText
+                android:id="@+id/subjectNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="true"
+                android:hint="@string/subject_number"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:ems="10"
-            android:enabled="true"
-            android:hint="@string/subject_number"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/lastName"
+            <TextView
+                android:id="@+id/textViewLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/prompt_create_last_name"
+                android:textAlignment="viewEnd" />
+
+            <EditText
+                android:id="@+id/lastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:autofillHints="name"
+                android:ems="10"
+                android:enabled="true"
+                android:hint="@string/prompt_create_last_name"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:autofillHints="name"
-            android:ems="10"
-            android:enabled="true"
-            android:hint="@string/prompt_create_last_name"
-            android:inputType="textPersonName" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/firstName"
+            <TextView
+                android:id="@+id/textViewFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/prompt_create_first_name"
+                android:textAlignment="viewEnd" />
+
+            <EditText
+                android:id="@+id/firstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:autofillHints="name"
+                android:ems="10"
+                android:enabled="true"
+                android:hint="@string/prompt_create_first_name"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:autofillHints="name"
-            android:ems="10"
-            android:enabled="true"
-            android:hint="@string/prompt_create_first_name"
-            android:inputType="textPersonName" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/displayName"
+            <TextView
+                android:id="@+id/textViewDisplayName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/display_name"
+                android:textAlignment="viewEnd" />
+
+            <EditText
+                android:id="@+id/displayName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:autofillHints="name"
+                android:ems="10"
+                android:enabled="true"
+                android:hint="@string/prompt_create_display_name"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:autofillHints="name"
-            android:ems="10"
-            android:enabled="true"
-            android:hint="@string/prompt_create_display_name"
-            android:inputType="textPersonName" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/dateOfBirth"
+            <TextView
+                android:id="@+id/textViewDateOfBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/date_of_birth"
+                android:textAlignment="viewEnd" />
+
+            <EditText
+                android:id="@+id/dateOfBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="@string/yyyy_MM_dd"
+                android:importantForAutofill="no"
+                android:inputType="date" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:importantForAutofill="no"
-            android:ems="10"
-            android:focusable="false"
-            android:hint="@string/yyyy_MM_dd"
-            android:inputType="date" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/age"
+            <TextView
+                android:id="@+id/textViewAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/age"
+                android:textAlignment="viewEnd" />
+
+            <EditText
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="true"
+                android:focusable="false"
+                android:hint="@string/age"
+                android:importantForAutofill="no"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:importantForAutofill="no"
-            android:ems="10"
-            android:enabled="true"
-            android:focusable="false"
-            android:hint="@string/age"
-            android:inputType="number" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/gender"
+            <TextView
+                android:id="@+id/textViewGenser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/gender"
+                android:textAlignment="viewEnd" />
+
+            <EditText
+                android:id="@+id/gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="true"
+                android:hint="@string/gender"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:importantForAutofill="no"
-            android:ems="10"
-            android:enabled="true"
-            android:hint="@string/gender"
-            android:inputType="textPersonName" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/ethnicity"
+            <TextView
+                android:id="@+id/textViewEthnicity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/ethnicity"
+                android:textAlignment="viewEnd" />
+
+            <EditText
+                android:id="@+id/ethnicity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="true"
+                android:hint="@string/ethnicity"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:importantForAutofill="no"
-            android:ems="10"
-            android:enabled="true"
-            android:hint="@string/ethnicity"
-            android:inputType="textPersonName" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/race"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:importantForAutofill="no"
-            android:ems="10"
-            android:enabled="true"
-            android:hint="@string/race"
-            android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/textViewRace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/race"
+                android:textAlignment="viewEnd" />
+
+            <EditText
+                android:id="@+id/race"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="true"
+                android:hint="@string/race"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/text_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textSize="50sp" />
+            android:textSize="8sp" />
 
     </LinearLayout>
-    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
