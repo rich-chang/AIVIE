@@ -33,7 +33,6 @@ public class HomeFragment extends Fragment {
     String userId;
     String displayName;
     String photoUri;
-    String birthday;
     String studyName;
     private ArrayList<String> visitPlan = new ArrayList<String>();
 
@@ -59,15 +58,12 @@ public class HomeFragment extends Fragment {
         userId = result.getString("UserID");
         displayName = result.getString("DisplayName");
         photoUri = result.getString("PhotoUrl");
-        birthday = result.getString("Birthday");
         studyName = result.getString("PatientOfStudy");
         visitPlan = result.getStringArrayList("VisitPlan");
 
         TextView textViewDisplayName = root.findViewById(R.id.textViewDisplayName);
-        TextView textViewBirthday = root.findViewById(R.id.textViewBirthday);
         TextView textViewStudyName = root.findViewById(R.id.textViewStudyTitle);
         textViewDisplayName.setText(displayName);
-        textViewBirthday.setText(birthday);
         textViewStudyName.setText(studyName);
 
         TextView textViewVisitPlan = root.findViewById(R.id.textViewVisitPlan);;
