@@ -143,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                                                             //loginButton.setEnabled(true);
                                                             pbLogin.setVisibility(View.GONE);
 
-                                                            studyName = documentVisit.get(getString(R.string.firestore_studies_study_title)).toString();
+                                                            studyName = documentVisit.get(getString(R.string.firestore_column_title)).toString();
 
                                                             SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
                                                             List<Timestamp> visitsDate = (List<Timestamp>) documentVisit.getData().get(getString(R.string.firestore_studies_visit_plan));

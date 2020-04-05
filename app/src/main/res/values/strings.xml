@@ -38,8 +38,9 @@
     <string name="subject_number">Subject Number </string>
     <string name="display_name">Display Name</string>
     <string name="date_of_birth">Date of Birth</string>
-    <string name="ddmmyyyy">DD-MM-YYYY</string>
+    <string name="yyyy_MM_dd">YYYY-MM-DD</string>
     <string name="age">Age</string>
+    <string name="gender">Gender</string>
     <string name="ethnicity">Ethnicity</string>
     <string name="race">Race</string>
 
@@ -70,7 +71,8 @@
 
     <!-- Firestore Columns in collection "studies" -->
     <string name="firestore_studies_id">Id</string>
-    <string name="firestore_studies_study_title">Title</string>
     <string name="firestore_studies_visit_plan">VisitPlan</string>
+
+    <string name="firestore_column_title">Title</string>
 
 </resources>
