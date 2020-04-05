@@ -50,11 +50,12 @@ public class SignupActivity extends AppCompatActivity {
     private static String TAG = "richc";
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    Button signupButton;
+    private Button signupButton;
+    private TextView textViewHaveAccount;
     private ProgressBar pbSignup;
-    String firstName;
-    String lastName;
-    String displayName;
+    private String firstName;
+    private String lastName;
+    private String displayName;
     private String photoUriString = "https://ui-avatars.com/api/?size=80&rounded=true&background=0D8ABC&color=fff&name=";
 
     @Override
@@ -63,12 +64,12 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         // Implement customized string
-        TextView textView = findViewById(R.id.textViewHaveAccount);
+        textViewHaveAccount = findViewById(R.id.textViewHaveAccount);
         SpannableString sp1 = new SpannableString(getResources().getString(R.string.have_account));
         SpannableString sp2 = new SpannableString(getResources().getString(R.string.have_account_log_in));
         sp2.setSpan(new ForegroundColorSpan(Color.BLUE), 0, sp2.length(), 0);
         sp2.setSpan(new UnderlineSpan(), 0, sp2.length(), 0);
-        textView.setText(TextUtils.concat(sp1, " ", sp2));
+        textViewHaveAccount.setText(TextUtils.concat(sp1, " ", sp2));
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -80,6 +81,7 @@ public class SignupActivity extends AppCompatActivity {
     public void signUp (View view) {
 
         signupButton.setEnabled(false);
+        textViewHaveAccount.setEnabled(false);
         pbSignup.setVisibility(view.VISIBLE);
 
         EditText editTextFirstName = findViewById(R.id.firstName);
@@ -121,7 +123,6 @@ public class SignupActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
 
-                                                //signupButton.setEnabled(true);
                                                 pbSignup.setVisibility(View.GONE);
 
                                                 if (DEBUG) Log.d(TAG, "User profile updated.");
@@ -129,6 +130,13 @@ public class SignupActivity extends AppCompatActivity {
 
                                                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                                 startActivity(intent);
+
+                                            } else {
+                                                if(DEBUG) Log.d(TAG, "get failed with ", task.getException());
+
+                                                signupButton.setEnabled(true);
+                                                textViewHaveAccount.setEnabled(true);
+                                                pbSignup.setVisibility(View.GONE);
                                             }
                                         }
                                     });
@@ -141,6 +149,7 @@ public class SignupActivity extends AppCompatActivity {
                             Toast.makeText(SignupActivity.this, "Authentication failed.\r\n", Toast.LENGTH_LONG).show();
 
                             signupButton.setEnabled(true);
+                            textViewHaveAccount.setEnabled(true);
                             pbSignup.setVisibility(View.GONE);
                         }
                     }

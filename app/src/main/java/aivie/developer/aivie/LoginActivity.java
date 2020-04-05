@@ -42,7 +42,8 @@ public class LoginActivity extends AppCompatActivity {
     private static String TAG = "richc";
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    Button loginButton;
+    private Button loginButton;
+    private TextView textViewNeedAccount;
     private ProgressBar pbLogin;
     String userId;
     String displayName;
@@ -57,12 +58,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Implement customized string
-        TextView textView = findViewById(R.id.textViewNeedAccount);
+        textViewNeedAccount = findViewById(R.id.textViewNeedAccount);
         SpannableString sp1 = new SpannableString(getResources().getString(R.string.need_account));
         SpannableString sp2 = new SpannableString(getResources().getString(R.string.need_account_sign_up));
         sp2.setSpan(new ForegroundColorSpan(Color.BLUE), 0, sp2.length(), 0);
         sp2.setSpan(new UnderlineSpan(), 0, sp2.length(), 0);
-        textView.setText(TextUtils.concat(sp1, " ", sp2));
+        textViewNeedAccount.setText(TextUtils.concat(sp1, " ", sp2));
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -74,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
     public void logIn (View view) {
 
         loginButton.setEnabled(false);
+        textViewNeedAccount.setEnabled(false);
         pbLogin.setVisibility(view.VISIBLE);
 
         FirebaseUser user = mAuth.getCurrentUser();
@@ -140,7 +142,6 @@ public class LoginActivity extends AppCompatActivity {
                                                         DocumentSnapshot documentVisit = task.getResult();
                                                         if (documentVisit.exists()) {
 
-                                                            //loginButton.setEnabled(true);
                                                             pbLogin.setVisibility(View.GONE);
 
                                                             studyName = documentVisit.get(getString(R.string.firestore_studies_study_title)).toString();
@@ -167,6 +168,8 @@ public class LoginActivity extends AppCompatActivity {
                                                             if(DEBUG) Log.d(TAG, "No such document");
 
                                                             loginButton.setEnabled(true);
+                                                            textViewNeedAccount.setEnabled(true);
+                                                            pbLogin.setVisibility(View.GONE);
                                                         }
                                                     }
                                                 }
@@ -175,12 +178,14 @@ public class LoginActivity extends AppCompatActivity {
                                             if(DEBUG) Log.d(TAG, "No such document");
 
                                             loginButton.setEnabled(true);
+                                            textViewNeedAccount.setEnabled(true);
                                             pbLogin.setVisibility(View.GONE);
                                         }
                                     } else {
                                         if(DEBUG) Log.d(TAG, "get failed with ", task.getException());
 
                                         loginButton.setEnabled(true);
+                                        textViewNeedAccount.setEnabled(true);
                                         pbLogin.setVisibility(View.GONE);
                                     }
                                 }
@@ -190,6 +195,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Authentication failed.\r\n", Toast.LENGTH_LONG).show();
 
                             loginButton.setEnabled(true);
+                            textViewNeedAccount.setEnabled(true);
                             pbLogin.setVisibility(View.GONE);
                         }
                     }
