@@ -2,6 +2,7 @@ package aivie.developer.aivie.ui.profile;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +16,50 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
+import aivie.developer.aivie.BuildConfig;
 import aivie.developer.aivie.HomeActivity;
 import aivie.developer.aivie.R;
 
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel profileViewModel;
-
+    private static boolean DEBUG = BuildConfig.DEBUG;
+    private static String TAG = "richc";
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private EditText editTextViewSubjectNum;
+    private EditText editTextLastName;
+    private EditText editTextFirstName;
+    private EditText editTextDisplayName;
+    private EditText editTextdateOfBirth;
+    private EditText editTextAge;
+    private EditText editTextGender;
+    private EditText editTextRace;
+    private EditText editTextEthnicity;
+    private String userId;
+    private String subjectNum;
+    private String firstName;
+    private String lastName;
+    private String displayName;
+    private String dateOfBirth;
+    private String gender;
+    private String race;
+    private String ethnicity;
     private final Calendar myCalendar = Calendar.getInstance();
-    private EditText dateOfBirth;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,18 +75,19 @@ public class ProfileFragment extends Fragment {
         });
 
         /// DOB selection ///
-        dateOfBirth = (EditText) root.findViewById(R.id.dateOfBirth);
+        editTextdateOfBirth = (EditText) root.findViewById(R.id.dateOfBirth);
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Log.d(TAG, "onDateSet");
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateDateOfBirth();
+                updateDateOfBirthAndAge(null);
             }
         };
-        dateOfBirth.setOnClickListener(new View.OnClickListener() {
+        editTextdateOfBirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog((HomeActivity)getActivity(), date, myCalendar
@@ -64,12 +97,146 @@ public class ProfileFragment extends Fragment {
         });
 
 
+        HomeActivity activity = (HomeActivity)getActivity();
+        Bundle result = activity.getHomeActivityData();
+        userId = result.getString("UserID");
+
+        editTextViewSubjectNum = root.findViewById(R.id.subjectNum);
+        editTextLastName = root.findViewById(R.id.lastName);
+        editTextFirstName = root.findViewById(R.id.firstName);
+        editTextDisplayName = root.findViewById(R.id.displayName);
+        editTextAge = root.findViewById(R.id.age);
+        editTextGender = root.findViewById(R.id.gender);
+        editTextRace = root.findViewById(R.id.race);
+        editTextEthnicity = root.findViewById(R.id.ethnicity);
+
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+        getUserProfileFromFirestore(userId);
+
         return root;
     }
 
-    private void updateDateOfBirth() {
-        String myFormat = "MM-dd-yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        dateOfBirth.setText(sdf.format(myCalendar.getTime()));
+    private void getUserProfileFromFirestore (String userId) {
+
+        DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(userId);
+
+        docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    final DocumentSnapshot documentUser = task.getResult();
+                    if (documentUser.exists()) {
+
+                        subjectNum = (String) documentUser.get(getString(R.string.firestore_users_subject_num));
+                        lastName = (String) documentUser.get(getString(R.string.firestore_users_last_name));
+                        firstName = (String) documentUser.get(getString(R.string.firestore_users_first_name));
+                        displayName = (String) documentUser.get(getString(R.string.firestore_users_display_name));
+
+                        // Get user birthday
+                        SimpleDateFormat sfd = new SimpleDateFormat(getString(R.string.yyyy_MM_dd));
+                        Timestamp tsBirthday = (Timestamp) documentUser.get(getString(R.string.firestore_users_birthday));
+                        Date dateBirthday = tsBirthday.toDate();
+                        dateOfBirth = sfd.format(dateBirthday);
+
+                        UpdateUI();
+
+                        DocumentReference docRefGender = (DocumentReference) documentUser.get(getString(R.string.firestore_users_gender));
+                        docRefGender.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+
+                                    DocumentSnapshot documentGender = task.getResult();
+                                    gender = (String) documentGender.get("Title");
+
+                                    UpdateUI();
+                                }
+                            }
+                        });
+
+                        DocumentReference docRefRace = (DocumentReference) documentUser.get(getString(R.string.firestore_users_race));
+                        docRefRace.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+
+                                    DocumentSnapshot documentRace = task.getResult();
+                                    race = (String) documentRace.get("Title");
+
+                                    UpdateUI();
+                                }
+                            }
+                        });
+
+                        DocumentReference docRefEthnicity = (DocumentReference) documentUser.get(getString(R.string.firestore_users_ethnicity));
+                        docRefEthnicity.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot documentEthnicity = task.getResult();
+                                    ethnicity = (String) documentEthnicity.get("Title");
+
+                                    UpdateUI();
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void UpdateUI () {
+
+        if (subjectNum != null) editTextViewSubjectNum.setText(subjectNum);
+        if (lastName != null) editTextLastName.setText(lastName);
+        if (firstName != null) editTextFirstName.setText(firstName);
+        if (displayName != null) editTextDisplayName.setText(displayName);
+        if (gender != null) editTextGender.setText(gender);
+        if (race != null) editTextRace.setText(race);
+        if (ethnicity != null) editTextEthnicity.setText(ethnicity);
+
+        updateDateOfBirthAndAge(dateOfBirth);
+    }
+
+    private void updateDateOfBirthAndAge (String dobString) {
+
+        if (dobString == null) {
+
+            SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.yyyy_MM_dd), Locale.US);
+            dobString = sdf.format(myCalendar.getTime());
+        }
+        editTextdateOfBirth.setText(dobString);
+
+        // Also update Age
+        editTextAge.setText(Integer.valueOf(updateAge(dobString)).toString());
+    }
+
+    private int updateAge (String dobString) {
+
+        // Construct DOB by input string
+        Date date = null;
+        SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.yyyy_MM_dd));
+        try {
+            date = sdf.parse(dobString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(date == null) return 0;
+
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.setTime(date);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+        if (age < 0)
+            age = 0;
+
+        return age;
     }
 }
