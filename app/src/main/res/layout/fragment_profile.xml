@@ -21,11 +21,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:importantForAutofill="no"
             android:ems="10"
-            android:enabled="false"
+            android:enabled="true"
             android:hint="@string/subject_number"
-            android:inputType="textPersonName"/>
+            android:importantForAutofill="no"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/lastName"
@@ -36,7 +36,7 @@
             android:layout_marginEnd="24dp"
             android:autofillHints="name"
             android:ems="10"
-            android:enabled="false"
+            android:enabled="true"
             android:hint="@string/prompt_create_last_name"
             android:inputType="textPersonName" />
 
@@ -49,12 +49,12 @@
             android:layout_marginEnd="24dp"
             android:autofillHints="name"
             android:ems="10"
-            android:enabled="false"
+            android:enabled="true"
             android:hint="@string/prompt_create_first_name"
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/displayname"
+            android:id="@+id/displayName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -62,24 +62,9 @@
             android:layout_marginEnd="24dp"
             android:autofillHints="name"
             android:ems="10"
-            android:enabled="false"
+            android:enabled="true"
             android:hint="@string/prompt_create_display_name"
             android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:autofillHints="emailAddress"
-            android:ems="10"
-            android:enabled="false"
-            android:fadeScrollbars="true"
-            android:hint="@string/prompt_email"
-            android:inputType="textEmailAddress"
-            android:text="" />
 
         <EditText
             android:id="@+id/dateOfBirth"
@@ -91,7 +76,7 @@
             android:importantForAutofill="no"
             android:ems="10"
             android:focusable="false"
-            android:hint="@string/ddmmyyyy"
+            android:hint="@string/yyyy_MM_dd"
             android:inputType="date" />
 
         <EditText
@@ -103,9 +88,23 @@
             android:layout_marginEnd="24dp"
             android:importantForAutofill="no"
             android:ems="10"
-            android:enabled="false"
+            android:enabled="true"
+            android:focusable="false"
             android:hint="@string/age"
             android:inputType="number" />
+
+        <EditText
+            android:id="@+id/gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:importantForAutofill="no"
+            android:ems="10"
+            android:enabled="true"
+            android:hint="@string/gender"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/ethnicity"
@@ -116,7 +115,7 @@
             android:layout_marginEnd="24dp"
             android:importantForAutofill="no"
             android:ems="10"
-            android:enabled="false"
+            android:enabled="true"
             android:hint="@string/ethnicity"
             android:inputType="textPersonName" />
 
@@ -129,7 +128,7 @@
             android:layout_marginEnd="24dp"
             android:importantForAutofill="no"
             android:ems="10"
-            android:enabled="false"
+            android:enabled="true"
             android:hint="@string/race"
             android:inputType="textPersonName" />
 
