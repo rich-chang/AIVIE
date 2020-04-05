@@ -22,10 +22,15 @@
 
     <!-- Race Activity -->
     <string name="race_white">White</string>
+    <string name="race_white_desc">A person having origins in any of the original peoples of Europe, the Middle East, or North Africa.</string>
     <string name="race_asian">Asian</string>
+    <string name="race_asian_desc">A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Taiwan, Thailand, and Vietnam.</string>
     <string name="race_black">Black or African American</string>
+    <string name="race_black_desc">A person having origins in any of the Black racial groups of Africa.</string>
     <string name="race_hawaiian">Native Hawaiian or Other Pacific Island</string>
+    <string name="race_hawaiian_desc">A person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands.</string>
     <string name="race_alaska">American Indian or Alaska Native</string>
+    <string name="race_alaska_desc">A person having origins in any of the original peoples of North and South America (including Central America) and who maintains tribal affiliation or community attachment.</string>
 
     <string name="confirm">Confirm</string>
 
