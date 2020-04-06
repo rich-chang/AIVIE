@@ -21,10 +21,6 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    String userId;
-    String displayName;
-    String photoUri;
-    String studyName;
     private ArrayList<String> visitPlan = new ArrayList<String>();
 
     @Override
@@ -44,14 +40,17 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        /*
         Intent intent = getIntent();
         userId = intent.getStringExtra("UserID");
         displayName = intent.getStringExtra("DisplayName");
         photoUri = intent.getStringExtra("PhotoUrl");
         studyName = intent.getStringExtra("PatientOfStudy");
         visitPlan = getIntent().getStringArrayListExtra("VisitPlan");
+        */
     }
 
+    /*
     public Bundle getHomeActivityData() {
 
         Bundle bundle = new Bundle();
@@ -63,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
 
         return bundle;
     }
+    */
 
     @Override
     public void onBackPressed() {

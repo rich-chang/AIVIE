@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import aivie.developer.aivie.BuildConfig;
 import aivie.developer.aivie.HomeActivity;
@@ -43,10 +44,12 @@ public class HomeFragment extends Fragment {
     private static boolean DEBUG = BuildConfig.DEBUG;
     private static String TAG = "richc";
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private ImageView imageViewAvatar;
     private TextView textViewName;
     private TextView textViewRole;
-    private String userId;
-    private String photoUri;
+    private TextView textViewStudyName;
+    private TextView textViewVisitPlan;
     private String firstName;
     private String lastName;
     private String studyName;
@@ -69,41 +72,37 @@ public class HomeFragment extends Fragment {
         // Add option menu
         setHasOptionsMenu(true);
 
-        HomeActivity activity = (HomeActivity)getActivity();
-        Bundle result = activity.getHomeActivityData();
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
-        userId = result.getString("UserID");
-        photoUri = result.getString("PhotoUrl");
-        studyName = result.getString("PatientOfStudy");
-        visitPlan = result.getStringArrayList("VisitPlan");
-
+        imageViewAvatar = root.findViewById(R.id.imageViewAvatar);
         textViewName = root.findViewById(R.id.textViewName);
         textViewRole = root.findViewById(R.id.textViewRole);
-        TextView textViewStudyName = root.findViewById(R.id.textViewStudyTitle);
-        textViewStudyName.setText(studyName);
+        textViewStudyName = root.findViewById(R.id.textViewStudyTitle);
+        textViewVisitPlan = root.findViewById(R.id.textViewVisitPlan);;
 
-        TextView textViewVisitPlan = root.findViewById(R.id.textViewVisitPlan);;
-        StringBuilder sb = new StringBuilder("");
-        textViewVisitPlan.setText("");
-        for (int i=0; i<visitPlan.size(); i++) {
-            sb.append(visitPlan.get(i) + "\r\n");
-        }
-        textViewVisitPlan.setText(sb.toString());
-
-        ImageView imageViewAvatar = (ImageView)root.findViewById(R.id.imageViewAvatar);
-        Glide.with(this).load(photoUri).into(imageViewAvatar);
-
-        db = FirebaseFirestore.getInstance();
-
-        getUserProfileFromFirestore(userId);
+        showUserInfo();
 
         return root;
+    }
+
+    private void showUserInfo () {
+
+        String userId = mAuth.getCurrentUser().getUid();
+
+        if (userId == null) {
+            // Put default data on screen
+        } else {
+
+            Glide.with(this).load(mAuth.getCurrentUser().getPhotoUrl()).into(imageViewAvatar);
+
+            getUserProfileFromFirestore(userId);
+        }
     }
 
     private void getUserProfileFromFirestore (String userId) {
 
         DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(userId);
-
         docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -127,12 +126,38 @@ public class HomeFragment extends Fragment {
                                     role = (String) documentRole.get("Title");
                                     
                                     UpdateUI();
-
                                 } else {
                                     if(DEBUG) Log.d(TAG, "task get failed with ", task.getException());
                                 }
                             }
                         });
+
+
+                        DocumentReference docRefStudy = (DocumentReference) documentUser.getData().get(getString(R.string.firestore_users_patient_of_study));
+                        docRefStudy.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+
+                                    DocumentSnapshot documentStudy = task.getResult();
+                                    studyName = (String) documentStudy.get(getString(R.string.firestore_studies_title));
+
+                                    List<Timestamp> visitsDate = (List<Timestamp>) documentStudy.getData().get(getString(R.string.firestore_studies_visit_plan));
+
+                                    SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
+                                    for (int i=0; i<visitsDate.size(); i++) {
+                                        Timestamp tm = (Timestamp) visitsDate.get(i);
+                                        Date date = tm.toDate();
+                                        visitPlan.add(sfd.format(date).toString());
+                                    }
+
+                                    UpdateUI();
+                                } else {
+                                    if(DEBUG) Log.d(TAG, "task get failed with ", task.getException());
+                                }
+                            }
+                        });
+
                     } else {
                         if(DEBUG) Log.d(TAG, "No such document");
                     }
@@ -150,6 +175,15 @@ public class HomeFragment extends Fragment {
             String name = firstName + "  " + lastName;
             textViewName.setText(name);
         }
+
+        if (studyName != null) textViewStudyName.setText(studyName);
+
+        StringBuilder sb = new StringBuilder("");
+        textViewVisitPlan.setText("");
+        for (int i=0; i<visitPlan.size(); i++) {
+            sb.append(visitPlan.get(i) + "\r\n");
+        }
+        textViewVisitPlan.setText(sb.toString());
     }
 
     @Override

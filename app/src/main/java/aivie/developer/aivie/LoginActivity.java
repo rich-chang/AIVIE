@@ -45,11 +45,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private TextView textViewNeedAccount;
     private ProgressBar pbLogin;
-    String userId;
-    String displayName;
-    String photoUri;
-    String studyName;
-    List<String> visitPlan = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +98,10 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             if(DEBUG) Log.d(TAG, "signInWithEmail:success");
 
+                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                            startActivity(intent);
+
+                            /*
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             userId = user.getUid();
@@ -184,6 +183,9 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 }
                             });
+
+                            */
+
                         } else {
                             if(DEBUG) Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.\r\n", Toast.LENGTH_LONG).show();
