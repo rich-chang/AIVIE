@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RaceSelectionActivity"></activity>
+        <activity android:name=".IcfActivity"></activity>
+        <activity android:name=".RaceSelectionActivity" />
         <activity android:name=".ui.ProfileActivity" />
         <activity
             android:name=".HomeActivity"
