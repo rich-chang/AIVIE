@@ -134,7 +134,7 @@ public class ProfileFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        //getUserProfileFromFirestore(userId);
+        getUserProfileFromFirestore(userId);
 
         return root;
     }
