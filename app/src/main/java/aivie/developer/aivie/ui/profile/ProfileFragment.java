@@ -55,7 +55,6 @@ public class ProfileFragment extends Fragment {
     private EditText editTextGender;
     private EditText editTextRace;
     private EditText editTextEthnicity;
-    private String userId;
     private String subjectNum;
     private String firstName;
     private String lastName;
@@ -117,26 +116,31 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
-        HomeActivity activity = (HomeActivity)getActivity();
-        Bundle result = activity.getHomeActivityData();
-        userId = result.getString("UserID");
-
         editTextViewSubjectNum = root.findViewById(R.id.subjectNum);
         editTextLastName = root.findViewById(R.id.lastName);
         editTextFirstName = root.findViewById(R.id.firstName);
         editTextDisplayName = root.findViewById(R.id.displayName);
         editTextAge = root.findViewById(R.id.age);
         editTextGender = root.findViewById(R.id.gender);
-
         editTextEthnicity = root.findViewById(R.id.ethnicity);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        getUserProfileFromFirestore(userId);
+        showUserInfo();
 
         return root;
+    }
+
+    private void showUserInfo () {
+
+        String userId = mAuth.getCurrentUser().getUid();
+
+        if (userId == null) {
+            // Put default data on screen
+        } else {
+            getUserProfileFromFirestore(userId);
+        }
     }
 
     private void getUserProfileFromFirestore (String userId) {
