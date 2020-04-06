@@ -92,6 +92,7 @@
 
     <!-- Firestore Columns in collection "studies" -->
     <string name="firestore_studies_id">Id</string>
+    <string name="firestore_studies_title">Title</string>
     <string name="firestore_studies_visit_plan">VisitPlan</string>
 
     <string name="firestore_column_title">Title</string>
