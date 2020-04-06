@@ -3,6 +3,7 @@ package aivie.developer.aivie;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -48,6 +50,7 @@ public class RaceSelectionActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private Button buttonConfirm;
+    private ProgressBar pbConfirm;
     ArrayList<String> race_desc = new ArrayList<String>();
     ArrayList<String> race = new ArrayList<String>();
     ArrayList<String> race_db_document = new ArrayList<String>();
@@ -62,6 +65,7 @@ public class RaceSelectionActivity extends AppCompatActivity {
 
         radioGroup = findViewById(R.id.radioGroup);
         buttonConfirm = findViewById(R.id.buttonConfirm);
+        pbConfirm = findViewById(R.id.progressBarConfirm);
 
         addListenerOnButton();
         updateUI();
@@ -73,11 +77,13 @@ public class RaceSelectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                radioGroup.setEnabled(false);
+                buttonConfirm.setEnabled(false);
+                pbConfirm.setVisibility(View.VISIBLE);
+
                 int selectedResId = radioGroup.getCheckedRadioButtonId();
                 radioButton = (RadioButton) findViewById(selectedResId);
                 int selectedIndex = radioGroup.indexOfChild(radioButton);
-
-                Toast.makeText(RaceSelectionActivity.this, Integer.valueOf(selectedIndex).toString(), Toast.LENGTH_SHORT).show();
 
                 updateToFireStore(selectedIndex);
             }
@@ -111,6 +117,11 @@ public class RaceSelectionActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         if (DEBUG) Log.d(TAG, "DocumentSnapshot successfully written!");
+
+                                        pbConfirm.setVisibility(View.GONE);
+
+                                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                        startActivity(intent);
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -172,6 +183,10 @@ public class RaceSelectionActivity extends AppCompatActivity {
 
             ((RadioButton) radioGroup.getChildAt(i)).setText(TextUtils.concat(sp1, "\r\n", sp2));
         }
+    }
 
+    @Override
+    public void onBackPressed() {
+        // empty so nothing happens
     }
 }
