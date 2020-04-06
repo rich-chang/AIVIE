@@ -123,9 +123,9 @@ public class HomeFragment extends Fragment {
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
 
-                                    DocumentSnapshot documentGender = task.getResult();
-                                    role = (String) documentGender.get("Title");
-
+                                    DocumentSnapshot documentRole = task.getResult();
+                                    role = (String) documentRole.get("Title");
+                                    
                                     UpdateUI();
 
                                 } else {
