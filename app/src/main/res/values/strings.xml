@@ -20,24 +20,25 @@
     <string name="have_account">Have an account? </string>
     <string name="have_account_log_in">LOG IN</string>
 
+    <string name="confirm">Confirm</string>
+
     <!-- Race Activity -->
     <string name="race_white">White</string>
     <string name="race_white_desc">A person having origins in any of the original peoples of Europe, the Middle East, or North Africa.</string>
-    <string name="race_white_db_doc">W</string>
+    <string name="firestore_race_white">W</string>
     <string name="race_asian">Asian</string>
     <string name="race_asian_desc">A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Taiwan, Thailand, and Vietnam.</string>
-    <string name="race_asian_db_doc">S</string>
+    <string name="firestore_race_asian">S</string>
     <string name="race_black">Black or African American</string>
     <string name="race_black_desc">A person having origins in any of the Black racial groups of Africa.</string>
-    <string name="race_black_db_doc">B</string>
+    <string name="firestore_race_black">B</string>
     <string name="race_hawaiian">Native Hawaiian or Other Pacific Island</string>
     <string name="race_hawaiian_desc">A person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands.</string>
-    <string name="race_hawaiian_db_doc">P</string>
+    <string name="firestore_race_hawaiian">P</string>
     <string name="race_alaska">American Indian or Alaska Native</string>
     <string name="race_alaska_desc">A person having origins in any of the original peoples of North and South America (including Central America) and who maintains tribal affiliation or community attachment.</string>
-    <string name="race_alaska_db_doc">A</string>
-
-    <string name="confirm">Confirm</string>
+    <string name="firestore_race_alaska">A</string>
+    <string name="firestore_race_unknown">O</string>
 
     <!-- Profile Activity -->
     <string name="update_profile">Please update patient profile and demographics data</string>
@@ -94,5 +95,25 @@
     <string name="firestore_studies_visit_plan">VisitPlan</string>
 
     <string name="firestore_column_title">Title</string>
+
+    <!-- Firestore document in collection "gender" -->
+    <string name="firestore_gender_male">MALE</string>
+    <string name="firestore_gender_female">FEMALE</string>
+    <string name="firestore_gender_unknown">UNKNOWN</string>
+    <string name="firestore_gender_na">Not Specified</string>
+
+    <!-- Firestore document in collection "role" -->
+    <string name="firestore_role_cg">CG</string>
+    <string name="firestore_role_cra">CRA</string>
+    <string name="firestore_role_pi">PI</string>
+    <string name="firestore_role_pt">PT</string>
+    <string name="firestore_role_sc">SC</string>
+    <string name="firestore_role_sponsor">SPONSOR</string>
+    <string name="firestore_role_unknown">UNKNOWN</string>
+
+    <!-- Firestore document in collection "ethnicity" -->
+    <string name="firestore_ethnicity_H">H</string>
+    <string name="firestore_ethnicity_N">N</string>
+    <string name="firestore_ethnicity_unknown">UNKNOWN</string>
 
 </resources>

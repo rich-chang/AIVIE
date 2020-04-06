@@ -134,23 +134,23 @@ public class RaceSelectionActivity extends AppCompatActivity {
 
         race.add(getResources().getString(R.string.race_white));
         race_desc.add(getResources().getString(R.string.race_white_desc));
-        race_db_document.add(getResources().getString(R.string.race_white_db_doc));
+        race_db_document.add(getResources().getString(R.string.firestore_race_white));
 
         race.add(getResources().getString(R.string.race_asian));
         race_desc.add(getResources().getString(R.string.race_asian_desc));
-        race_db_document.add(getResources().getString(R.string.race_asian_db_doc));
+        race_db_document.add(getResources().getString(R.string.firestore_race_asian));
 
         race.add(getResources().getString(R.string.race_black));
         race_desc.add(getResources().getString(R.string.race_black_desc));
-        race_db_document.add(getResources().getString(R.string.race_black_db_doc));
+        race_db_document.add(getResources().getString(R.string.firestore_race_black));
 
         race.add(getResources().getString(R.string.race_hawaiian));
         race_desc.add(getResources().getString(R.string.race_hawaiian_desc));
-        race_db_document.add(getResources().getString(R.string.race_hawaiian_db_doc));
+        race_db_document.add(getResources().getString(R.string.firestore_race_hawaiian));
 
         race.add(getResources().getString(R.string.race_alaska));
         race_desc.add(getResources().getString(R.string.race_alaska_desc));
-        race_db_document.add(getResources().getString(R.string.race_alaska_db_doc));
+        race_db_document.add(getResources().getString(R.string.firestore_race_alaska));
 
         for (int i = 0; i < radioGroup .getChildCount(); i++) {
 

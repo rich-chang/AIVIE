@@ -165,7 +165,7 @@ public class SignupActivity extends AppCompatActivity {
         userData.put(getString(R.string.firestore_users_last_name), lastName);
         userData.put(getString(R.string.firestore_users_birthday), new Timestamp(new Date()));
         userData.put(getString(R.string.firestore_users_gender), db.collection(getString(R.string.firestore_gender)).document(getString(R.string.firestore_gender_unknown)));
-        userData.put(getString(R.string.firestore_users_race), db.collection(getString(R.string.firestore_race)).document(getString(R.string.race_unknown_db_doc)));
+        userData.put(getString(R.string.firestore_users_race), db.collection(getString(R.string.firestore_race)).document(getString(R.string.firestore_race_unknown)));
         userData.put(getString(R.string.firestore_users_ethnicity), db.collection(getString(R.string.firestore_ethnicity)).document(getString(R.string.firestore_ethnicity_unknown)));
         userData.put(getString(R.string.firestore_users_subject_num), "UNKNOWN");
         userData.put(getString(R.string.firestore_users_role), db.collection(getString(R.string.firestore_roles)).document(getString(R.string.firestore_role_unknown)));
