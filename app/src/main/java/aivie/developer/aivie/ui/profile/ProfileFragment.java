@@ -60,7 +60,9 @@ import aivie.developer.aivie.RaceSelectionActivity;
 
 public class ProfileFragment extends Fragment {
 
-    private static final String[] PERMISSIONS = {android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static final String[] PERMISSIONS = {
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private static boolean hasPermissions(Context context, String... permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
@@ -363,7 +365,7 @@ public class ProfileFragment extends Fragment {
 
         if (!hasPermissions(getActivity(), PERMISSIONS)) {
 
-            if (DEBUG) Log.v(TAG, "download() Method DON'T HAVE PERMISSIONS ");
+            if (DEBUG) Log.v(TAG, "view() Method DON'T HAVE PERMISSIONS ");
             Toast.makeText(getActivity(), "You don't have read access !", Toast.LENGTH_LONG).show();
         } else {
 
