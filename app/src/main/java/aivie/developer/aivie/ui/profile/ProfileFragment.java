@@ -81,6 +81,7 @@ public class ProfileFragment extends Fragment {
     private StorageReference storageRef;
     private EditText editTextSubjectNum;
     private EditText editTextSignedICF;
+    private EditText editTextIsIcfSigned;
     private EditText editTextLastName;
     private EditText editTextFirstName;
     private EditText editTextDisplayName;
@@ -92,6 +93,7 @@ public class ProfileFragment extends Fragment {
     private String icfFileUrl;
     private String icfFileName;
     private String signedIcfName;
+    private boolean isIcfSigned = false;
     private String subjectNum;
     private String firstName;
     private String lastName;
@@ -164,6 +166,7 @@ public class ProfileFragment extends Fragment {
         });
 
         editTextSubjectNum = root.findViewById(R.id.subjectNum);
+        editTextIsIcfSigned = root.findViewById(R.id.icf_signature);
         editTextLastName = root.findViewById(R.id.lastName);
         editTextFirstName = root.findViewById(R.id.firstName);
         editTextDisplayName = root.findViewById(R.id.displayName);
@@ -193,7 +196,7 @@ public class ProfileFragment extends Fragment {
 
     private void getUserProfileFromFirestore (String userId) {
 
-        DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(userId);
+        final DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(userId);
 
         docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -207,6 +210,7 @@ public class ProfileFragment extends Fragment {
                         lastName = (String) documentUser.get(getString(R.string.firestore_users_last_name));
                         firstName = (String) documentUser.get(getString(R.string.firestore_users_first_name));
                         displayName = (String) documentUser.get(getString(R.string.firestore_users_display_name));
+                        isIcfSigned = (boolean) documentUser.get(getString(R.string.firestore_users_eicf_signed));
 
                         // Get user birthday
                         SimpleDateFormat sfd = new SimpleDateFormat(getString(R.string.yyyy_MM_dd));
@@ -257,13 +261,13 @@ public class ProfileFragment extends Fragment {
                             }
                         });
 
-                        DocumentReference docRefSignedICF = (DocumentReference) documentUser.get(getString(R.string.firestore_users_signed_icf));
-                        docRefSignedICF.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        DocumentReference docRefIcf = (DocumentReference) documentUser.get(getString(R.string.firestore_users_eicf));
+                        docRefIcf.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot documentEthnicity = task.getResult();
-                                    signedIcfName = (String) documentEthnicity.get("Title");
+                                    signedIcfName = (String) documentEthnicity.get("Id");
 
                                     UpdateUI();
                                 }
@@ -280,6 +284,7 @@ public class ProfileFragment extends Fragment {
 
         if (subjectNum != null) editTextSubjectNum.setText(subjectNum);
         if (signedIcfName != null) editTextSignedICF.setText(signedIcfName);
+        editTextIsIcfSigned.setText(Boolean.toString(isIcfSigned));
         if (lastName != null) editTextLastName.setText(lastName);
         if (firstName != null) editTextFirstName.setText(firstName);
         if (displayName != null) editTextDisplayName.setText(displayName);

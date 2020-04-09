@@ -168,7 +168,8 @@ public class SignupActivity extends AppCompatActivity {
         userData.put(getString(R.string.firestore_users_subject_num), "UNKNOWN");
         userData.put(getString(R.string.firestore_users_role), db.collection(getString(R.string.firestore_roles)).document(getString(R.string.firestore_role_unknown)));
         userData.put(getString(R.string.firestore_users_patient_of_study), db.collection(getString(R.string.firestore_studies)).document("000000"));
-        userData.put(getString(R.string.firestore_users_signed_icf), db.collection(getString(R.string.firestore_icf)).document("0000"));
+        userData.put(getString(R.string.firestore_users_eicf), db.collection(getString(R.string.firestore_icf)).document("0001"));
+        userData.put(getString(R.string.firestore_users_eicf_signed), false);
 
         if (Constant.DEBUG) Log.i(Constant.TAG, userData.toString());
 
