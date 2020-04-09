@@ -1,9 +1,9 @@
 package aivie.developer.aivie;
 
-public class Constant {
+public interface Constant {
 
-    public static boolean DEBUG = BuildConfig.DEBUG;
-    public static final String TAG = "richc";
+    boolean DEBUG = BuildConfig.DEBUG;
+    String TAG = "richc";
 
-    public static final String FIREBASE_STORAGE_INST = "gs://clinical-trials-772d5.appspot.com";
+    String FIREBASE_STORAGE_INST = "gs://clinical-trials-772d5.appspot.com";
 }
