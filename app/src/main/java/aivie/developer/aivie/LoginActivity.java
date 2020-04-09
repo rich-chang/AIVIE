@@ -38,8 +38,6 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static boolean DEBUG = BuildConfig.DEBUG;
-    private static String TAG = "richc";
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private Button loginButton;
@@ -75,9 +73,9 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (user == null) {
-            if(DEBUG) Log.i(TAG, "Login-user is null");
+            if(Constant.DEBUG) Log.i(Constant.TAG, "Login-user is null");
         } else {
-            if(DEBUG) Log.i(TAG, "Login-user: " + user.getUid());
+            if(Constant.DEBUG) Log.i(Constant.TAG, "Login-user: " + user.getUid());
         }
 
         EditText editTextEmail = findViewById(R.id.username);
@@ -96,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()) {
-                            if(DEBUG) Log.d(TAG, "signInWithEmail:success");
+                            if(Constant.DEBUG) Log.d(Constant.TAG, "signInWithEmail:success");
 
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
@@ -119,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         final DocumentSnapshot documentUser = task.getResult();
                                         if (documentUser.exists()) {
-                                            if(DEBUG) Log.d(TAG, "DocumentSnapshot data: " + documentUser.getData());
+                                            if(Constant.DEBUG) Log.d(Constant.TAG, "DocumentSnapshot data: " + documentUser.getData());
 
 
 
@@ -158,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
                                                             startActivity(intent);
 
                                                         } else {
-                                                            if(DEBUG) Log.d(TAG, "No such document");
+                                                            if(Constant.DEBUG) Log.d(Constant.TAG, "No such document");
 
                                                             loginButton.setEnabled(true);
                                                             textViewNeedAccount.setEnabled(true);
@@ -168,14 +166,14 @@ public class LoginActivity extends AppCompatActivity {
                                                 }
                                             });
                                         } else {
-                                            if(DEBUG) Log.d(TAG, "No such document");
+                                            if(Constant.DEBUG) Log.d(Constant.TAG, "No such document");
 
                                             loginButton.setEnabled(true);
                                             textViewNeedAccount.setEnabled(true);
                                             pbLogin.setVisibility(View.GONE);
                                         }
                                     } else {
-                                        if(DEBUG) Log.d(TAG, "get failed with ", task.getException());
+                                        if(Constant.DEBUG) Log.d(Constant.TAG, "get failed with ", task.getException());
 
                                         loginButton.setEnabled(true);
                                         textViewNeedAccount.setEnabled(true);
@@ -187,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
                             */
 
                         } else {
-                            if(DEBUG) Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            if(Constant.DEBUG) Log.w(Constant.TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.\r\n", Toast.LENGTH_LONG).show();
 
                             loginButton.setEnabled(true);
