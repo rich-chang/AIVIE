@@ -43,8 +43,6 @@ import java.util.Map;
 
 public class RaceSelectionActivity extends AppCompatActivity {
 
-    private static boolean DEBUG = BuildConfig.DEBUG;
-    private static String TAG = "richc";
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private RadioGroup radioGroup;
@@ -96,7 +94,7 @@ public class RaceSelectionActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (user != null) {
-            if(DEBUG) Log.i(TAG, "Login-user: " + user.getUid());
+            if(Constant.DEBUG) Log.i(Constant.TAG, "Login-user: " + user.getUid());
 
             DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(mAuth.getCurrentUser().getUid());
 
@@ -108,7 +106,7 @@ public class RaceSelectionActivity extends AppCompatActivity {
                         Map<String, Object> userData = new HashMap<>();
 
                         userData.put(getString(R.string.firestore_users_race), db.collection(getString(R.string.firestore_race)).document(race_db_document.get(selectedIndex)));
-                        if (DEBUG) Log.i(TAG, userData.toString());
+                        if (Constant.DEBUG) Log.i(Constant.TAG, userData.toString());
 
                         db.collection(getString(R.string.firestore_users))
                                 .document(mAuth.getCurrentUser().getUid()).set(userData, SetOptions.merge())
@@ -116,7 +114,7 @@ public class RaceSelectionActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        if (DEBUG) Log.d(TAG, "DocumentSnapshot successfully written!");
+                                        if (Constant.DEBUG) Log.d(Constant.TAG, "DocumentSnapshot successfully written!");
 
                                         pbConfirm.setVisibility(View.GONE);
 
@@ -128,7 +126,7 @@ public class RaceSelectionActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        if (DEBUG) Log.w(TAG, "Error writing document", e);
+                                        if (Constant.DEBUG) Log.w(Constant.TAG, "Error writing document", e);
                                     }
                                 });
 
@@ -137,7 +135,7 @@ public class RaceSelectionActivity extends AppCompatActivity {
             });
 
         } else {
-            if(DEBUG) Log.i(TAG, "Login-user is null");
+            if(Constant.DEBUG) Log.i(Constant.TAG, "Login-user is null");
         }
     }
 

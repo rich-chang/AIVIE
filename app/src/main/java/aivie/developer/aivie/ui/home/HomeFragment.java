@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.List;
 
 import aivie.developer.aivie.BuildConfig;
+import aivie.developer.aivie.Constant;
 import aivie.developer.aivie.HomeActivity;
 import aivie.developer.aivie.LoginActivity;
 import aivie.developer.aivie.R;
@@ -41,8 +42,6 @@ import aivie.developer.aivie.R;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    private static boolean DEBUG = BuildConfig.DEBUG;
-    private static String TAG = "richc";
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private ImageView imageViewAvatar;
@@ -127,7 +126,7 @@ public class HomeFragment extends Fragment {
                                     
                                     UpdateUI();
                                 } else {
-                                    if(DEBUG) Log.d(TAG, "task get failed with ", task.getException());
+                                    if(Constant.DEBUG) Log.d(Constant.TAG, "task get failed with ", task.getException());
                                 }
                             }
                         });
@@ -153,16 +152,16 @@ public class HomeFragment extends Fragment {
 
                                     UpdateUI();
                                 } else {
-                                    if(DEBUG) Log.d(TAG, "task get failed with ", task.getException());
+                                    if(Constant.DEBUG) Log.d(Constant.TAG, "task get failed with ", task.getException());
                                 }
                             }
                         });
 
                     } else {
-                        if(DEBUG) Log.d(TAG, "No such document");
+                        if(Constant.DEBUG) Log.d(Constant.TAG, "No such document");
                     }
                 } else {
-                    if(DEBUG) Log.d(TAG, "task get failed with ", task.getException());
+                    if(Constant.DEBUG) Log.d(Constant.TAG, "task get failed with ", task.getException());
                 }
             }
         });

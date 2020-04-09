@@ -51,6 +51,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import aivie.developer.aivie.BuildConfig;
+import aivie.developer.aivie.Constant;
 import aivie.developer.aivie.FileDownloader;
 import aivie.developer.aivie.HomeActivity;
 import aivie.developer.aivie.IcfActivity;
@@ -75,8 +76,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private ProfileViewModel profileViewModel;
-    private static boolean DEBUG = BuildConfig.DEBUG;
-    private static String TAG = "richc";
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private StorageReference storageRef;
@@ -123,7 +122,7 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Log.d(TAG, "onDateSet");
+                Log.d(Constant.TAG, "onDateSet");
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -174,7 +173,7 @@ public class ProfileFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        storageRef = FirebaseStorage.getInstance("gs://clinical-trials-772d5.appspot.com").getReference();
+        storageRef = FirebaseStorage.getInstance(Constant.FIREBASE_STORAGE_INST).getReference();
 
         showUserInfo();
 
@@ -345,7 +344,7 @@ public class ProfileFragment extends Fragment {
 
                 // Got the download URL for 'users/me/profile.png'
                 icfFileUrl = uri.toString();
-                if (DEBUG) Log.d(TAG, icfFileName + " : " + icfFileUrl);
+                if (Constant.DEBUG) Log.d(Constant.TAG, icfFileName + " : " + icfFileUrl);
 
                 downloadFile();
             }
@@ -361,21 +360,21 @@ public class ProfileFragment extends Fragment {
         //Intent intent = new Intent((HomeActivity)getActivity(), IcfActivity.class);
         //startActivity(intent);
 
-        if (DEBUG) Log.v(TAG, "view() Method invoked ");
+        if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method invoked ");
 
         if (!hasPermissions(getActivity(), PERMISSIONS)) {
 
-            if (DEBUG) Log.v(TAG, "view() Method DON'T HAVE PERMISSIONS ");
+            if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method DON'T HAVE PERMISSIONS ");
             Toast.makeText(getActivity(), "You don't have read access !", Toast.LENGTH_LONG).show();
         } else {
 
             File d = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
             File pdfFile = new File(d, icfFileName);
-            if (DEBUG) Log.v(TAG, "view() Method pdfFile " + pdfFile.getAbsolutePath());
+            if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method pdfFile " + pdfFile.getAbsolutePath());
 
             Uri path = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".fileprovider", pdfFile);
-            if (DEBUG) Log.v(TAG, "view() Method path " + path);
+            if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method path " + path);
 
             Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
             pdfIntent.setDataAndType(path, "application/pdf");
@@ -388,29 +387,29 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getActivity(), "No Application available to view PDF", Toast.LENGTH_SHORT).show();
             }
         }
-        if (DEBUG) Log.v(TAG, "view() Method completed ");
+        if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method completed ");
     }
 
     public void downloadFile() {
-        if (DEBUG) Log.v(TAG, "download() Method invoked ");
+        if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method invoked ");
 
         if (!hasPermissions(getActivity(), PERMISSIONS)) {
-            if (DEBUG) Log.v(TAG, "download() Method DON'T HAVE PERMISSIONS ");
+            if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method DON'T HAVE PERMISSIONS ");
             Toast.makeText(getActivity(), "You don't have write access !", Toast.LENGTH_LONG).show();
         } else {
-            if (DEBUG) Log.v(TAG, "download() Method HAVE PERMISSIONS ");
+            if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method HAVE PERMISSIONS ");
 
             //new DownloadFile().execute("http://maven.apache.org/maven-1.x/maven.pdf", "maven.pdf");
             new DownloadFile().execute(icfFileUrl, icfFileName);
         }
-        if (DEBUG) Log.v(TAG, "download() Method completed ");
+        if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method completed ");
     }
 
     private class DownloadFile extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(String... strings) {
-            if (DEBUG) Log.v(TAG, "doInBackground() Method invoked ");
+            if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() Method invoked ");
 
             String fileUrl = strings[0];   // -> http://maven.apache.org/maven-1.x/maven.pdf
             String fileName = strings[1];  // -> maven.pdf
@@ -418,20 +417,20 @@ public class ProfileFragment extends Fragment {
             File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
             File pdfFile = new File(folder, fileName);
 
-            if (DEBUG) Log.v(TAG, "doInBackground() pdfFile invoked " + pdfFile.getAbsolutePath());
-            if (DEBUG) Log.v(TAG, "doInBackground() pdfFile invoked " + pdfFile.getAbsoluteFile());
+            if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() pdfFile invoked " + pdfFile.getAbsolutePath());
+            if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() pdfFile invoked " + pdfFile.getAbsoluteFile());
 
             try {
                 pdfFile.createNewFile();
-                if (DEBUG) Log.v(TAG, "doInBackground() file created" + pdfFile);
+                if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() file created" + pdfFile);
             } catch (IOException e) {
                 e.printStackTrace();
-                if (DEBUG) Log.e(TAG, "doInBackground() error" + e.getMessage());
-                if (DEBUG) Log.e(TAG, "doInBackground() error" + Arrays.toString(e.getStackTrace()));
+                if (Constant.DEBUG) Log.e(Constant.TAG, "doInBackground() error" + e.getMessage());
+                if (Constant.DEBUG) Log.e(Constant.TAG, "doInBackground() error" + Arrays.toString(e.getStackTrace()));
             }
 
             FileDownloader.downloadFile(fileUrl, pdfFile);
-            if (DEBUG) Log.v(TAG, "doInBackground() file download completed");
+            if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() file download completed");
 
             viewICF();
 
@@ -439,7 +438,7 @@ public class ProfileFragment extends Fragment {
         }
 
         protected void onPostExecute(Long result) {
-            if (DEBUG) Log.d(TAG, "Downloaded " + result + " bytes");
+            if (Constant.DEBUG) Log.d(Constant.TAG, "Downloaded " + result + " bytes");
         }
     }
 }

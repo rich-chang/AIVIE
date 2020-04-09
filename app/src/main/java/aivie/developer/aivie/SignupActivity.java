@@ -46,8 +46,6 @@ import java.util.Random;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private static boolean DEBUG = BuildConfig.DEBUG;
-    private static String TAG = "richc";
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private Button signupButton;
@@ -108,7 +106,7 @@ public class SignupActivity extends AppCompatActivity {
 
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            if (DEBUG) Log.d(TAG, "createUserWithEmail:success");
+                            if (Constant.DEBUG) Log.d(Constant.TAG, "createUserWithEmail:success");
 
                             FirebaseUser user = mAuth.getCurrentUser();
 
@@ -125,14 +123,14 @@ public class SignupActivity extends AppCompatActivity {
 
                                                 pbSignup.setVisibility(View.GONE);
 
-                                                if (DEBUG) Log.d(TAG, "User profile updated.");
+                                                if (Constant.DEBUG) Log.d(Constant.TAG, "User profile updated.");
                                                 Toast.makeText(SignupActivity.this, "Create account successfully", Toast.LENGTH_LONG).show();
 
                                                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                                 startActivity(intent);
 
                                             } else {
-                                                if(DEBUG) Log.d(TAG, "get failed with ", task.getException());
+                                                if(Constant.DEBUG) Log.d(Constant.TAG, "get failed with ", task.getException());
 
                                                 signupButton.setEnabled(true);
                                                 textViewHaveAccount.setEnabled(true);
@@ -145,7 +143,7 @@ public class SignupActivity extends AppCompatActivity {
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            if (DEBUG) Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            if (Constant.DEBUG) Log.w(Constant.TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(SignupActivity.this, "Authentication failed.\r\n", Toast.LENGTH_LONG).show();
 
                             signupButton.setEnabled(true);
@@ -172,21 +170,21 @@ public class SignupActivity extends AppCompatActivity {
         userData.put(getString(R.string.firestore_users_patient_of_study), db.collection(getString(R.string.firestore_studies)).document("000000"));
         userData.put(getString(R.string.firestore_users_signed_icf), db.collection(getString(R.string.firestore_icf)).document("0000"));
 
-        if (DEBUG) Log.i(TAG, userData.toString());
+        if (Constant.DEBUG) Log.i(Constant.TAG, userData.toString());
 
         db.collection(getString(R.string.firestore_users)).document(userId).set(userData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
 
                     @Override
                     public void onSuccess(Void aVoid) {
-                        if (DEBUG) Log.d(TAG, "DocumentSnapshot successfully written!");
+                        if (Constant.DEBUG) Log.d(Constant.TAG, "DocumentSnapshot successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
 
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        if (DEBUG) Log.w(TAG, "Error writing document", e);
+                        if (Constant.DEBUG) Log.w(Constant.TAG, "Error writing document", e);
                     }
                 });
     }
