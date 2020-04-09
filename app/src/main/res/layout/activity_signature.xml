@@ -65,7 +65,7 @@
             android:enabled="false" />
 
         <Button
-            android:id="@+id/save_button"
+            android:id="@+id/confirm_signed_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
