@@ -2,11 +2,21 @@ package aivie.developer.aivie;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.github.gcacace.signaturepad.views.SignaturePad;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class SignatureActivity extends AppCompatActivity {
 
@@ -52,8 +62,45 @@ public class SignatureActivity extends AppCompatActivity {
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Press CONFIRM
+
+                Bitmap signatureBitmap = mSignaturePad.getSignatureBitmap();
+                if (saveJpgSignatureToExtStorage(signatureBitmap)) {
+                    //Toast.makeText(MainActivity.this, "Signature saved into the Gallery", Toast.LENGTH_SHORT).show();
+                    if(Constant.DEBUG) Log.d(Constant.TAG, "Signature saved!");
+                } else {
+                    //Toast.makeText(MainActivity.this, "Unable to store the signature", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
+
+    public boolean saveJpgSignatureToExtStorage(Bitmap signature) {
+
+        boolean result = false;
+
+        File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+        try {
+            File photo = new File(folder, String.format("Signature_%d.jpg", System.currentTimeMillis()));
+            saveBitmapToJPG(signature, photo);
+            //scanMediaFile(photo);
+            result = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public void saveBitmapToJPG(Bitmap bitmap, File photo) throws IOException {
+
+        Bitmap newBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(newBitmap);
+        canvas.drawColor(Color.WHITE);
+        canvas.drawBitmap(bitmap, 0, 0, null);
+        OutputStream stream = new FileOutputStream(photo);
+        newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+        stream.close();
+    }
+
+
 }
