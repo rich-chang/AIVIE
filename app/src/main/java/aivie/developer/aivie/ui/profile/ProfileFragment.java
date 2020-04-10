@@ -38,9 +38,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -51,7 +53,9 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import aivie.developer.aivie.BuildConfig;
 import aivie.developer.aivie.Constant;
@@ -304,6 +308,8 @@ public class ProfileFragment extends Fragment {
 
         // Also update Age
         editTextAge.setText(Integer.valueOf(updateAge(dobString)).toString());
+
+        updateDateOfBirthToFirestore(dobString);
     }
 
     private int updateAge (String dobString) {
@@ -328,6 +334,53 @@ public class ProfileFragment extends Fragment {
             age = 0;
 
         return age;
+    }
+
+    private void updateDateOfBirthToFirestore(final String dobString) {
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(mAuth.getCurrentUser().getUid());
+
+        docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    // Get user birthday
+                    SimpleDateFormat sfd = new SimpleDateFormat(getString(R.string.yyyy_MM_dd));
+                    Date dateBirthday = new Date();
+
+                    try {
+                        dateBirthday = (Date)sfd.parse(dobString);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    Map<String, Object> userData = new HashMap<>();
+                    userData.put(getString(R.string.firestore_users_birthday), dateBirthday);
+
+                    db.collection(getString(R.string.firestore_users))
+                            .document(mAuth.getCurrentUser().getUid())
+                            .set(userData, SetOptions.merge())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    if (Constant.DEBUG) Log.d(Constant.TAG, "DOB successfully written Firebase!");
+
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    if (Constant.DEBUG) Log.w(Constant.TAG, "Error writing DOB to Firebase", e);
+                                }
+                            });
+                }
+            }
+        });
     }
 
     private void updateRace () {
