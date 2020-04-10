@@ -106,7 +106,7 @@ public class SignatureActivity extends AppCompatActivity {
             File photo = new File(folder, String.format("Signature_%s.jpg", userId));
             saveBitmapToJPG(signature, photo);
             //scanMediaFile(photo);
-            updateFileToSirebase(photo);
+            updateFileToFirebase(photo);
 
             result = true;
         } catch (IOException e) {
@@ -126,7 +126,7 @@ public class SignatureActivity extends AppCompatActivity {
         stream.close();
     }
 
-    private void updateFileToSirebase(File sourceFile) {
+    private void updateFileToFirebase(File sourceFile) {
 
         Uri file = Uri.fromFile(sourceFile);
         String targetFile = getString(R.string.firebase_storage_icf_signature) + "/" + sourceFile.getName();
