@@ -6,11 +6,14 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -271,13 +274,21 @@ public class ProfileFragment extends Fragment {
 
         if (subjectNum != null) editTextSubjectNum.setText(subjectNum);
         if (signedIcfName != null) editTextSignedICF.setText(signedIcfName);
-        editTextIsIcfSigned.setText(Boolean.toString(isIcfSigned));
         if (lastName != null) editTextLastName.setText(lastName);
         if (firstName != null) editTextFirstName.setText(firstName);
         if (displayName != null) editTextDisplayName.setText(displayName);
         if (gender != null) editTextGender.setText(gender);
         if (race != null) editTextRace.setText(race);
         if (ethnicity != null) editTextEthnicity.setText(ethnicity);
+
+        if (isIcfSigned) {
+            editTextIsIcfSigned.setText(getString(R.string.icf_has_signed));
+        } else {
+            // Implement customized string
+            SpannableString sp = new SpannableString(getResources().getString(R.string.icf_has_not_signed));
+            sp.setSpan(new ForegroundColorSpan(Color.RED), 0, sp.length(), 0);
+            editTextIsIcfSigned.setText(sp);
+        }
 
         updateDateOfBirthAndAge(dateOfBirth);
     }

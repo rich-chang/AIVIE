@@ -72,6 +72,8 @@
     <string name="gender">Gender</string>
     <string name="ethnicity">Ethnicity</string>
     <string name="race">Race</string>
+    <string name="icf_has_signed">Signed</string>
+    <string name="icf_has_not_signed">NOT Signed</string>
 
     <!-- Firestore Collection name -->
     <string name="firestore_users">users</string>
