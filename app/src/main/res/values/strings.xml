@@ -22,6 +22,12 @@
 
     <string name="confirm">Confirm</string>
 
+    <!-- ICF Activity -->
+    <string name="icf_review_and_sign">Please review and sign your ICF</string>
+    <string name="icf_review">REVIEW ICF</string>
+    <string name="icf_sign">SIGN ICF</string>
+    <string name="skip_now">Skip now</string>
+
     <!-- Race Activity -->
     <string name="race_white">White</string>
     <string name="race_white_desc">A person having origins in any of the original peoples of Europe, the Middle East, or North Africa.</string>
