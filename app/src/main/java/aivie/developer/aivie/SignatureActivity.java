@@ -17,6 +17,11 @@ import android.widget.Button;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -25,11 +30,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignatureActivity extends AppCompatActivity {
 
     private SignaturePad mSignaturePad;
     private FirebaseStorage storage;
+    private FirebaseFirestore db;
     private StorageReference storageRef;
     private Button mClearButton;
     private Button mConfirmButton;
@@ -40,6 +48,7 @@ public class SignatureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signature);
 
+        db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance(Constant.FIREBASE_STORAGE_INST);
         storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -84,6 +93,32 @@ public class SignatureActivity extends AppCompatActivity {
                 if (saveJpgSignatureToExtStorage(signatureBitmap)) {
                     //Toast.makeText(MainActivity.this, "Signature saved into the Gallery", Toast.LENGTH_SHORT).show();
                     if(Constant.DEBUG) Log.d(Constant.TAG, "Signature saved!");
+
+                    Map<String, Object> userData = new HashMap<>();
+                    userData.put(getString(R.string.firestore_users_eicf_signed), true);
+
+                    final DocumentReference docRefSignedICF = db.collection(getString(R.string.firestore_users)).document(userId);
+
+                    db.runTransaction(new Transaction.Function<Void>() {
+                        @Override
+                        public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+
+                            transaction.update(docRefSignedICF, getString(R.string.firestore_users_eicf_signed), true);
+                            // Success
+                            return null;
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            if(Constant.DEBUG) Log.d(Constant.TAG, "Transaction success!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            if(Constant.DEBUG) Log.w(Constant.TAG, "Transaction failure.", e);
+                        }
+                    });
 
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
