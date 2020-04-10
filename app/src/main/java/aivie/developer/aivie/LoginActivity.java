@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private TextView textViewNeedAccount;
     private ProgressBar pbLogin;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +90,10 @@ public class LoginActivity extends AppCompatActivity {
                             if(Constant.DEBUG) Log.d(Constant.TAG, "signInWithEmail:success");
 
                             FirebaseUser user = mAuth.getCurrentUser();
-                            if(Constant.DEBUG) Log.i(Constant.TAG, "Login User: " + user.getUid());
+                            userId = user.getUid();
+                            if(Constant.DEBUG) Log.i(Constant.TAG, "Login User: " + userId);
 
-                            DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(user.getUid());
+                            DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(userId);
                             docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -115,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 Log.d(Constant.TAG, "ICF is NOT Signed");
 
                                                 Intent intent = new Intent(getApplicationContext(), IcfActivity.class);
+                                                intent.putExtra("UserID", userId);
                                                 startActivity(intent);
                                                 finish();
                                             }

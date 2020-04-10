@@ -46,12 +46,15 @@ public class IcfActivity extends AppCompatActivity {
     private StorageReference storageRef;
     private String fileUrl;
     private String fileName;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_icf);
-        
+
+        Intent intent = getIntent();
+        userId = intent.getStringExtra("UserID");
     }
 
     public void reviewICF(View view) {
@@ -74,6 +77,7 @@ public class IcfActivity extends AppCompatActivity {
 
     public void signICF(View view) {
         Intent intent = new Intent(getApplicationContext(), SignatureActivity.class);
+        intent.putExtra("UserID", userId);
         startActivity(intent);
     }
 

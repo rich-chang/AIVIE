@@ -24,11 +24,15 @@ public class SignatureActivity extends AppCompatActivity {
     private SignaturePad mSignaturePad;
     private Button mClearButton;
     private Button mConfirmButton;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signature);
+
+        Intent intent = getIntent();
+        userId = intent.getStringExtra("UserID");
 
         mClearButton = findViewById(R.id.clear_button);
         mConfirmButton = findViewById(R.id.confirm_signed_button);
@@ -87,7 +91,7 @@ public class SignatureActivity extends AppCompatActivity {
         File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
         try {
-            File photo = new File(folder, String.format("Signature_%d.jpg", System.currentTimeMillis()));
+            File photo = new File(folder, String.format("Signature_%s.jpg", userId));
             saveBitmapToJPG(signature, photo);
             //scanMediaFile(photo);
             result = true;
