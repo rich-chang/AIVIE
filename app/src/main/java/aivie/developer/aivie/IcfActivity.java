@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -47,6 +48,7 @@ public class IcfActivity extends AppCompatActivity {
     private String fileUrl;
     private String fileName;
     private String userId;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +57,13 @@ public class IcfActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("UserID");
+
+        progressBar = findViewById(R.id.progressBarConfirm);
     }
 
     public void reviewICF(View view) {
+
+        progressBar.setVisibility(View.VISIBLE);
 
         // Get a non-default Storage bucket
         storage = FirebaseStorage.getInstance(Constant.FIREBASE_STORAGE_INST);
@@ -76,14 +82,24 @@ public class IcfActivity extends AppCompatActivity {
     }
 
     public void signICF(View view) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
         Intent intent = new Intent(getApplicationContext(), SignatureActivity.class);
         intent.putExtra("UserID", userId);
         startActivity(intent);
+
+        progressBar.setVisibility(View.GONE);
     }
 
     public void skipNow(View view) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intent);
+
+        progressBar.setVisibility(View.GONE);
     }
 
     private void getFileFromFirebase() throws IOException {
@@ -134,7 +150,10 @@ public class IcfActivity extends AppCompatActivity {
             pdfIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             try {
+
                 startActivity(pdfIntent);
+                progressBar.setVisibility(View.GONE);
+
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(IcfActivity.this, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
             }
