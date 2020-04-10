@@ -235,4 +235,9 @@ public class IcfActivity extends AppCompatActivity {
             if (Constant.DEBUG) Log.d(Constant.TAG, "Downloaded " + result + " bytes");
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        //moveTaskToBack(true); // disable going back to the MainActivity
+    }
 }
