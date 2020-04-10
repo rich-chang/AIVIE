@@ -240,6 +240,7 @@ public class LoginActivity extends AppCompatActivity {
     public  void goSignupActivity (View view) {
         Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
