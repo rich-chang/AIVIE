@@ -81,6 +81,7 @@ public class ProfileFragment extends Fragment {
     private StorageReference storageRef;
     private EditText editTextSubjectNum;
     private EditText editTextSignedICF;
+    private EditText editTextIsIcfSigned;
     private EditText editTextLastName;
     private EditText editTextFirstName;
     private EditText editTextDisplayName;
@@ -92,6 +93,7 @@ public class ProfileFragment extends Fragment {
     private String icfFileUrl;
     private String icfFileName;
     private String signedIcfName;
+    private boolean isIcfSigned = false;
     private String subjectNum;
     private String firstName;
     private String lastName;
@@ -149,21 +151,9 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        // Listener for Signed ICF
-        editTextSignedICF = root.findViewById(R.id.signed_icf);
-        editTextSignedICF.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                try {
-                    getFileFromFirebase();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return false;
-            }
-        });
-
         editTextSubjectNum = root.findViewById(R.id.subjectNum);
+        editTextSignedICF = root.findViewById(R.id.signed_icf);
+        editTextIsIcfSigned = root.findViewById(R.id.icf_signature);
         editTextLastName = root.findViewById(R.id.lastName);
         editTextFirstName = root.findViewById(R.id.firstName);
         editTextDisplayName = root.findViewById(R.id.displayName);
@@ -193,7 +183,7 @@ public class ProfileFragment extends Fragment {
 
     private void getUserProfileFromFirestore (String userId) {
 
-        DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(userId);
+        final DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(userId);
 
         docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -207,6 +197,7 @@ public class ProfileFragment extends Fragment {
                         lastName = (String) documentUser.get(getString(R.string.firestore_users_last_name));
                         firstName = (String) documentUser.get(getString(R.string.firestore_users_first_name));
                         displayName = (String) documentUser.get(getString(R.string.firestore_users_display_name));
+                        isIcfSigned = (boolean) documentUser.get(getString(R.string.firestore_users_eicf_signed));
 
                         // Get user birthday
                         SimpleDateFormat sfd = new SimpleDateFormat(getString(R.string.yyyy_MM_dd));
@@ -257,13 +248,13 @@ public class ProfileFragment extends Fragment {
                             }
                         });
 
-                        DocumentReference docRefSignedICF = (DocumentReference) documentUser.get(getString(R.string.firestore_users_signed_icf));
-                        docRefSignedICF.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        DocumentReference docRefIcf = (DocumentReference) documentUser.get(getString(R.string.firestore_users_eicf));
+                        docRefIcf.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot documentEthnicity = task.getResult();
-                                    signedIcfName = (String) documentEthnicity.get("Title");
+                                    signedIcfName = (String) documentEthnicity.get("Id");
 
                                     UpdateUI();
                                 }
@@ -280,6 +271,7 @@ public class ProfileFragment extends Fragment {
 
         if (subjectNum != null) editTextSubjectNum.setText(subjectNum);
         if (signedIcfName != null) editTextSignedICF.setText(signedIcfName);
+        editTextIsIcfSigned.setText(Boolean.toString(isIcfSigned));
         if (lastName != null) editTextLastName.setText(lastName);
         if (firstName != null) editTextFirstName.setText(firstName);
         if (displayName != null) editTextDisplayName.setText(displayName);
@@ -330,115 +322,5 @@ public class ProfileFragment extends Fragment {
     private void updateRace () {
         Intent intent = new Intent((HomeActivity)getActivity(), RaceSelectionActivity.class);
         startActivity(intent);
-    }
-
-    private void getFileFromFirebase() throws IOException {
-
-        StorageReference docRefICF = storageRef.child("ICF/ICF0001.pdf");
-
-        icfFileName = docRefICF.getName();
-
-        docRefICF.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-
-                // Got the download URL for 'users/me/profile.png'
-                icfFileUrl = uri.toString();
-                if (Constant.DEBUG) Log.d(Constant.TAG, icfFileName + " : " + icfFileUrl);
-
-                downloadFile();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
-    }
-
-    private void viewICF () {
-        //Intent intent = new Intent((HomeActivity)getActivity(), IcfActivity.class);
-        //startActivity(intent);
-
-        if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method invoked ");
-
-        if (!hasPermissions(getActivity(), PERMISSIONS)) {
-
-            if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method DON'T HAVE PERMISSIONS ");
-            Toast.makeText(getActivity(), "You don't have read access !", Toast.LENGTH_LONG).show();
-        } else {
-
-            File d = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-
-            File pdfFile = new File(d, icfFileName);
-            if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method pdfFile " + pdfFile.getAbsolutePath());
-
-            Uri path = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".fileprovider", pdfFile);
-            if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method path " + path);
-
-            Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
-            pdfIntent.setDataAndType(path, "application/pdf");
-            pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            pdfIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-            try {
-                startActivity(pdfIntent);
-            } catch (ActivityNotFoundException e) {
-                Toast.makeText(getActivity(), "No Application available to view PDF", Toast.LENGTH_SHORT).show();
-            }
-        }
-        if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method completed ");
-    }
-
-    public void downloadFile() {
-        if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method invoked ");
-
-        if (!hasPermissions(getActivity(), PERMISSIONS)) {
-            if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method DON'T HAVE PERMISSIONS ");
-            Toast.makeText(getActivity(), "You don't have write access !", Toast.LENGTH_LONG).show();
-        } else {
-            if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method HAVE PERMISSIONS ");
-
-            //new DownloadFile().execute("http://maven.apache.org/maven-1.x/maven.pdf", "maven.pdf");
-            new DownloadFile().execute(icfFileUrl, icfFileName);
-        }
-        if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method completed ");
-    }
-
-    private class DownloadFile extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected Void doInBackground(String... strings) {
-            if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() Method invoked ");
-
-            String fileUrl = strings[0];   // -> http://maven.apache.org/maven-1.x/maven.pdf
-            String fileName = strings[1];  // -> maven.pdf
-            String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-            File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-            File pdfFile = new File(folder, fileName);
-
-            if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() pdfFile invoked " + pdfFile.getAbsolutePath());
-            if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() pdfFile invoked " + pdfFile.getAbsoluteFile());
-
-            try {
-                pdfFile.createNewFile();
-                if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() file created" + pdfFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-                if (Constant.DEBUG) Log.e(Constant.TAG, "doInBackground() error" + e.getMessage());
-                if (Constant.DEBUG) Log.e(Constant.TAG, "doInBackground() error" + Arrays.toString(e.getStackTrace()));
-            }
-
-            FileDownloader.downloadFile(fileUrl, pdfFile);
-            if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() file download completed");
-
-            viewICF();
-
-            return null;
-        }
-
-        protected void onPostExecute(Long result) {
-            if (Constant.DEBUG) Log.d(Constant.TAG, "Downloaded " + result + " bytes");
-        }
     }
 }

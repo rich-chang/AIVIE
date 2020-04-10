@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SignatureActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -24,8 +25,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-
-        <activity android:name=".IcfActivity"></activity>
+        <activity android:name=".IcfActivity" />
         <activity android:name=".RaceSelectionActivity" />
         <activity android:name=".ui.ProfileActivity" />
         <activity

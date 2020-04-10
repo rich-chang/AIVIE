@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private TextView textViewNeedAccount;
     private ProgressBar pbLogin;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,14 +71,6 @@ public class LoginActivity extends AppCompatActivity {
         textViewNeedAccount.setEnabled(false);
         pbLogin.setVisibility(view.VISIBLE);
 
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if (user == null) {
-            if(Constant.DEBUG) Log.i(Constant.TAG, "Login-user is null");
-        } else {
-            if(Constant.DEBUG) Log.i(Constant.TAG, "Login-user: " + user.getUid());
-        }
-
         EditText editTextEmail = findViewById(R.id.username);
         EditText editTextPassword = findViewById(R.id.password);
         String email = editTextEmail.getText().toString();
@@ -96,8 +89,46 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             if(Constant.DEBUG) Log.d(Constant.TAG, "signInWithEmail:success");
 
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(intent);
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            userId = user.getUid();
+                            if(Constant.DEBUG) Log.i(Constant.TAG, "Login User: " + userId);
+
+                            DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(userId);
+                            docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+
+                                        DocumentSnapshot documentUser = task.getResult();
+                                        if (documentUser.exists()) {
+
+                                            final boolean[] isIcfSigned = {false};
+
+                                            isIcfSigned[0] = (boolean) documentUser.get(getString(R.string.firestore_users_eicf_signed));
+                                            Log.d(Constant.TAG, Boolean.toString(isIcfSigned[0]));
+
+                                            if (isIcfSigned[0]) {
+                                                Log.d(Constant.TAG, "ICF Signed");
+
+                                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                Log.d(Constant.TAG, "ICF is NOT Signed");
+
+                                                Intent intent = new Intent(getApplicationContext(), IcfActivity.class);
+                                                intent.putExtra("UserID", userId);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+
+                                            loginButton.setEnabled(true);
+                                            textViewNeedAccount.setEnabled(true);
+                                            pbLogin.setVisibility(View.GONE);
+                                        }
+                                    }
+                                }
+                            });
 
                             /*
                             FirebaseUser user = mAuth.getCurrentUser();

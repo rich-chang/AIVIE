@@ -42,24 +42,29 @@ public class IcfActivity extends AppCompatActivity {
         return true;
     }
 
-    private static boolean DEBUG = BuildConfig.DEBUG;
-    private static String TAG = "richc";
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private String fileUrl;
     private String fileName;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_icf);
 
+        Intent intent = getIntent();
+        userId = intent.getStringExtra("UserID");
+    }
+
+    public void reviewICF(View view) {
+
         // Get a non-default Storage bucket
-        storage = FirebaseStorage.getInstance("gs://clinical-trials-772d5.appspot.com");
+        storage = FirebaseStorage.getInstance(Constant.FIREBASE_STORAGE_INST);
         storageRef = FirebaseStorage.getInstance().getReference();
 
-        if (DEBUG) Log.d(TAG, storage.toString());
-        if (DEBUG) Log.d(TAG, storageRef.toString());
+        if (Constant.DEBUG) Log.d(Constant.TAG, storage.toString());
+        if (Constant.DEBUG) Log.d(Constant.TAG, storageRef.toString());
 
         ActivityCompat.requestPermissions(IcfActivity.this, PERMISSIONS, 112);
 
@@ -68,6 +73,17 @@ public class IcfActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void signICF(View view) {
+        Intent intent = new Intent(getApplicationContext(), SignatureActivity.class);
+        intent.putExtra("UserID", userId);
+        startActivity(intent);
+    }
+
+    public void skipNow(View view) {
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(intent);
     }
 
     private void getFileFromFirebase() throws IOException {
@@ -83,7 +99,7 @@ public class IcfActivity extends AppCompatActivity {
 
                 // Got the download URL for 'users/me/profile.png'
                 fileUrl = uri.toString();
-                if (DEBUG) Log.d(TAG, fileName + " : " + fileUrl);
+                if (Constant.DEBUG) Log.d(Constant.TAG, fileName + " : " + fileUrl);
 
                 downloadFile();
             }
@@ -96,21 +112,21 @@ public class IcfActivity extends AppCompatActivity {
     }
 
     public void viewPDF() {
-        if (DEBUG) Log.v(TAG, "view() Method invoked ");
+        if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method invoked ");
 
         if (!hasPermissions(IcfActivity.this, PERMISSIONS)) {
 
-            if (DEBUG) Log.v(TAG, "download() Method DON'T HAVE PERMISSIONS ");
+            if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method DON'T HAVE PERMISSIONS ");
             Toast.makeText(getApplicationContext(), "You don't have read access !", Toast.LENGTH_LONG).show();
         } else {
 
             File d = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
             File pdfFile = new File(d, fileName);
-            if (DEBUG) Log.v(TAG, "view() Method pdfFile " + pdfFile.getAbsolutePath());
+            if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method pdfFile " + pdfFile.getAbsolutePath());
 
             Uri path = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileprovider", pdfFile);
-            if (DEBUG) Log.v(TAG, "view() Method path " + path);
+            if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method path " + path);
 
             Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
             pdfIntent.setDataAndType(path, "application/pdf");
@@ -123,29 +139,29 @@ public class IcfActivity extends AppCompatActivity {
                 Toast.makeText(IcfActivity.this, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
             }
         }
-        if (DEBUG) Log.v(TAG, "view() Method completed ");
+        if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method completed ");
     }
 
     public void downloadFile() {
-        if (DEBUG) Log.v(TAG, "download() Method invoked ");
+        if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method invoked ");
 
         if (!hasPermissions(IcfActivity.this, PERMISSIONS)) {
-            if (DEBUG) Log.v(TAG, "download() Method DON'T HAVE PERMISSIONS ");
+            if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method DON'T HAVE PERMISSIONS ");
             Toast.makeText(getApplicationContext(), "You don't have write access !", Toast.LENGTH_LONG).show();
         } else {
-            if (DEBUG) Log.v(TAG, "download() Method HAVE PERMISSIONS ");
+            if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method HAVE PERMISSIONS ");
 
             //new DownloadFile().execute("http://maven.apache.org/maven-1.x/maven.pdf", "maven.pdf");
             new DownloadFile().execute(fileUrl, fileName);
         }
-        if (DEBUG) Log.v(TAG, "download() Method completed ");
+        if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method completed ");
     }
 
     private class DownloadFile extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(String... strings) {
-            if (DEBUG) Log.v(TAG, "doInBackground() Method invoked ");
+            if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() Method invoked ");
 
             String fileUrl = strings[0];   // -> http://maven.apache.org/maven-1.x/maven.pdf
             String fileName = strings[1];  // -> maven.pdf
@@ -153,20 +169,20 @@ public class IcfActivity extends AppCompatActivity {
             File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
             File pdfFile = new File(folder, fileName);
 
-            if (DEBUG) Log.v(TAG, "doInBackground() pdfFile invoked " + pdfFile.getAbsolutePath());
-            if (DEBUG) Log.v(TAG, "doInBackground() pdfFile invoked " + pdfFile.getAbsoluteFile());
+            if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() pdfFile invoked " + pdfFile.getAbsolutePath());
+            if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() pdfFile invoked " + pdfFile.getAbsoluteFile());
 
             try {
                 pdfFile.createNewFile();
-                if (DEBUG) Log.v(TAG, "doInBackground() file created" + pdfFile);
+                if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() file created" + pdfFile);
             } catch (IOException e) {
                 e.printStackTrace();
-                if (DEBUG) Log.e(TAG, "doInBackground() error" + e.getMessage());
-                if (DEBUG) Log.e(TAG, "doInBackground() error" + Arrays.toString(e.getStackTrace()));
+                if (Constant.DEBUG) Log.e(Constant.TAG, "doInBackground() error" + e.getMessage());
+                if (Constant.DEBUG) Log.e(Constant.TAG, "doInBackground() error" + Arrays.toString(e.getStackTrace()));
             }
 
             FileDownloader.downloadFile(fileUrl, pdfFile);
-            if (DEBUG) Log.v(TAG, "doInBackground() file download completed");
+            if (Constant.DEBUG) Log.v(Constant.TAG, "doInBackground() file download completed");
 
             viewPDF();
 
@@ -174,7 +190,7 @@ public class IcfActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Long result) {
-            if (DEBUG) Log.d(TAG, "Downloaded " + result + " bytes");
+            if (Constant.DEBUG) Log.d(Constant.TAG, "Downloaded " + result + " bytes");
         }
     }
 }
