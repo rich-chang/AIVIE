@@ -131,11 +131,14 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Log.d(Constant.TAG, "onDateSet");
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
                 updateDateOfBirthAndAge(null);
+
+                SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.yyyy_MM_dd), Locale.US);
+                updateDateOfBirthToFirestore(sdf.format(myCalendar.getTime()));
             }
         };
         editTextdateOfBirth.setOnClickListener(new View.OnClickListener() {
@@ -308,8 +311,6 @@ public class ProfileFragment extends Fragment {
 
         // Also update Age
         editTextAge.setText(Integer.valueOf(updateAge(dobString)).toString());
-
-        updateDateOfBirthToFirestore(dobString);
     }
 
     private int updateAge (String dobString) {
