@@ -1,11 +1,13 @@
 package aivie.developer.aivie;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -13,6 +15,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.github.gcacace.signaturepad.views.SignaturePad;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,6 +29,8 @@ import java.io.OutputStream;
 public class SignatureActivity extends AppCompatActivity {
 
     private SignaturePad mSignaturePad;
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
     private Button mClearButton;
     private Button mConfirmButton;
     private String userId;
@@ -30,6 +39,9 @@ public class SignatureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signature);
+
+        storage = FirebaseStorage.getInstance(Constant.FIREBASE_STORAGE_INST);
+        storageRef = FirebaseStorage.getInstance().getReference();
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("UserID");
@@ -94,6 +106,8 @@ public class SignatureActivity extends AppCompatActivity {
             File photo = new File(folder, String.format("Signature_%s.jpg", userId));
             saveBitmapToJPG(signature, photo);
             //scanMediaFile(photo);
+            updateFileToSirebase(photo);
+
             result = true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -112,5 +126,27 @@ public class SignatureActivity extends AppCompatActivity {
         stream.close();
     }
 
+    private void updateFileToSirebase(File sourceFile) {
 
+        Uri file = Uri.fromFile(sourceFile);
+        String targetFile = getString(R.string.firebase_storage_icf_signature) + "/" + sourceFile.getName();
+
+        StorageReference icfFolderRef = storageRef.child(targetFile);
+
+        icfFolderRef.putFile(file)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        if(Constant.DEBUG) Log.d(Constant.TAG, "Update signature file successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        if(Constant.DEBUG) Log.d(Constant.TAG, "Update signature file failed");
+                    }
+                });
+
+    }
 }

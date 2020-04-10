@@ -126,4 +126,8 @@
     <string name="firestore_ethnicity_N">N</string>
     <string name="firestore_ethnicity_unknown">UNKNOWN</string>
 
+    <!-- Firebase Storage Folder -->
+    <string name="firebase_storage_icf">ICF</string>
+    <string name="firebase_storage_icf_signature">ICF_Signature</string>
+
 </resources>

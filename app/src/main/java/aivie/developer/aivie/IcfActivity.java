@@ -60,7 +60,7 @@ public class IcfActivity extends AppCompatActivity {
     public void reviewICF(View view) {
 
         // Get a non-default Storage bucket
-        storage = FirebaseStorage.getInstance("gs://clinical-trials-772d5.appspot.com");
+        storage = FirebaseStorage.getInstance(Constant.FIREBASE_STORAGE_INST);
         storageRef = FirebaseStorage.getInstance().getReference();
 
         if (Constant.DEBUG) Log.d(Constant.TAG, storage.toString());
