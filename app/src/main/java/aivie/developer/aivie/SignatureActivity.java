@@ -2,6 +2,7 @@ package aivie.developer.aivie;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -67,6 +68,11 @@ public class SignatureActivity extends AppCompatActivity {
                 if (saveJpgSignatureToExtStorage(signatureBitmap)) {
                     //Toast.makeText(MainActivity.this, "Signature saved into the Gallery", Toast.LENGTH_SHORT).show();
                     if(Constant.DEBUG) Log.d(Constant.TAG, "Signature saved!");
+
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+
                 } else {
                     //Toast.makeText(MainActivity.this, "Unable to store the signature", Toast.LENGTH_SHORT).show();
                 }

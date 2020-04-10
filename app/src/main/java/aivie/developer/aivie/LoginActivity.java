@@ -96,8 +96,44 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             if(Constant.DEBUG) Log.d(Constant.TAG, "signInWithEmail:success");
 
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(intent);
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if(Constant.DEBUG) Log.i(Constant.TAG, "Login User: " + user.getUid());
+
+                            DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(user.getUid());
+                            docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+
+                                        DocumentSnapshot documentUser = task.getResult();
+                                        if (documentUser.exists()) {
+
+                                            final boolean[] isIcfSigned = {false};
+
+                                            isIcfSigned[0] = (boolean) documentUser.get(getString(R.string.firestore_users_eicf_signed));
+                                            Log.d(Constant.TAG, Boolean.toString(isIcfSigned[0]));
+
+                                            if (isIcfSigned[0]) {
+                                                Log.d(Constant.TAG, "ICF Signed");
+
+                                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                Log.d(Constant.TAG, "ICF is NOT Signed");
+
+                                                Intent intent = new Intent(getApplicationContext(), SignatureActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+
+                                            loginButton.setEnabled(true);
+                                            textViewNeedAccount.setEnabled(true);
+                                            pbLogin.setVisibility(View.GONE);
+                                        }
+                                    }
+                                }
+                            });
 
                             /*
                             FirebaseUser user = mAuth.getCurrentUser();
