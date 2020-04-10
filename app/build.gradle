@@ -24,7 +24,6 @@ android {
             buildConfigField("String", "APP_CENTER_KEY", "\"${System.env.APP_CENTER_KEY}\"")
         }
         debug {
-            /*
             // Creates a variable called keystorePropertiesFile, and initializes it to the keystore.properties file.
             def keystorePropertiesFile = rootProject.file("keystore.properties")
             // Initializes a new Properties() object called keystoreProperties.
@@ -33,8 +32,6 @@ android {
             keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
             buildConfigField("String","APP_CENTER_KEY", keystoreProperties['APP_CENTER_KEY'])
-            */
-            buildConfigField("String", "APP_CENTER_KEY", "\"${System.env.APP_CENTER_KEY}\"")
         }
     }
 
