@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                                             } else {
                                                 Log.d(Constant.TAG, "ICF is NOT Signed");
 
-                                                Intent intent = new Intent(getApplicationContext(), SignatureActivity.class);
+                                                Intent intent = new Intent(getApplicationContext(), IcfActivity.class);
                                                 startActivity(intent);
                                                 finish();
                                             }
