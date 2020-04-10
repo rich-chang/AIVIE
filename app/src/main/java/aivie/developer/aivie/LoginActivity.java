@@ -70,14 +70,6 @@ public class LoginActivity extends AppCompatActivity {
         textViewNeedAccount.setEnabled(false);
         pbLogin.setVisibility(view.VISIBLE);
 
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if (user == null) {
-            if(Constant.DEBUG) Log.i(Constant.TAG, "Login-user is null");
-        } else {
-            if(Constant.DEBUG) Log.i(Constant.TAG, "Login-user: " + user.getUid());
-        }
-
         EditText editTextEmail = findViewById(R.id.username);
         EditText editTextPassword = findViewById(R.id.password);
         String email = editTextEmail.getText().toString();
