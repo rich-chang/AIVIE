@@ -167,6 +167,7 @@ public class RaceSelectionActivity extends AppCompatActivity {
             SpannableString sp1 = new SpannableString(race.get(i));
             SpannableString sp2 = new SpannableString(race_desc.get(i));
 
+            /*
             if (i == 3) {
                 sp1.setSpan(new RelativeSizeSpan(1.1f), 0, sp1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             } else if (i == 4) {
@@ -174,9 +175,12 @@ public class RaceSelectionActivity extends AppCompatActivity {
             } else {
                 sp1.setSpan(new RelativeSizeSpan(1.4f), 0, sp1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
+            */
 
+            sp1.setSpan(new RelativeSizeSpan(1.1f), 0, sp1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             sp1.setSpan(new StyleSpan(Typeface.BOLD), 0, sp1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            sp1.setSpan(new UnderlineSpan(), 0, sp1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            //sp1.setSpan(new UnderlineSpan(), 0, sp1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            sp2.setSpan(new RelativeSizeSpan(0.8f), 0, sp2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             sp2.setSpan(new ForegroundColorSpan(Color.GRAY), 0, sp2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             ((RadioButton) radioGroup.getChildAt(i)).setText(TextUtils.concat(sp1, "\r\n", sp2));

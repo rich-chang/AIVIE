@@ -23,13 +23,13 @@
                 android:layout_marginTop="16dp"
                 android:text="Select your race"
                 android:textAlignment="center"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <RadioGroup
                 android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="6dp">
 
                 <RadioButton
                     android:id="@+id/radioButtonWhite"
@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="48dp"
                 android:text="@string/confirm" />
