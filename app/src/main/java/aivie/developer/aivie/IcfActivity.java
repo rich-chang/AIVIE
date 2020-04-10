@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -48,6 +49,8 @@ public class IcfActivity extends AppCompatActivity {
     private String fileUrl;
     private String fileName;
     private String userId;
+    private Button reviewICF;
+    private Button signICF;
     private ProgressBar progressBar;
 
     @Override
@@ -58,11 +61,15 @@ public class IcfActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getStringExtra("UserID");
 
+        reviewICF = findViewById(R.id.buttonReviewICF);
+        signICF = findViewById(R.id.buttonSignICF);
         progressBar = findViewById(R.id.progressBarConfirm);
     }
 
     public void reviewICF(View view) {
 
+        reviewICF.setEnabled(false);
+        signICF.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
 
         // Get a non-default Storage bucket
@@ -83,6 +90,8 @@ public class IcfActivity extends AppCompatActivity {
 
     public void signICF(View view) {
 
+        reviewICF.setEnabled(false);
+        signICF.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = new Intent(getApplicationContext(), SignatureActivity.class);
@@ -90,16 +99,22 @@ public class IcfActivity extends AppCompatActivity {
         startActivity(intent);
 
         progressBar.setVisibility(View.GONE);
+        reviewICF.setEnabled(true);
+        signICF.setEnabled(true);
     }
 
     public void skipNow(View view) {
 
+        reviewICF.setEnabled(false);
+        signICF.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intent);
 
         progressBar.setVisibility(View.GONE);
+        reviewICF.setEnabled(true);
+        signICF.setEnabled(true);
     }
 
     private void getFileFromFirebase() throws IOException {
@@ -152,11 +167,19 @@ public class IcfActivity extends AppCompatActivity {
             try {
 
                 startActivity(pdfIntent);
-                progressBar.setVisibility(View.GONE);
-
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(IcfActivity.this, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
             }
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //Your code
+                    reviewICF.setEnabled(true);
+                    signICF.setEnabled(true);
+                    progressBar.setVisibility(View.GONE);
+                }
+            });
         }
         if (Constant.DEBUG) Log.v(Constant.TAG, "view() Method completed ");
     }
