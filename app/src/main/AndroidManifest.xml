@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignatureActivity"></activity>
+        <activity
+            android:name=".HomeAdmActivity"
+            android:label="@string/title_activity_home_adm"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".SignatureActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -27,9 +31,8 @@
 
         <activity android:name=".IcfActivity" />
         <activity android:name=".RaceSelectionActivity" />
-        <activity android:name=".ui.ProfileActivity" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".HomeUserActivity"
             android:label="@string/title_activity_home" />
         <activity
             android:name=".SignupActivity"
@@ -44,6 +47,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".util.NotificationPublisher" />
+
     </application>
 
 </manifest>

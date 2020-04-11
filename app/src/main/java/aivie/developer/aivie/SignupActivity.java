@@ -3,7 +3,6 @@ package aivie.developer.aivie;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -32,17 +31,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
+
+import aivie.developer.aivie.util.Constant;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -54,7 +49,6 @@ public class SignupActivity extends AppCompatActivity {
     private String firstName;
     private String lastName;
     private String displayName;
-    private String photoUriString = "https://ui-avatars.com/api/?size=80&rounded=true&background=0D8ABC&color=fff&name=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +106,7 @@ public class SignupActivity extends AppCompatActivity {
 
                             UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(displayName)
-                                    .setPhotoUri(Uri.parse(photoUriString + displayName))
+                                    .setPhotoUri(Uri.parse(Constant.AUTO_AVATAR_URL + displayName))
                                     .build();
 
                             user.updateProfile(profileUpdate)

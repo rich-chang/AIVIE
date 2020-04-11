@@ -22,13 +22,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+
+import aivie.developer.aivie.util.Constant;
+import aivie.developer.aivie.util.FileDownloader;
 
 public class IcfActivity extends AppCompatActivity {
 
@@ -109,7 +111,7 @@ public class IcfActivity extends AppCompatActivity {
         signICF.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
 
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        Intent intent = new Intent(getApplicationContext(), HomeUserActivity.class);
         startActivity(intent);
 
         progressBar.setVisibility(View.GONE);

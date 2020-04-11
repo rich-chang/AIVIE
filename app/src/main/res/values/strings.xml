@@ -84,6 +84,10 @@
     <string name="firestore_studies">studies</string>
     <string name="firestore_icf">icf</string>
 
+    <!-- Firestore common column -->
+    <string name="firestore_column_id">Id</string>
+    <string name="firestore_column_title">Title</string>
+
     <!-- Firestore Columns in collection "users" -->
     <string name="firestore_users_display_name">DisplayName</string>
     <string name="firestore_users_first_name">FirstName</string>
@@ -105,8 +109,6 @@
     <string name="firestore_studies_id">Id</string>
     <string name="firestore_studies_title">Title</string>
     <string name="firestore_studies_visit_plan">VisitPlan</string>
-
-    <string name="firestore_column_title">Title</string>
 
     <!-- Firestore document in collection "gender" -->
     <string name="firestore_gender_male">MALE</string>
@@ -131,5 +133,18 @@
     <!-- Firebase Storage Folder -->
     <string name="firebase_storage_icf">ICF</string>
     <string name="firebase_storage_icf_signature">ICF_Signature</string>
+    <string name="title_activity_home_adm">HomeAdmActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
 
 </resources>
