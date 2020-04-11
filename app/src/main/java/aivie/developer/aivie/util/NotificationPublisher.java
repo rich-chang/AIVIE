@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 public class NotificationPublisher extends BroadcastReceiver {
 
@@ -20,6 +21,7 @@ public class NotificationPublisher extends BroadcastReceiver {
         notification.flags = Notification.FLAG_NO_CLEAR;
 
         int id = intent.getIntExtra(NOTIFICATION_ID, 0);
+        if(Constant.DEBUG) Log.d(Constant.TAG, "NOTIFICATION_ID: " + id);
         notificationManager.notify(id, notification);
     }
 
