@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,10 +30,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import aivie.developer.aivie.util.Constant;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -102,25 +98,57 @@ public class LoginActivity extends AppCompatActivity {
                                         DocumentSnapshot documentUser = task.getResult();
                                         if (documentUser.exists()) {
 
+                                            /// Check if PT signed ICF ///
                                             final boolean[] isIcfSigned = {false};
 
                                             isIcfSigned[0] = (boolean) documentUser.get(getString(R.string.firestore_users_eicf_signed));
                                             Log.d(Constant.TAG, Boolean.toString(isIcfSigned[0]));
 
-                                            if (isIcfSigned[0]) {
-                                                Log.d(Constant.TAG, "ICF Signed");
+                                            /// Check Role ///
+                                            final DocumentReference docRefRole = (DocumentReference) documentUser.get(getString(R.string.firestore_users_role));
+                                            docRefRole.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                    if (task.isSuccessful()) {
 
-                                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                                startActivity(intent);
-                                                finish();
-                                            } else {
-                                                Log.d(Constant.TAG, "ICF is NOT Signed");
+                                                        DocumentSnapshot documentRace = task.getResult();
+                                                        String role = (String) documentRace.get(getString(R.string.firestore_column_id));
+                                                        Log.d(Constant.TAG, "Role: " + role);
 
-                                                Intent intent = new Intent(getApplicationContext(), IcfActivity.class);
-                                                intent.putExtra("UserID", userId);
-                                                startActivity(intent);
-                                                finish();
-                                            }
+                                                        Intent intent = null;
+                                                        switch (role) {
+                                                            case "SC":
+
+                                                                intent = new Intent(getApplicationContext(), HomeAdmActivity.class);
+                                                                startActivity(intent);
+                                                                finish();
+                                                                break;
+
+                                                            case "PT":
+
+                                                                if (isIcfSigned[0]) {
+                                                                    Log.d(Constant.TAG, "ICF Signed");
+
+                                                                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                                                                    startActivity(intent);
+                                                                    finish();
+                                                                } else {
+                                                                    Log.d(Constant.TAG, "ICF is NOT Signed");
+
+                                                                    intent = new Intent(getApplicationContext(), IcfActivity.class);
+                                                                    intent.putExtra("UserID", userId);
+                                                                    startActivity(intent);
+                                                                    finish();
+                                                                }
+                                                                break;
+
+                                                            case "UNKNOWN":
+                                                            default:
+                                                                Log.d(Constant.TAG, "User role is unknown");
+                                                        }
+                                                    }
+                                                }
+                                            });
 
                                             loginButton.setEnabled(true);
                                             textViewNeedAccount.setEnabled(true);
