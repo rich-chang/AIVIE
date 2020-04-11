@@ -252,6 +252,7 @@ public class HomeUserFragment extends Fragment {
         builder.setContentTitle("Visit Reminder");
         builder.setContentText(content);
         builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+        builder.setAutoCancel(false);
         builder.setDefaults(Notification.DEFAULT_ALL);
 
         return builder.build();
