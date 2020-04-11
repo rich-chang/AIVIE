@@ -15,4 +15,5 @@ public interface Constant {
     // Notification
     String NOTIFICATION_ID = "notification-id";
     String NOTIFICATION = "notification";
+    int NOTIFICATION_ID_VISIT_REMINDER = 1;
 }

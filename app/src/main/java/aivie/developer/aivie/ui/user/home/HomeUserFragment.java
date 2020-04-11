@@ -232,7 +232,7 @@ public class HomeUserFragment extends Fragment {
         long futureInMillis = SystemClock.elapsedRealtime() + delay;
 
         Intent notificationIntent = new Intent(getActivity(), NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, Constant.NOTIFICATION_ID_VISIT_REMINDER);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
