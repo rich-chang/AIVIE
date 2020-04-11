@@ -33,6 +33,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -148,17 +149,22 @@ public class HomeUserFragment extends Fragment {
 
                                     List<Timestamp> visitsDate = (List<Timestamp>) documentStudy.getData().get(getString(R.string.firestore_studies_visit_plan));
 
-                                    SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
                                     for (int i=0; i<visitsDate.size(); i++) {
-                                        Timestamp tm = (Timestamp) visitsDate.get(i);
+
+                                        Timestamp tm = visitsDate.get(i);
                                         Date date = tm.toDate();
-                                        visitPlan.add(sfd.format(date).toString());
+
+                                        SimpleDateFormat sfdFull = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                                        SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
+                                        visitPlan.add(sfdFull.format(date));
+
+                                        /// Schedule notification ///
+                                        long delayInMs = date.getTime() - new Date().getTime();
+                                        if (Constant.DEBUG) Log.d(Constant.TAG, "Delay in milli :: " + delayInMs);
+                                        scheduleNotification(getNotification("Your doctor appointment " + visitPlan.get(i)), (int)delayInMs);
                                     }
 
                                     UpdateUI();
-
-                                    /// Schedule notification for visit reminder
-                                    scheduleNotification(getNotification("Reminder: Visit your doctor on 05/20"), 18000);
 
                                 } else {
                                     if(Constant.DEBUG) Log.d(Constant.TAG, "task get failed with ", task.getException());
@@ -240,7 +246,7 @@ public class HomeUserFragment extends Fragment {
 
         Notification.Builder builder = new Notification.Builder(getActivity());
 
-        builder.setContentTitle(getString(R.string.app_name));
+        builder.setContentTitle("Visit Reminder");
         builder.setContentText(content);
         builder.setSmallIcon(R.drawable.ic_launcher_foreground);
         builder.setDefaults(Notification.DEFAULT_ALL);
