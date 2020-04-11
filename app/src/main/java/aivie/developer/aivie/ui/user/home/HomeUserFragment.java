@@ -6,6 +6,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -45,11 +46,14 @@ import aivie.developer.aivie.LoginActivity;
 import aivie.developer.aivie.R;
 import aivie.developer.aivie.util.NotificationPublisher;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class HomeUserFragment extends Fragment {
 
     private HomeUserViewModel homeViewModel;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    private SharedPreferences sharedpreferences;
     private ImageView imageViewAvatar;
     private TextView textViewName;
     private TextView textViewRole;
@@ -79,6 +83,7 @@ public class HomeUserFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        sharedpreferences = getActivity().getSharedPreferences(Constant.SP_NAME, MODE_PRIVATE);
 
         imageViewAvatar = root.findViewById(R.id.imageViewAvatar);
         textViewName = root.findViewById(R.id.textViewName);
@@ -158,14 +163,21 @@ public class HomeUserFragment extends Fragment {
                                         SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
                                         visitPlan.add(sfdFull.format(date));
 
-                                        /// Schedule notification ///
-                                        long delayInMs = date.getTime() - new Date().getTime();
-                                        if (Constant.DEBUG) Log.d(Constant.TAG, "Delay in milli :: " + delayInMs);
-                                        scheduleNotification(
-                                                getNotification("Your doctor appointment " + visitPlan.get(i)),
-                                                (int)delayInMs,
-                                                i, i);
+                                        if (!sharedpreferences.getBoolean(Constant.SP_KEY_INIT_REMINDER, false)) {
+
+                                            /// Schedule notification ///
+                                            long delayInMs = date.getTime() - new Date().getTime();
+                                            if (Constant.DEBUG)
+                                                Log.d(Constant.TAG, "Delay in milli :: " + delayInMs);
+                                            scheduleNotification(
+                                                    getNotification("Your doctor appointment " + visitPlan.get(i)),
+                                                    (int) delayInMs,
+                                                    i, i);
+                                        }
                                     }
+
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putBoolean(Constant.SP_KEY_INIT_REMINDER, true).apply();
 
                                     UpdateUI();
 

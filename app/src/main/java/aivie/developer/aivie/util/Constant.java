@@ -16,4 +16,8 @@ public interface Constant {
     String NOTIFICATION_ID = "notification-id";
     String NOTIFICATION = "notification";
     String GROUP_VISIT_REMINDER = "Visit Reminder";
+
+    // Shared Preference
+    String SP_NAME = "AIVIE";
+    String SP_KEY_INIT_REMINDER = "init-visit-reminder";
 }
