@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="aivie.developer.aivie.ui.notifications.NotificationsFragment"
+        android:name="aivie.developer.aivie.ui.notifications.NotificationsUserFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications_user" />
 </navigation>
