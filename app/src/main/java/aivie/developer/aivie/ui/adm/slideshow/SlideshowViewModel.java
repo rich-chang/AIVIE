@@ -1,4 +1,4 @@
-package aivie.developer.aivie.ui.slideshow;
+package aivie.developer.aivie.ui.adm.slideshow;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

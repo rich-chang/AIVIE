@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="aivie.developer.aivie.ui.home.HomeFragment"
+        android:name="aivie.developer.aivie.ui.adm.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home">
+        tools:layout="@layout/fragment_home_adm">
 
         <action
             android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_home_second"
-        android:name="aivie.developer.aivie.ui.home.HomeSecondFragment"
+        android:name="aivie.developer.aivie.ui.adm.home.HomeSecondFragment"
         android:label="@string/home_second"
         tools:layout="@layout/fragment_home_second">
         <action
@@ -31,13 +31,13 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="aivie.developer.aivie.ui.gallery.GalleryFragment"
+        android:name="aivie.developer.aivie.ui.adm.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery_adm" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="aivie.developer.aivie.ui.slideshow.SlideshowFragment"
+        android:name="aivie.developer.aivie.ui.adm.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_slideshow_adm" />
 </navigation>
