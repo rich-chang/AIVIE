@@ -185,7 +185,7 @@ public class HomeUserFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_home_menu, menu);
+        inflater.inflate(R.menu.fragment_home_user_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
