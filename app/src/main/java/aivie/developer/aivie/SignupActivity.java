@@ -54,7 +54,6 @@ public class SignupActivity extends AppCompatActivity {
     private String firstName;
     private String lastName;
     private String displayName;
-    private String photoUriString = "https://ui-avatars.com/api/?size=80&rounded=true&background=0D8ABC&color=fff&name=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +111,7 @@ public class SignupActivity extends AppCompatActivity {
 
                             UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(displayName)
-                                    .setPhotoUri(Uri.parse(photoUriString + displayName))
+                                    .setPhotoUri(Uri.parse(Constant.AUTO_AVATRA_URL + displayName))
                                     .build();
 
                             user.updateProfile(profileUpdate)
