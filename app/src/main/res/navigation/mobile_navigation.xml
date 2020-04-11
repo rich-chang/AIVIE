@@ -9,7 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="aivie.developer.aivie.ui.home.HomeUserFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home_user" />
 
     <fragment
         android:id="@+id/navigation_profile"
