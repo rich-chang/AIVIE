@@ -106,7 +106,7 @@ public class SignupActivity extends AppCompatActivity {
 
                             UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(displayName)
-                                    .setPhotoUri(Uri.parse(Constant.AUTO_AVATRA_URL + displayName))
+                                    .setPhotoUri(Uri.parse(Constant.AUTO_AVATAR_URL + displayName))
                                     .build();
 
                             user.updateProfile(profileUpdate)
