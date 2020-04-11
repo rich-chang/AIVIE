@@ -161,7 +161,10 @@ public class HomeUserFragment extends Fragment {
                                         /// Schedule notification ///
                                         long delayInMs = date.getTime() - new Date().getTime();
                                         if (Constant.DEBUG) Log.d(Constant.TAG, "Delay in milli :: " + delayInMs);
-                                        scheduleNotification(getNotification("Your doctor appointment " + visitPlan.get(i)), (int)delayInMs);
+                                        scheduleNotification(
+                                                getNotification("Your doctor appointment " + visitPlan.get(i)),
+                                                (int)delayInMs,
+                                                i);
                                     }
 
                                     UpdateUI();
@@ -224,7 +227,7 @@ public class HomeUserFragment extends Fragment {
         return true;
     }
 
-    private void scheduleNotification(Notification notification, int delay) {
+    private void scheduleNotification(Notification notification, int delay, int requestCode) {
 
         long futureInMillis = SystemClock.elapsedRealtime() + delay;
 
@@ -234,7 +237,7 @@ public class HomeUserFragment extends Fragment {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 getActivity(),
-                0,
+                requestCode,
                 notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
