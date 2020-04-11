@@ -53,7 +53,7 @@ import aivie.developer.aivie.HomeUserActivity;
 import aivie.developer.aivie.R;
 import aivie.developer.aivie.RaceSelectionActivity;
 
-public class ProfileFragment extends Fragment {
+public class ProfileUserFragment extends Fragment {
 
     private static final String[] PERMISSIONS = {
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -69,7 +69,7 @@ public class ProfileFragment extends Fragment {
         return true;
     }
 
-    private ProfileViewModel profileViewModel;
+    private ProfileUserViewModel profileViewModel;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private StorageReference storageRef;
@@ -102,8 +102,8 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel =
-                ViewModelProviders.of(this).get(ProfileViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_profile, container, false);
+                ViewModelProviders.of(this).get(ProfileUserViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_profile_user, container, false);
         final TextView textView = root.findViewById(R.id.text_profile);
         profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

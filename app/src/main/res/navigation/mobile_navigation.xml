@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="aivie.developer.aivie.ui.profile.ProfileFragment"
+        android:name="aivie.developer.aivie.ui.profile.ProfileUserFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile_user" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
