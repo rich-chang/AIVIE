@@ -18,7 +18,6 @@ import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Transaction;
@@ -120,7 +119,7 @@ public class SignatureActivity extends AppCompatActivity {
                         }
                     });
 
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), HomeUserActivity.class);
                     startActivity(intent);
                     finish();
 

@@ -2,16 +2,12 @@ package aivie.developer.aivie.ui.profile;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -22,12 +18,10 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -46,23 +40,16 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import aivie.developer.aivie.BuildConfig;
 import aivie.developer.aivie.Constant;
-import aivie.developer.aivie.FileDownloader;
-import aivie.developer.aivie.HomeActivity;
-import aivie.developer.aivie.IcfActivity;
-import aivie.developer.aivie.LoginActivity;
+import aivie.developer.aivie.HomeUserActivity;
 import aivie.developer.aivie.R;
 import aivie.developer.aivie.RaceSelectionActivity;
 
@@ -144,7 +131,7 @@ public class ProfileFragment extends Fragment {
         editTextdateOfBirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog((HomeActivity)getActivity(), date, myCalendar
+                new DatePickerDialog((HomeUserActivity)getActivity(), date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -385,7 +372,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void updateRace () {
-        Intent intent = new Intent((HomeActivity)getActivity(), RaceSelectionActivity.class);
+        Intent intent = new Intent((HomeUserActivity)getActivity(), RaceSelectionActivity.class);
         startActivity(intent);
     }
 }

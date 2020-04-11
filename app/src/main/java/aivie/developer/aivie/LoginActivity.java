@@ -23,18 +23,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -110,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                                             if (isIcfSigned[0]) {
                                                 Log.d(Constant.TAG, "ICF Signed");
 
-                                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                                Intent intent = new Intent(getApplicationContext(), HomeUserActivity.class);
                                                 startActivity(intent);
                                                 finish();
                                             } else {

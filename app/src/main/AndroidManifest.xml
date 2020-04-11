@@ -29,7 +29,7 @@
         <activity android:name=".RaceSelectionActivity" />
         <activity android:name=".ui.ProfileActivity" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".HomeUserActivity"
             android:label="@string/title_activity_home" />
         <activity
             android:name=".SignupActivity"
