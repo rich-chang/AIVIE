@@ -37,9 +37,9 @@ import aivie.developer.aivie.Constant;
 import aivie.developer.aivie.LoginActivity;
 import aivie.developer.aivie.R;
 
-public class HomeFragment extends Fragment {
+public class HomeUserFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private HomeUserViewModel homeViewModel;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private ImageView imageViewAvatar;
@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+                ViewModelProviders.of(this).get(HomeUserViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
