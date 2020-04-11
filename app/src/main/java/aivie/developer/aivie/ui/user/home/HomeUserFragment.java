@@ -164,7 +164,7 @@ public class HomeUserFragment extends Fragment {
                                         scheduleNotification(
                                                 getNotification("Your doctor appointment " + visitPlan.get(i)),
                                                 (int)delayInMs,
-                                                i);
+                                                i, i);
                                     }
 
                                     UpdateUI();
@@ -227,12 +227,12 @@ public class HomeUserFragment extends Fragment {
         return true;
     }
 
-    private void scheduleNotification(Notification notification, int delay, int requestCode) {
+    private void scheduleNotification(Notification notification, int delay, int requestCode, int notificationId) {
 
         long futureInMillis = SystemClock.elapsedRealtime() + delay;
 
         Intent notificationIntent = new Intent(getActivity(), NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, Constant.NOTIFICATION_ID_VISIT_REMINDER);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, notificationId);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
@@ -253,6 +253,7 @@ public class HomeUserFragment extends Fragment {
         builder.setContentText(content);
         builder.setSmallIcon(R.drawable.ic_launcher_foreground);
         builder.setAutoCancel(false);
+        builder.setGroup(Constant.GROUP_VISIT_REMINDER);
         builder.setDefaults(Notification.DEFAULT_ALL);
 
         return builder.build();
