@@ -1,4 +1,4 @@
-package aivie.developer.aivie.ui.dashboard;
+package aivie.developer.aivie.ui.user.dashboard;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

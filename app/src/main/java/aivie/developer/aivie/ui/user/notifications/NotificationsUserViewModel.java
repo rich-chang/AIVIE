@@ -1,16 +1,16 @@
-package aivie.developer.aivie.ui.profile;
+package aivie.developer.aivie.ui.user.notifications;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ProfileUserViewModel extends ViewModel {
+public class NotificationsUserViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ProfileUserViewModel() {
+    public NotificationsUserViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("");
+        mText.setValue("This is notifications fragment");
     }
 
     public LiveData<String> getText() {

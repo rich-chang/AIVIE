@@ -1,4 +1,4 @@
-package aivie.developer.aivie.ui.notifications;
+package aivie.developer.aivie.ui.user.dashboard;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import aivie.developer.aivie.R;
 
-public class NotificationsUserFragment extends Fragment {
+public class DashboardUserFragment extends Fragment {
 
-    private NotificationsUserViewModel notificationsViewModel;
+    private DashboardUserViewModel dashboardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsUserViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications_user, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        dashboardViewModel =
+                ViewModelProviders.of(this).get(DashboardUserViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_dashboard_user, container, false);
+        final TextView textView = root.findViewById(R.id.text_dashboard);
+        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

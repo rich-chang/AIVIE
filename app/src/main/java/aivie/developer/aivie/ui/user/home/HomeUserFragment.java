@@ -1,4 +1,4 @@
-package aivie.developer.aivie.ui.home;
+package aivie.developer.aivie.ui.user.home;
 
 import android.app.Activity;
 import android.content.Intent;

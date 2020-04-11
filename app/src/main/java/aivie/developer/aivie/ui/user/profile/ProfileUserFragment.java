@@ -1,4 +1,4 @@
-package aivie.developer.aivie.ui.profile;
+package aivie.developer.aivie.ui.user.profile;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;

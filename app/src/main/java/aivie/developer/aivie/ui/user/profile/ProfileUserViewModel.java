@@ -1,14 +1,14 @@
-package aivie.developer.aivie.ui.home;
+package aivie.developer.aivie.ui.user.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeUserViewModel extends ViewModel {
+public class ProfileUserViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeUserViewModel() {
+    public ProfileUserViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("");
     }
