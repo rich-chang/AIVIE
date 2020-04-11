@@ -1,4 +1,4 @@
-package aivie.developer.aivie;
+package aivie.developer.aivie.util;
 
 import android.util.Log;
 
@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import aivie.developer.aivie.BuildConfig;
 
 public class FileDownloader {
 

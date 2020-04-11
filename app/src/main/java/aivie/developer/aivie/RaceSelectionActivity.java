@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import aivie.developer.aivie.util.Constant;
+
 public class RaceSelectionActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;

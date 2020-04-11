@@ -48,7 +48,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import aivie.developer.aivie.Constant;
+import aivie.developer.aivie.util.Constant;
 import aivie.developer.aivie.HomeUserActivity;
 import aivie.developer.aivie.R;
 import aivie.developer.aivie.RaceSelectionActivity;

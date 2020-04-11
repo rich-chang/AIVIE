@@ -30,6 +30,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import aivie.developer.aivie.util.Constant;
+
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;

@@ -29,6 +29,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+import aivie.developer.aivie.util.Constant;
+import aivie.developer.aivie.util.FileDownloader;
+
 public class IcfActivity extends AppCompatActivity {
 
     private static final String[] PERMISSIONS = {android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};

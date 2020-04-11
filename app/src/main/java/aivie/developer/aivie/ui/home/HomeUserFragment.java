@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import aivie.developer.aivie.Constant;
+import aivie.developer.aivie.util.Constant;
 import aivie.developer.aivie.LoginActivity;
 import aivie.developer.aivie.R;
 

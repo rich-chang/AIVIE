@@ -1,4 +1,6 @@
-package aivie.developer.aivie;
+package aivie.developer.aivie.util;
+
+import aivie.developer.aivie.BuildConfig;
 
 public interface Constant {
 

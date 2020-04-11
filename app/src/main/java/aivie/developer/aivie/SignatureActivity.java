@@ -32,6 +32,8 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import aivie.developer.aivie.util.Constant;
+
 public class SignatureActivity extends AppCompatActivity {
 
     private SignaturePad mSignaturePad;
