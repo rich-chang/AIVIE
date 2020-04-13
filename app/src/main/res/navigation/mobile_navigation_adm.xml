@@ -30,9 +30,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_management"
         android:name="aivie.developer.aivie.ui.adm.management.ManagementFragment"
-        android:label="@string/menu_gallery"
+        android:label="Management"
         tools:layout="@layout/fragment_management_adm" />
 
     <fragment
