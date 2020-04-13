@@ -114,8 +114,7 @@ public class RaceSelectionActivity extends AppCompatActivity {
 
                                         pbConfirm.setVisibility(View.GONE);
 
-                                        Intent intent = new Intent(getApplicationContext(), HomeAdmActivity.class);
-                                        startActivity(intent);
+                                        finish();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -181,10 +180,5 @@ public class RaceSelectionActivity extends AppCompatActivity {
 
             ((RadioButton) radioGroup.getChildAt(i)).setText(TextUtils.concat(sp1, "\r\n", sp2));
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        // empty so nothing happens
     }
 }

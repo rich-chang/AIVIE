@@ -58,11 +58,6 @@ public class EthnicityActivity extends AppCompatActivity {
         addListenerOnButton();
     }
 
-    @Override
-    public void onBackPressed() {
-        // empty so nothing happens
-    }
-
     public void addListenerOnButton() {
 
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
@@ -112,8 +107,7 @@ public class EthnicityActivity extends AppCompatActivity {
 
                                     pbConfirm.setVisibility(View.GONE);
 
-                                    Intent intent = new Intent(getApplicationContext(), HomeAdmActivity.class);
-                                    startActivity(intent);
+                                    finish();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
