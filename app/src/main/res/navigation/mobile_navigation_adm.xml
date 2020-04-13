@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/nav_management"
         android:name="aivie.developer.aivie.ui.adm.management.ManagementFragment"
-        android:label="Management"
+        android:label="Patient Management"
         tools:layout="@layout/fragment_management_adm" />
 
     <fragment
