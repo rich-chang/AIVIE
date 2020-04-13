@@ -39,8 +39,8 @@ import aivie.developer.aivie.util.Constant;
 
 public class RaceSelectionActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private String userId;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private Button buttonConfirm;
@@ -55,7 +55,9 @@ public class RaceSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_race_selection);
 
         db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
+
+        Intent intent = getIntent();
+        userId = intent.getStringExtra("UserID");
 
         radioGroup = findViewById(R.id.radioGroup);
         buttonConfirm = findViewById(R.id.buttonConfirm);
@@ -70,6 +72,10 @@ public class RaceSelectionActivity extends AppCompatActivity {
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (userId == null) {
+                    return;
+                }
 
                 radioGroup.setEnabled(false);
                 buttonConfirm.setEnabled(false);
@@ -87,51 +93,42 @@ public class RaceSelectionActivity extends AppCompatActivity {
 
     private void updateToFireStore (final Integer selectedIndex) {
 
-        FirebaseUser user = mAuth.getCurrentUser();
+        DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(userId);
 
-        if (user != null) {
-            if(Constant.DEBUG) Log.i(Constant.TAG, "Login-user: " + user.getUid());
+        docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
 
-            DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(mAuth.getCurrentUser().getUid());
+                    Map<String, Object> userData = new HashMap<>();
 
-            docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
+                    userData.put(getString(R.string.firestore_users_race), db.collection(getString(R.string.firestore_race)).document(race_db_document.get(selectedIndex)));
+                    if (Constant.DEBUG) Log.i(Constant.TAG, userData.toString());
 
-                        Map<String, Object> userData = new HashMap<>();
+                    db.collection(getString(R.string.firestore_users))
+                            .document(userId).set(userData, SetOptions.merge())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
 
-                        userData.put(getString(R.string.firestore_users_race), db.collection(getString(R.string.firestore_race)).document(race_db_document.get(selectedIndex)));
-                        if (Constant.DEBUG) Log.i(Constant.TAG, userData.toString());
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    if (Constant.DEBUG) Log.d(Constant.TAG, "DocumentSnapshot successfully written!");
 
-                        db.collection(getString(R.string.firestore_users))
-                                .document(mAuth.getCurrentUser().getUid()).set(userData, SetOptions.merge())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    pbConfirm.setVisibility(View.GONE);
 
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        if (Constant.DEBUG) Log.d(Constant.TAG, "DocumentSnapshot successfully written!");
+                                    finish();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
 
-                                        pbConfirm.setVisibility(View.GONE);
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    if (Constant.DEBUG) Log.w(Constant.TAG, "Error writing document", e);
+                                }
+                            });
 
-                                        finish();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        if (Constant.DEBUG) Log.w(Constant.TAG, "Error writing document", e);
-                                    }
-                                });
-
-                    }
                 }
-            });
-
-        } else {
-            if(Constant.DEBUG) Log.i(Constant.TAG, "Login-user is null");
-        }
+            }
+        });
     }
 
     private void updateUI() {
