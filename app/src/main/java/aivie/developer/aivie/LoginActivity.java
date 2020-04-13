@@ -59,13 +59,13 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton = findViewById(R.id.login);
         pbLogin = findViewById(R.id.progressBarLogin);
+
+        updateUiControl(true);
     }
 
     public void logIn (View view) {
 
-        loginButton.setEnabled(false);
-        textViewNeedAccount.setEnabled(false);
-        pbLogin.setVisibility(view.VISIBLE);
+        updateUiControl(false);
 
         EditText editTextEmail = findViewById(R.id.username);
         EditText editTextPassword = findViewById(R.id.password);
@@ -146,14 +146,16 @@ public class LoginActivity extends AppCompatActivity {
                                                             default:
                                                                 Log.d(Constant.TAG, "User role is unknown");
                                                         }
+                                                    } else {
+                                                        updateUiControl(true);
                                                     }
                                                 }
                                             });
-
-                                            loginButton.setEnabled(true);
-                                            textViewNeedAccount.setEnabled(true);
-                                            pbLogin.setVisibility(View.GONE);
+                                        } else {
+                                            updateUiControl(true);
                                         }
+                                    } else {
+                                        updateUiControl(true);
                                     }
                                 }
                             });
@@ -247,9 +249,7 @@ public class LoginActivity extends AppCompatActivity {
                             if(Constant.DEBUG) Log.w(Constant.TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.\r\n", Toast.LENGTH_LONG).show();
 
-                            loginButton.setEnabled(true);
-                            textViewNeedAccount.setEnabled(true);
-                            pbLogin.setVisibility(View.GONE);
+                            updateUiControl(true);
                         }
                     }
                 });
@@ -274,5 +274,20 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //moveTaskToBack(true); // disable going back to the MainActivity
+    }
+
+    private void updateUiControl (boolean allowUserControl) {
+
+        if (allowUserControl) {
+
+            loginButton.setEnabled(true);
+            textViewNeedAccount.setEnabled(true);
+            pbLogin.setVisibility(View.GONE);
+        } else {
+
+            loginButton.setEnabled(false);
+            textViewNeedAccount.setEnabled(false);
+            pbLogin.setVisibility(View.VISIBLE);
+        }
     }
 }
