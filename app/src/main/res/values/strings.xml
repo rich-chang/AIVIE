@@ -28,7 +28,7 @@
     <string name="icf_sign">SIGN ICF</string>
     <string name="skip_now">Skip now</string>
 
-    <!-- Race Activity -->
+    <!-- Race -->
     <string name="race_white">White</string>
     <string name="race_white_desc">A person having origins in any of the original peoples of Europe, the Middle East, or North Africa.</string>
     <string name="firestore_race_white">W</string>
@@ -45,6 +45,13 @@
     <string name="race_alaska_desc">A person having origins in any of the original peoples of North and South America (including Central America) and who maintains tribal affiliation or community attachment.</string>
     <string name="firestore_race_alaska">A</string>
     <string name="firestore_race_unknown">O</string>
+
+    <!-- Ethnicity -->
+    <string name="ethnicity_hispanic_latino">Hispanic or Latino</string>
+    <string name="ethnicity_hispanic_latino_desc">A person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race.</string>
+    <string name="ethnicity_not_hispanic_latino">Not Hispanic or Latino</string>
+    <string name="firestore_ethnicity_h">H</string>
+    <string name="firestore_ethnicity_n">N</string>
 
     <!-- Profile Activity -->
     <string name="update_profile">Please update patient profile and demographics data</string>

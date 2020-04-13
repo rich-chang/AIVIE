@@ -111,6 +111,17 @@ public class ProfileActivity extends AppCompatActivity {
         editTextGender = findViewById(R.id.gender);
         editTextEthnicity = findViewById(R.id.ethnicity);
 
+        // Listener for Ethnicity
+        editTextEthnicity = findViewById(R.id.ethnicity);
+        editTextEthnicity.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                updateEthnicity();
+                return false;
+            }
+        });
+
         // Listener for Race
         editTextRace = findViewById(R.id.race);
         editTextRace.setOnTouchListener(new View.OnTouchListener() {
@@ -339,8 +350,15 @@ public class ProfileActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
+    private void updateEthnicity () {
+        Intent intent = new Intent(this, EthnicityActivity.class);
+        intent.putExtra("UserID", userId);
+        startActivity(intent);
+    }
+
     private void updateRace () {
         Intent intent = new Intent(this, RaceSelectionActivity.class);
+        intent.putExtra("UserID", userId);
         startActivity(intent);
     }
 }
