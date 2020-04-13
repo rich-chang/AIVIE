@@ -117,6 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                editTextEthnicity.setEnabled(false);
                 updateEthnicity();
                 return false;
             }
@@ -128,6 +129,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                editTextRace.setEnabled(false);
                 updateRace();
                 return false;
             }
