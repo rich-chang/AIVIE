@@ -31,7 +31,6 @@
 
         <activity android:name=".IcfActivity" />
         <activity android:name=".RaceSelectionActivity" />
-        <activity android:name=".ui.ProfileActivity" />
         <activity
             android:name=".HomeUserActivity"
             android:label="@string/title_activity_home" />
@@ -48,6 +47,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".util.NotificationPublisher" />
+
     </application>
 
 </manifest>

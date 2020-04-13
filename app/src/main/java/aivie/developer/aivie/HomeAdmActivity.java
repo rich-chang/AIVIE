@@ -60,4 +60,9 @@ public class HomeAdmActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    @Override
+    public void onBackPressed() {
+        // empty so nothing happens
+    }
 }

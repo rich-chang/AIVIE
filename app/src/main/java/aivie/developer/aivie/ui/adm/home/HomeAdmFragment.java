@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import aivie.developer.aivie.R;
 
-public class HomeFragment extends Fragment {
+public class HomeAdmFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private HomeAdmViewModel homeAdmViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+        homeAdmViewModel =
+                ViewModelProviders.of(this).get(HomeAdmViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home_adm, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        homeAdmViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

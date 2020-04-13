@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
+
+import aivie.developer.aivie.util.Constant;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +48,13 @@ public class MainActivity extends AppCompatActivity {
 
         if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, 112);
+        }
+
+        SharedPreferences sharedpreferences = getSharedPreferences(Constant.SP_NAME, MODE_PRIVATE);
+        if (Constant.DEBUG) {
+            // FOR DEBUGGING: Set back to default value if NOT.
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(Constant.SP_KEY_INIT_REMINDER, false).apply();
         }
 
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
