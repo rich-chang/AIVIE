@@ -28,6 +28,11 @@
     <string name="icf_sign">SIGN ICF</string>
     <string name="skip_now">Skip now</string>
 
+    <!-- Ethnicity -->
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_na">Not Specified</string>
+
     <!-- Race -->
     <string name="race_white">White</string>
     <string name="race_white_desc">A person having origins in any of the original peoples of Europe, the Middle East, or North Africa.</string>
@@ -50,8 +55,6 @@
     <string name="ethnicity_hispanic_latino">Hispanic or Latino</string>
     <string name="ethnicity_hispanic_latino_desc">A person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race.</string>
     <string name="ethnicity_not_hispanic_latino">Not Hispanic or Latino</string>
-    <string name="firestore_ethnicity_h">H</string>
-    <string name="firestore_ethnicity_n">N</string>
 
     <!-- Profile Activity -->
     <string name="update_profile">Please update patient profile and demographics data</string>
@@ -120,8 +123,8 @@
     <!-- Firestore document in collection "gender" -->
     <string name="firestore_gender_male">MALE</string>
     <string name="firestore_gender_female">FEMALE</string>
-    <string name="firestore_gender_unknown">UNKNOWN</string>
     <string name="firestore_gender_na">Not Specified</string>
+    <string name="firestore_gender_unknown">UNKNOWN</string>
 
     <!-- Firestore document in collection "role" -->
     <string name="firestore_role_cg">CG</string>
@@ -133,8 +136,8 @@
     <string name="firestore_role_unknown">UNKNOWN</string>
 
     <!-- Firestore document in collection "ethnicity" -->
-    <string name="firestore_ethnicity_H">H</string>
-    <string name="firestore_ethnicity_N">N</string>
+    <string name="firestore_ethnicity_h">H</string>
+    <string name="firestore_ethnicity_n">N</string>
     <string name="firestore_ethnicity_unknown">UNKNOWN</string>
 
     <!-- Firebase Storage Folder -->
