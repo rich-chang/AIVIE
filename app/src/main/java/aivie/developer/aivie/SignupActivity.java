@@ -68,13 +68,13 @@ public class SignupActivity extends AppCompatActivity {
 
         signupButton = findViewById(R.id.signup);
         pbSignup = findViewById(R.id.progressBarSignup);
+
+        updateUiControl(true);
     }
 
     public void signUp (View view) {
 
-        signupButton.setEnabled(false);
-        textViewHaveAccount.setEnabled(false);
-        pbSignup.setVisibility(view.VISIBLE);
+        updateUiControl(false);
 
         EditText editTextFirstName = findViewById(R.id.firstName);
         EditText editTextLastName = findViewById(R.id.lastName);
@@ -125,10 +125,7 @@ public class SignupActivity extends AppCompatActivity {
 
                                             } else {
                                                 if(Constant.DEBUG) Log.d(Constant.TAG, "get failed with ", task.getException());
-
-                                                signupButton.setEnabled(true);
-                                                textViewHaveAccount.setEnabled(true);
-                                                pbSignup.setVisibility(View.GONE);
+                                                updateUiControl(true);
                                             }
                                         }
                                     });
@@ -139,10 +136,7 @@ public class SignupActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             if (Constant.DEBUG) Log.w(Constant.TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(SignupActivity.this, "Authentication failed.\r\n", Toast.LENGTH_LONG).show();
-
-                            signupButton.setEnabled(true);
-                            textViewHaveAccount.setEnabled(true);
-                            pbSignup.setVisibility(View.GONE);
+                            updateUiControl(true);
                         }
                     }
                 });
@@ -203,5 +197,20 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //moveTaskToBack(true); // disable going back to the MainActivity
+    }
+
+    private void updateUiControl (boolean allowUserControl) {
+
+        if (allowUserControl) {
+
+            signupButton.setEnabled(true);
+            textViewHaveAccount.setEnabled(true);
+            pbSignup.setVisibility(View.GONE);
+        } else {
+
+            signupButton.setEnabled(false);
+            textViewHaveAccount.setEnabled(false);
+            pbSignup.setVisibility(View.VISIBLE);
+        }
     }
 }

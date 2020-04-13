@@ -1,4 +1,4 @@
-package aivie.developer.aivie.ui.adm.slideshow;
+package aivie.developer.aivie.ui.adm.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import aivie.developer.aivie.R;
 
-public class SlideshowFragment extends Fragment {
+public class HomeAdmFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private HomeAdmViewModel homeAdmViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow_adm, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        homeAdmViewModel =
+                ViewModelProviders.of(this).get(HomeAdmViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_home_adm, container, false);
+        final TextView textView = root.findViewById(R.id.text_home);
+        homeAdmViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

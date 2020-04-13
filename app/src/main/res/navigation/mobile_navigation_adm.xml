@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="aivie.developer.aivie.ui.adm.home.HomeFragment"
+        android:name="aivie.developer.aivie.ui.adm.home.HomeAdmFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home_adm">
 
@@ -30,14 +30,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="aivie.developer.aivie.ui.adm.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery_adm" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="aivie.developer.aivie.ui.adm.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow_adm" />
+        android:id="@+id/nav_management"
+        android:name="aivie.developer.aivie.ui.adm.management.ManagementFragment"
+        android:label="Patient Management"
+        tools:layout="@layout/fragment_management_adm" />
 </navigation>
