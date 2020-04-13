@@ -108,17 +108,16 @@ public class ProfileActivity extends AppCompatActivity {
         editTextFirstName = findViewById(R.id.firstName);
         editTextDisplayName = findViewById(R.id.displayName);
         editTextAge = findViewById(R.id.age);
-        editTextGender = findViewById(R.id.gender);
-        editTextEthnicity = findViewById(R.id.ethnicity);
+
 
         // Listener for Ethnicity
-        editTextEthnicity = findViewById(R.id.ethnicity);
-        editTextEthnicity.setOnTouchListener(new View.OnTouchListener() {
+        editTextGender = findViewById(R.id.gender);
+        editTextGender.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                editTextEthnicity.setEnabled(false);
-                updateEthnicity();
+                editTextGender.setEnabled(false);
+                updateGender();
                 return false;
             }
         });
@@ -135,6 +134,18 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        // Listener for Ethnicity
+        editTextEthnicity = findViewById(R.id.ethnicity);
+        editTextEthnicity.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                editTextEthnicity.setEnabled(false);
+                updateEthnicity();
+                return false;
+            }
+        });
+
         Intent intent = getIntent();
         userId = intent.getStringExtra("UserID");
 
@@ -143,7 +154,19 @@ public class ProfileActivity extends AppCompatActivity {
         showUserInfo();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // fetch updated data
+        showUserInfo();
+    }
+
     private void showUserInfo () {
+
+        editTextGender.setEnabled(true);
+        editTextRace.setEnabled(true);
+        editTextEthnicity.setEnabled(true);
 
         if (userId == null) {
             // Put default data on screen
@@ -352,14 +375,20 @@ public class ProfileActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-    private void updateEthnicity () {
-        Intent intent = new Intent(this, EthnicityActivity.class);
+    private void updateGender () {
+        Intent intent = new Intent(this, GenderActivity.class);
         intent.putExtra("UserID", userId);
         startActivity(intent);
     }
 
     private void updateRace () {
         Intent intent = new Intent(this, RaceSelectionActivity.class);
+        intent.putExtra("UserID", userId);
+        startActivity(intent);
+    }
+
+    private void updateEthnicity () {
+        Intent intent = new Intent(this, EthnicityActivity.class);
         intent.putExtra("UserID", userId);
         startActivity(intent);
     }
