@@ -114,7 +114,7 @@ public class RaceSelectionActivity extends AppCompatActivity {
 
                                         pbConfirm.setVisibility(View.GONE);
 
-                                        Intent intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                                        Intent intent = new Intent(getApplicationContext(), HomeAdmActivity.class);
                                         startActivity(intent);
                                     }
                                 })
