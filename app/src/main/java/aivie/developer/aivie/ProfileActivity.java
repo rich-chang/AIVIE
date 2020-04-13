@@ -117,7 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.d(Constant.TAG, "Race touched");
+                updateRace();
                 return false;
             }
         });
@@ -337,5 +337,10 @@ public class ProfileActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    private void updateRace () {
+        Intent intent = new Intent(this, RaceSelectionActivity.class);
+        startActivity(intent);
     }
 }
