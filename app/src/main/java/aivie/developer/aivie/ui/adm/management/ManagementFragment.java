@@ -22,7 +22,7 @@ public class ManagementFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         managementViewModel =
                 ViewModelProviders.of(this).get(ManagementViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery_adm, container, false);
+        View root = inflater.inflate(R.layout.fragment_management_adm, container, false);
         final TextView textView = root.findViewById(R.id.text_gallery);
         managementViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
