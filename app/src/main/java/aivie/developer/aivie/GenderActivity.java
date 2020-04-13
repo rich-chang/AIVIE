@@ -48,6 +48,7 @@ public class GenderActivity extends AppCompatActivity {
         userId = intent.getStringExtra("UserID");
 
         radioGroup = findViewById(R.id.radioGroupEthnicity);
+        radioGroup.check(R.id.radioButtonFemale);
         buttonConfirm = findViewById(R.id.buttonConfirm);
         pbConfirm = findViewById(R.id.progressBarConfirm);
 
