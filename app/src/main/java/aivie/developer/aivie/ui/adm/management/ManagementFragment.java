@@ -1,5 +1,6 @@
 package aivie.developer.aivie.ui.adm.management;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +26,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import aivie.developer.aivie.HomeAdmActivity;
+import aivie.developer.aivie.ProfileActivity;
 import aivie.developer.aivie.R;
+import aivie.developer.aivie.RaceSelectionActivity;
 import aivie.developer.aivie.util.Constant;
 
 import static aivie.developer.aivie.util.Constant.DEBUG;
@@ -61,6 +65,12 @@ public class ManagementFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // TODO implement some logic
+        Log.d(TAG, position + ": " + patients.get(position));
+        String userId = patients.get(position);
+
+        Intent intent = new Intent((HomeAdmActivity)getActivity(), ProfileActivity.class);
+        intent.putExtra("UserID", userId);
+        startActivity(intent);
     }
 
     private void refresh() {
