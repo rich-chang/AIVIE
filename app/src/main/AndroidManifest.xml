@@ -13,7 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileActivity"
+
+        <activity android:name=".GenderActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EthnicityActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RaceSelectionActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HomeAdmActivity"
@@ -32,7 +43,6 @@
         </provider>
 
         <activity android:name=".IcfActivity" />
-        <activity android:name=".RaceSelectionActivity" />
         <activity
             android:name=".HomeUserActivity"
             android:label="@string/title_activity_home" />
