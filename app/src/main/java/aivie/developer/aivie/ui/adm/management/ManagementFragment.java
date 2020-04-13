@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -29,7 +28,6 @@ import java.util.Objects;
 import aivie.developer.aivie.HomeAdmActivity;
 import aivie.developer.aivie.ProfileActivity;
 import aivie.developer.aivie.R;
-import aivie.developer.aivie.RaceSelectionActivity;
 import aivie.developer.aivie.util.Constant;
 
 import static aivie.developer.aivie.util.Constant.DEBUG;
@@ -50,10 +48,11 @@ public class ManagementFragment extends ListFragment {
                 ViewModelProviders.of(this).get(ManagementViewModel.class);
         View root = inflater.inflate(R.layout.fragment_management_adm, container, false);
 
-
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
+        patients.clear();
+        patientsList.clear();
         arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), android.R.layout.simple_list_item_1, patientsList);
         setListAdapter(arrayAdapter);
 
