@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="aivie.developer.aivie.ui.adm.gallery.GalleryFragment"
+        android:name="aivie.developer.aivie.ui.adm.management.ManagementFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery_adm" />
 
