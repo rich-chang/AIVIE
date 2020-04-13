@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="aivie.developer.aivie.ui.adm.home.HomeFragment"
+        android:name="aivie.developer.aivie.ui.adm.home.HomeAdmFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home_adm">
 
