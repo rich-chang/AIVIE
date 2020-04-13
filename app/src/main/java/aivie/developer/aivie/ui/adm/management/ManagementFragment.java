@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
@@ -41,6 +42,7 @@ public class ManagementFragment extends ListFragment {
     static ArrayList<String> patientsList = new ArrayList<>();
     static ArrayList<String> patients = new ArrayList<>();
     static ArrayAdapter<String> arrayAdapter;
+    private ProgressBar pbLoading;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class ManagementFragment extends ListFragment {
         patientsList.clear();
         arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), android.R.layout.simple_list_item_1, patientsList);
         setListAdapter(arrayAdapter);
+
+        pbLoading = root.findViewById(R.id.progressBar);
 
         refresh();
 
@@ -73,6 +77,8 @@ public class ManagementFragment extends ListFragment {
     }
 
     private void refresh() {
+
+        pbLoading.setVisibility(View.VISIBLE);
 
         db.collection(getString(R.string.firestore_users))
                 .get()
@@ -101,8 +107,9 @@ public class ManagementFragment extends ListFragment {
 
                                                 patients.add(userId);
                                                 patientsList.add(firstName + " " + lastName);
-                                                 arrayAdapter.notifyDataSetChanged();
-                                                 //arrayAdapter.notifyDataSetInvalidated();
+                                                arrayAdapter.notifyDataSetChanged();
+
+                                                pbLoading.setVisibility(View.GONE);
                                              }
 
                                         } else {
