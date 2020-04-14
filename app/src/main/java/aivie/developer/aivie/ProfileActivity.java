@@ -199,7 +199,7 @@ public class ProfileActivity extends AppCompatActivity {
                         Date dateBirthday = tsBirthday.toDate();
                         dateOfBirth = sfd.format(dateBirthday);
 
-                        UpdateUI();
+                        UpdateUiContent();
 
                         DocumentReference docRefGender = (DocumentReference) documentUser.get(getString(R.string.firestore_users_gender));
                         docRefGender.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -210,7 +210,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     DocumentSnapshot documentGender = task.getResult();
                                     gender = (String) documentGender.get("Title");
 
-                                    UpdateUI();
+                                    UpdateUiContent();
                                 }
                             }
                         });
@@ -224,7 +224,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     DocumentSnapshot documentRace = task.getResult();
                                     race = (String) documentRace.get("Title");
 
-                                    UpdateUI();
+                                    UpdateUiContent();
                                 }
                             }
                         });
@@ -237,7 +237,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     DocumentSnapshot documentEthnicity = task.getResult();
                                     ethnicity = (String) documentEthnicity.get("Title");
 
-                                    UpdateUI();
+                                    UpdateUiContent();
                                 }
                             }
                         });
@@ -250,7 +250,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     DocumentSnapshot documentEthnicity = task.getResult();
                                     signedIcfName = (String) documentEthnicity.get("Id");
 
-                                    UpdateUI();
+                                    UpdateUiContent();
                                 }
                             }
                         });
@@ -260,7 +260,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void UpdateUI () {
+    private void UpdateUiContent () {
 
         if (subjectNum != null) editTextSubjectNum.setText(subjectNum);
         if (signedIcfName != null) editTextSignedICF.setText(signedIcfName);
