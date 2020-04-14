@@ -132,7 +132,7 @@
         android:id="@+id/textViewHaveAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="36dp"
         android:onClick="goLoginActivity"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
