@@ -72,7 +72,7 @@ public class ProfileUserFragment extends Fragment {
     private ProfileUserViewModel profileViewModel;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    private StorageReference storageRef;
+
     private EditText editTextSubjectNum;
     private EditText editTextSignedICF;
     private EditText editTextIsIcfSigned;
@@ -84,8 +84,7 @@ public class ProfileUserFragment extends Fragment {
     private EditText editTextGender;
     private EditText editTextRace;
     private EditText editTextEthnicity;
-    private String icfFileUrl;
-    private String icfFileName;
+
     private String signedIcfName;
     private boolean isIcfSigned = false;
     private String subjectNum;
@@ -96,7 +95,6 @@ public class ProfileUserFragment extends Fragment {
     private String gender;
     private String race;
     private String ethnicity;
-    private final Calendar myCalendar = Calendar.getInstance();
 
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -112,55 +110,20 @@ public class ProfileUserFragment extends Fragment {
             }
         });
 
-        /// DOB selection ///
-        editTextdateOfBirth = (EditText) root.findViewById(R.id.dateOfBirth);
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                updateDateOfBirthAndAge(null);
-
-                SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.yyyy_MM_dd), Locale.US);
-                updateDateOfBirthToFirestore(sdf.format(myCalendar.getTime()));
-            }
-        };
-        editTextdateOfBirth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog((HomeUserActivity)getActivity(), date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-        // Listener for Race
-        editTextRace = root.findViewById(R.id.race);
-        editTextRace.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                updateRace();
-                return false;
-            }
-        });
-
         editTextSubjectNum = root.findViewById(R.id.subjectNum);
         editTextSignedICF = root.findViewById(R.id.signed_icf);
         editTextIsIcfSigned = root.findViewById(R.id.icf_signature);
         editTextLastName = root.findViewById(R.id.lastName);
         editTextFirstName = root.findViewById(R.id.firstName);
         editTextDisplayName = root.findViewById(R.id.displayName);
+        editTextdateOfBirth = root.findViewById(R.id.dateOfBirth);
         editTextAge = root.findViewById(R.id.age);
         editTextGender = root.findViewById(R.id.gender);
         editTextEthnicity = root.findViewById(R.id.ethnicity);
+        editTextRace = root.findViewById(R.id.race);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        storageRef = FirebaseStorage.getInstance(Constant.FIREBASE_STORAGE_INST).getReference();
 
         showUserInfo();
 
@@ -290,9 +253,8 @@ public class ProfileUserFragment extends Fragment {
     private void updateDateOfBirthAndAge (String dobString) {
 
         if (dobString == null) {
-
             SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.yyyy_MM_dd), Locale.US);
-            dobString = sdf.format(myCalendar.getTime());
+            dobString = sdf.format("1900-01-01");
         }
         editTextdateOfBirth.setText(dobString);
 
@@ -322,57 +284,5 @@ public class ProfileUserFragment extends Fragment {
             age = 0;
 
         return age;
-    }
-
-    private void updateDateOfBirthToFirestore(final String dobString) {
-
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(mAuth.getCurrentUser().getUid());
-
-        docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-
-                    // Get user birthday
-                    SimpleDateFormat sfd = new SimpleDateFormat(getString(R.string.yyyy_MM_dd));
-                    Date dateBirthday = new Date();
-
-                    try {
-                        dateBirthday = (Date)sfd.parse(dobString);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    Map<String, Object> userData = new HashMap<>();
-                    userData.put(getString(R.string.firestore_users_birthday), dateBirthday);
-
-                    db.collection(getString(R.string.firestore_users))
-                            .document(mAuth.getCurrentUser().getUid())
-                            .set(userData, SetOptions.merge())
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    if (Constant.DEBUG) Log.d(Constant.TAG, "DOB successfully written Firebase!");
-
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    if (Constant.DEBUG) Log.w(Constant.TAG, "Error writing DOB to Firebase", e);
-                                }
-                            });
-                }
-            }
-        });
-    }
-
-    private void updateRace () {
-        Intent intent = new Intent((HomeUserActivity)getActivity(), RaceSelectionActivity.class);
-        startActivity(intent);
     }
 }
