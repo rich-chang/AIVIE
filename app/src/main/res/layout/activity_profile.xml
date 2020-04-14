@@ -49,7 +49,8 @@
                 android:enabled="true"
                 android:hint="@string/subject_number"
                 android:importantForAutofill="no"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -77,7 +78,8 @@
                 android:focusable="false"
                 android:hint="@string/eIcf"
                 android:importantForAutofill="no"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -105,7 +107,8 @@
                 android:focusable="false"
                 android:hint="@string/eIcf_signed"
                 android:importantForAutofill="no"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <View
@@ -140,7 +143,8 @@
                 android:ems="10"
                 android:enabled="true"
                 android:hint="@string/prompt_create_last_name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -168,7 +172,8 @@
                 android:ems="10"
                 android:enabled="true"
                 android:hint="@string/prompt_create_first_name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -197,7 +202,8 @@
                 android:ems="10"
                 android:enabled="true"
                 android:hint="@string/prompt_create_display_name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -224,7 +230,8 @@
                 android:focusable="false"
                 android:hint="@string/yyyy_MM_dd"
                 android:importantForAutofill="no"
-                android:inputType="date" />
+                android:inputType="date"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -252,7 +259,8 @@
                 android:focusable="false"
                 android:hint="@string/age"
                 android:importantForAutofill="no"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <View
@@ -288,7 +296,8 @@
                 android:focusable="false"
                 android:hint="@string/gender"
                 android:importantForAutofill="no"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -316,7 +325,8 @@
                 android:focusable="false"
                 android:hint="@string/ethnicity"
                 android:importantForAutofill="no"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -344,7 +354,8 @@
                 android:focusable="false"
                 android:hint="@string/race"
                 android:importantForAutofill="no"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <TextView
