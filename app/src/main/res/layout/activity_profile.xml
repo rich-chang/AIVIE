@@ -358,13 +358,6 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="8sp" />
-
     </LinearLayout>
 
 </ScrollView>
