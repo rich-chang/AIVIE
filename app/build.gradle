@@ -31,12 +31,7 @@ android {
                 keyAlias keystoreProperties['KEY_ALIAS']
                 keyPassword keystoreProperties['KEY_PASSWORD']
             } else {
-
-                // For MSFT AppCenter process
-                storeFile rootProject.file('upload-keystore.jks')
-                storePassword System.getProperty("APPCENTER_KEYSTORE_PASSWORD")
-                keyAlias System.getProperty("APPCENTER_KEY_ALIAS")
-                keyPassword System.getProperty("APPCENTER_KEY_PASSWORD")
+                // Handle in each cloud DevOp platform
             }
         }
     }
