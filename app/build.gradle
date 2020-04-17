@@ -34,9 +34,9 @@ android {
 
                 // For MSFT AppCenter process
                 storeFile rootProject.file('upload-keystore')
-                storePassword buildConfigField("String", "APPCENTER_KEYSTORE_PASSWORD", "\"${System.env.APPCENTER_KEYSTORE_PASSWORD}\"")
-                keyAlias buildConfigField("String", "APPCENTER_KEY_ALIAS", "\"${System.env.APPCENTER_KEY_ALIAS}\"")
-                keyPassword keyAlias buildConfigField("String", "APPCENTER_KEY_PASSWORD", "\"${System.env.APPCENTER_KEY_PASSWORD}\"")
+                storePassword "\"${System.env.APPCENTER_KEYSTORE_PASSWORD}\""
+                keyAlias "\"${System.env.APPCENTER_KEY_ALIAS}\""
+                keyPassword "\"${System.env.APPCENTER_KEY_PASSWORD}\""
             }
         }
     }
