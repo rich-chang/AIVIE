@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,6 +43,7 @@ public class ManagementFragment extends ListFragment {
     static ArrayList<String> patientsList = new ArrayList<>();
     static ArrayList<String> patients = new ArrayList<>();
     static ArrayAdapter<String> arrayAdapter;
+    private SwipeRefreshLayout pullToRefresh;
     private ProgressBar pbLoading;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,13 +55,19 @@ public class ManagementFragment extends ListFragment {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        patients.clear();
-        patientsList.clear();
-        arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), android.R.layout.simple_list_item_1, patientsList);
-        setListAdapter(arrayAdapter);
-
         pbLoading = root.findViewById(R.id.progressBar);
 
+        pullToRefresh = (SwipeRefreshLayout)root.findViewById(R.id.pullToRefresh);
+        arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), R.layout.activity_listview, patientsList);
+        setListAdapter(arrayAdapter);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+        
         refresh();
 
         return root;
@@ -79,6 +87,9 @@ public class ManagementFragment extends ListFragment {
     private void refresh() {
 
         pbLoading.setVisibility(View.VISIBLE);
+
+        patients.clear();
+        patientsList.clear();
 
         db.collection(getString(R.string.firestore_users))
                 .get()

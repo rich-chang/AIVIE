@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -22,8 +23,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -55,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText editTextGender;
     private EditText editTextRace;
     private EditText editTextEthnicity;
+    private Button buttonUpdate;
 
     private String subjectNum;
     private String signedIcfName;
@@ -66,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String gender;
     private String race;
     private String ethnicity;
-
+    private boolean allowEdit = false;
     private final Calendar myCalendar = Calendar.getInstance();
 
     @Override
@@ -109,7 +109,6 @@ public class ProfileActivity extends AppCompatActivity {
         editTextDisplayName = findViewById(R.id.displayName);
         editTextAge = findViewById(R.id.age);
 
-
         // Listener for Ethnicity
         editTextGender = findViewById(R.id.gender);
         editTextGender.setOnTouchListener(new View.OnTouchListener() {
@@ -146,11 +145,34 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        buttonUpdate = findViewById(R.id.buttonUpdate);
+        buttonUpdate.setText("EDIT");
+        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                buttonUpdate.setEnabled(false);
+
+                if (allowEdit) {
+                    updateUserInfoToFirestore();
+
+                    allowEdit = false;
+                    buttonUpdate.setText("EDIT");
+                } else {
+                    allowEdit = true;
+                    buttonUpdate.setText("SAVE");
+                    buttonUpdate.setEnabled(true);
+                }
+                updateUiControl(allowEdit);
+            }
+        });
+
+
         Intent intent = getIntent();
         userId = intent.getStringExtra("UserID");
 
         db = FirebaseFirestore.getInstance();
 
+        updateUiControl(allowEdit);
         showUserInfo();
     }
 
@@ -163,10 +185,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void showUserInfo () {
-
-        editTextGender.setEnabled(true);
-        editTextRace.setEnabled(true);
-        editTextEthnicity.setEnabled(true);
 
         if (userId == null) {
             // Put default data on screen
@@ -199,7 +217,7 @@ public class ProfileActivity extends AppCompatActivity {
                         Date dateBirthday = tsBirthday.toDate();
                         dateOfBirth = sfd.format(dateBirthday);
 
-                        UpdateUI();
+                        UpdateUiContent();
 
                         DocumentReference docRefGender = (DocumentReference) documentUser.get(getString(R.string.firestore_users_gender));
                         docRefGender.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -210,7 +228,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     DocumentSnapshot documentGender = task.getResult();
                                     gender = (String) documentGender.get("Title");
 
-                                    UpdateUI();
+                                    UpdateUiContent();
                                 }
                             }
                         });
@@ -224,7 +242,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     DocumentSnapshot documentRace = task.getResult();
                                     race = (String) documentRace.get("Title");
 
-                                    UpdateUI();
+                                    UpdateUiContent();
                                 }
                             }
                         });
@@ -237,7 +255,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     DocumentSnapshot documentEthnicity = task.getResult();
                                     ethnicity = (String) documentEthnicity.get("Title");
 
-                                    UpdateUI();
+                                    UpdateUiContent();
                                 }
                             }
                         });
@@ -250,7 +268,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     DocumentSnapshot documentEthnicity = task.getResult();
                                     signedIcfName = (String) documentEthnicity.get("Id");
 
-                                    UpdateUI();
+                                    UpdateUiContent();
                                 }
                             }
                         });
@@ -260,7 +278,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void UpdateUI () {
+    private void UpdateUiContent () {
 
         if (subjectNum != null) editTextSubjectNum.setText(subjectNum);
         if (signedIcfName != null) editTextSignedICF.setText(signedIcfName);
@@ -281,6 +299,36 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         updateDateOfBirthAndAge(dateOfBirth);
+    }
+
+    private void updateUiControl(boolean allowEdit) {
+
+        if (allowEdit) {
+
+            editTextSubjectNum.setEnabled(true);
+            //editTextSignedICF.setEnabled(true);       //always read-only
+            //editTextIsIcfSigned.setEnabled(true); //always read-only
+            editTextLastName.setEnabled(true);
+            editTextFirstName.setEnabled(true);
+            editTextDisplayName.setEnabled(true);
+            editTextdateOfBirth.setEnabled(true);
+            editTextGender.setEnabled(true);
+            editTextRace.setEnabled(true);
+            editTextEthnicity.setEnabled(true);
+        } else {
+
+            editTextSubjectNum.setEnabled(false);
+            //editTextSignedICF.setEnabled(false);
+            //editTextIsIcfSigned.setEnabled(false);
+            editTextLastName.setEnabled(false);
+            editTextFirstName.setEnabled(false);
+            editTextDisplayName.setEnabled(false);
+            editTextdateOfBirth.setEnabled(false);
+            editTextGender.setEnabled(false);
+            editTextRace.setEnabled(false);
+            editTextEthnicity.setEnabled(false);
+        }
+
     }
 
     private void updateDateOfBirthAndAge (String dobString) {
@@ -391,5 +439,52 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(this, EthnicityActivity.class);
         intent.putExtra("UserID", userId);
         startActivity(intent);
+    }
+
+    private void updateUserInfoToFirestore() {
+
+        // Get data from UI and save to database
+        subjectNum = editTextSubjectNum.getText().toString();
+        lastName = editTextLastName.getText().toString();
+        firstName = editTextFirstName.getText().toString();
+        displayName = editTextDisplayName.getText().toString();
+
+        DocumentReference docRefUser = db.collection(getString(R.string.firestore_users)).document(userId);
+
+        docRefUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    Map<String, Object> userData = new HashMap<>();
+
+                    userData.put(getString(R.string.firestore_users_subject_num), subjectNum);
+                    userData.put(getString(R.string.firestore_users_first_name), firstName);
+                    userData.put(getString(R.string.firestore_users_last_name), lastName);
+                    userData.put(getString(R.string.firestore_users_display_name), displayName);
+
+                    if (Constant.DEBUG) Log.i(Constant.TAG, userData.toString());
+
+                    db.collection(getString(R.string.firestore_users))
+                            .document(userId).set(userData, SetOptions.merge())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    if (Constant.DEBUG) Log.d(Constant.TAG, "DocumentSnapshot successfully written!");
+
+                                    buttonUpdate.setEnabled(true);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    if (Constant.DEBUG) Log.w(Constant.TAG, "Error writing document", e);
+                                }
+                            });
+                }
+            }
+        });
     }
 }

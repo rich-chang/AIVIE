@@ -33,7 +33,7 @@
         android:id="@+id/linearLayoutDisplayName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar"
         tools:layout_editor_absoluteX="184dp">
@@ -43,7 +43,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:text="@string/name"
             android:textAlignment="viewEnd" />
 
@@ -60,7 +60,7 @@
         android:id="@+id/linearLayoutRole"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutDisplayName"
         tools:layout_editor_absoluteX="184dp">
@@ -70,7 +70,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:text="@string/firestore_users_role"
             android:textAlignment="viewEnd" />
 
@@ -87,7 +87,7 @@
         android:id="@+id/linearLayoutStudy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutRole">
 
@@ -96,7 +96,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:text="@string/study_title"
             android:textAlignment="viewEnd" />
 
@@ -113,7 +113,7 @@
         android:id="@+id/linearLayoutVisitPlan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutStudy">
 
@@ -122,7 +122,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:text="@string/visit_plan"
             android:textAlignment="viewEnd" />
 

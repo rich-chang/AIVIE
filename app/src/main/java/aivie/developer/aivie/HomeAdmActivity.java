@@ -2,12 +2,17 @@ package aivie.developer.aivie;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -21,11 +26,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Objects;
+
 import aivie.developer.aivie.util.Constant;
 
 public class HomeAdmActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,16 @@ public class HomeAdmActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        View headerView =  navigationView.getHeaderView(0);
+        TextView textViewUserName = headerView.findViewById(R.id.textViewUserName);
+        TextView textViewEmail = headerView.findViewById(R.id.textViewEmail);
+        textViewUserName.setText(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
+        textViewEmail.setText(mAuth.getCurrentUser().getEmail());
+        //final ImageView imageViewAvatar = (ImageView) headerView.findViewById(R.id.imageViewAvatar);
+        //Glide.with(this).load(mAuth.getCurrentUser().getPhotoUrl()).into(imageViewAvatar);
     }
 
     @Override

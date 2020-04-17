@@ -23,7 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="16dp"
         android:onClick="reviewICF"
         android:text="@string/icf_review"
@@ -50,7 +50,7 @@
         android:id="@+id/textViewSkip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="36dp"
         android:onClick="skipNow"
         android:paddingStart="16dp"
         android:paddingTop="6dp"
@@ -58,10 +58,10 @@
         android:paddingBottom="6dp"
         android:text="@string/skip_now"
         android:textColor="#2196F3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSignICF" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBarConfirm"

@@ -82,3 +82,5 @@ lint/tmp/
 # lint/reports/
 
 keystore.properties
+
+private_key.pepk

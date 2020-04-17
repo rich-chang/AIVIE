@@ -13,7 +13,7 @@
     <string name="create_account">Create an account</string>
     <string name="prompt_create_last_name">Last Name</string>
     <string name="prompt_create_first_name">First Name</string>
-    <string name="prompt_create_display_name">Display Name (Optional)</string>
+    <string name="prompt_create_display_name">Display Name</string>
     <string name="prompt_create_email">Email</string>
     <string name="prompt_create_password">Password</string>
     <string name="action_signup">CREATE ACCOUNT</string>
