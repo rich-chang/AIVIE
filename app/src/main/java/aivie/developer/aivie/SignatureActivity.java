@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,9 +41,11 @@ public class SignatureActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private FirebaseFirestore db;
     private StorageReference storageRef;
+    private CheckBox checkAgreement;
     private Button mClearButton;
     private Button mConfirmButton;
     private String userId;
+    private boolean isSigned = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +59,27 @@ public class SignatureActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getStringExtra("UserID");
 
+        checkAgreement = findViewById(R.id.checkBoxUserAgreement);
         mClearButton = findViewById(R.id.clear_button);
         mConfirmButton = findViewById(R.id.confirm_signed_button);
         mSignaturePad = findViewById(R.id.signature_pad);
+
+        checkAgreement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean checked = ((CheckBox) view).isChecked();
+                if (checked){
+                    if (isSigned) {
+                        mConfirmButton.setEnabled(true);
+                    } else {
+                        mConfirmButton.setEnabled(false);
+                    }
+                }
+                else{
+                    mConfirmButton.setEnabled(false);
+                }
+            }
+        });
 
         mSignaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
             @Override
@@ -68,12 +89,17 @@ public class SignatureActivity extends AppCompatActivity {
 
             @Override
             public void onSigned() {
-                mConfirmButton.setEnabled(true);
+                isSigned = true;
                 mClearButton.setEnabled(true);
+
+                if (checkAgreement.isChecked()) {
+                    mConfirmButton.setEnabled(true);
+                }
             }
 
             @Override
             public void onClear() {
+                isSigned = false;
                 mConfirmButton.setEnabled(false);
                 mClearButton.setEnabled(false);
             }
