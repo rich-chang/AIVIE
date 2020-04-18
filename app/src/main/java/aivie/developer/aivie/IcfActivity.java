@@ -178,6 +178,10 @@ public class IcfActivity extends AppCompatActivity {
         if (!hasPermissions(IcfActivity.this, PERMISSIONS)) {
             if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method DON'T HAVE PERMISSIONS ");
             Toast.makeText(getApplicationContext(), "You don't have write access !", Toast.LENGTH_LONG).show();
+
+            progressBar.setVisibility(View.GONE);
+            reviewICF.setEnabled(true);
+            signICF.setEnabled(true);
         } else {
             if (Constant.DEBUG) Log.v(Constant.TAG, "download() Method HAVE PERMISSIONS ");
 
