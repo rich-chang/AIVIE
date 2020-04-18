@@ -23,7 +23,7 @@ android {
     signingConfigs {
         release {
 
-            storeFile rootProject.file('upload-keystore')
+            storeFile rootProject.file('upload-keystore.jks')
 
             if (keystorePropertiesFile.exists()) {
                 def keystoreProperties = new Properties()
