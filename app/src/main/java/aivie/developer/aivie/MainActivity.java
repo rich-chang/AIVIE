@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         
-        AppCenter.start(getApplication(), BuildConfig.APP_CENTER_KEY, Analytics.class, Crashes.class);
+        AppCenter.start(getApplication(), BuildConfig.APPCENTER_KEY, Analytics.class, Crashes.class);
 
         if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, 112);
