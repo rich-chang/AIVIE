@@ -33,7 +33,9 @@ android {
                 keyAlias keystoreProperties['KEY_ALIAS']
                 keyPassword keystoreProperties['KEY_PASSWORD']
             } else {
-                // Handle in each cloud DevOp platform
+                storePassword "\"${System.env.KEYSTORE_PASSWORD}\""
+                keyAlias "\"${System.env.KEY_ALIAS}\""
+                keyPassword "\"${System.env.KEY_PASSWORD}\""
             }
         }
     }
