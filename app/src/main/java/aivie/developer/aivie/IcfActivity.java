@@ -105,20 +105,6 @@ public class IcfActivity extends AppCompatActivity {
         signICF.setEnabled(true);
     }
 
-    public void skipNow(View view) {
-
-        reviewICF.setEnabled(false);
-        signICF.setEnabled(false);
-        progressBar.setVisibility(View.VISIBLE);
-
-        Intent intent = new Intent(getApplicationContext(), HomeUserActivity.class);
-        startActivity(intent);
-
-        progressBar.setVisibility(View.GONE);
-        reviewICF.setEnabled(true);
-        signICF.setEnabled(true);
-    }
-
     private void getFileFromFirebase() throws IOException {
 
         StorageReference icfFolderRef = storageRef.child("ICF");
