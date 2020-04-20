@@ -5,23 +5,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -66,6 +73,21 @@ public class IcfActivity extends AppCompatActivity {
         reviewICF = findViewById(R.id.buttonReviewICF);
         signICF = findViewById(R.id.buttonSignICF);
         progressBar = findViewById(R.id.progressBarConfirm);
+
+        // Implement customized string
+        TextView textViewLogout = findViewById(R.id.textViewLogout);
+        SpannableString sp1 = new SpannableString("Log out");
+        sp1.setSpan(new ForegroundColorSpan(Color.BLUE), 0, sp1.length(), 0);
+        textViewLogout.setText(sp1);
+    }
+
+    public void logOut(View view) {
+
+        FirebaseAuth.getInstance().signOut();
+
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void reviewICF(View view) {
