@@ -57,12 +57,20 @@ public class HomeUserFragment extends Fragment {
     private ImageView imageViewAvatar;
     private TextView textViewName;
     private TextView textViewRole;
+    private TextView textViewSiteId;
+    private TextView textViewSiteDoctor;
+    private TextView textViewSiteSC;
+    private TextView textViewSitePhoneNum;
     private TextView textViewStudyName;
     private TextView textViewVisitPlan;
     private String firstName;
     private String lastName;
     private String studyName;
     private String role;
+    private String SiteId;
+    private String SiteDoctor;
+    private String SiteSC;
+    private String SitePhone;
     private ArrayList<String> visitPlan = new ArrayList<String>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -88,6 +96,10 @@ public class HomeUserFragment extends Fragment {
         imageViewAvatar = root.findViewById(R.id.imageViewAvatar);
         textViewName = root.findViewById(R.id.textViewName);
         textViewRole = root.findViewById(R.id.textViewRole);
+        textViewSiteId = root.findViewById(R.id.textViewSiteId);
+        textViewSiteDoctor = root.findViewById(R.id.textViewSiteDoctor);
+        textViewSiteSC = root.findViewById(R.id.textViewSiteSC);
+        textViewSitePhoneNum = root.findViewById(R.id.textViewSitePhoneNum);
         textViewStudyName = root.findViewById(R.id.textViewStudyTitle);
         textViewVisitPlan = root.findViewById(R.id.textViewVisitPlan);;
 
@@ -123,10 +135,14 @@ public class HomeUserFragment extends Fragment {
 
                         lastName = (String) documentUser.get(getString(R.string.firestore_users_last_name));
                         firstName = (String) documentUser.get(getString(R.string.firestore_users_first_name));
+                        SiteId = (String) documentUser.get("SiteId");
+                        SiteDoctor = (String) documentUser.get("SiteDoctor");
+                        SiteSC = (String) documentUser.get("SiteSC");
+                        SitePhone = (String) documentUser.get("SitePhone");
 
                         UpdateUI();
 
-                        DocumentReference docRefRole = (DocumentReference) documentUser.get(getString(R.string.firestore_users_role));
+                        final DocumentReference docRefRole = (DocumentReference) documentUser.get(getString(R.string.firestore_users_role));
                         docRefRole.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -213,6 +229,11 @@ public class HomeUserFragment extends Fragment {
             sb.append(visitPlan.get(i) + "\r\n");
         }
         textViewVisitPlan.setText(sb.toString());
+
+        textViewSiteId.setText(SiteId);
+        textViewSiteDoctor.setText(SiteDoctor);
+        textViewSiteSC.setText(SiteSC);
+        textViewSitePhoneNum.setText(SitePhone);
     }
 
     @Override

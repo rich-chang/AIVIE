@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/imageViewAvatar"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:contentDescription="@string/avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -84,12 +84,116 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayoutSiteId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutRole"
+        tools:layout_editor_absoluteX="184dp">
+
+        <TextView
+            android:id="@+id/SiteId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:text="Your Site"
+            android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/textViewSiteId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutSiteDoctor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutSiteId"
+        tools:layout_editor_absoluteX="184dp">
+
+        <TextView
+            android:id="@+id/SiteDoctor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:text="Your Doctor"
+            android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/textViewSiteDoctor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutSiteSC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutSiteDoctor"
+        tools:layout_editor_absoluteX="184dp">
+
+        <TextView
+            android:id="@+id/SiteSC"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:text="Your SC"
+            android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/textViewSiteSC"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutSitePhoneNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutSiteSC"
+        tools:layout_editor_absoluteX="184dp">
+
+        <TextView
+            android:id="@+id/SitePhoneNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:text="Site Id"
+            android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/textViewSitePhoneNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/linearLayoutStudy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutRole">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutSitePhoneNum">
 
         <TextView
             android:id="@+id/participateStudy"
