@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (email.equals("") || password.equals("")) {
 
+            updateUiControl(true);
             Toast.makeText(LoginActivity.this, "A username and password is required.", Toast.LENGTH_SHORT).show();
         } else {
 
