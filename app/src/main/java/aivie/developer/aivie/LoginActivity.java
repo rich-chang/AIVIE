@@ -72,7 +72,13 @@ public class LoginActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
-        logInToFirebaseByEmail(email, password);
+        if (email.equals("") || password.equals("")) {
+
+            Toast.makeText(LoginActivity.this, "A username and password is required.", Toast.LENGTH_SHORT).show();
+        } else {
+
+            logInToFirebaseByEmail(email, password);
+        }
     }
 
     public void logInToFirebaseByEmail (String email, String password) {
