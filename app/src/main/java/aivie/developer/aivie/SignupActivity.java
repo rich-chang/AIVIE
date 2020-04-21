@@ -88,7 +88,13 @@ public class SignupActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
-        logInToFirebaseByEmail(displayName, email, password);
+        if (firstName.equals("") || lastName.equals("") || displayName.equals("") || email.equals("") || password.equals("")) {
+
+            Toast.makeText(SignupActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
+        } else {
+
+            logInToFirebaseByEmail(displayName, email, password);
+        }
     }
 
     public void logInToFirebaseByEmail (final String displayName, String email, String password) {
