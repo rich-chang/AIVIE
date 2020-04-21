@@ -90,6 +90,7 @@ public class SignupActivity extends AppCompatActivity {
 
         if (firstName.equals("") || lastName.equals("") || displayName.equals("") || email.equals("") || password.equals("")) {
 
+            updateUiControl(true);
             Toast.makeText(SignupActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
         } else {
 
@@ -164,6 +165,11 @@ public class SignupActivity extends AppCompatActivity {
         userData.put(getString(R.string.firestore_users_patient_of_study), db.collection(getString(R.string.firestore_studies)).document("000001"));
         userData.put(getString(R.string.firestore_users_eicf), db.collection(getString(R.string.firestore_icf)).document("0001"));
         userData.put(getString(R.string.firestore_users_eicf_signed), false);
+
+        userData.put("SiteId", "S001");
+        userData.put("SiteDoctor", "Steven Jackson");
+        userData.put("SiteSC", "Kelly Lin");
+        userData.put("SitePhone", "+886-2-12345678");
 
         if (Constant.DEBUG) Log.i(Constant.TAG, userData.toString());
 
