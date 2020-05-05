@@ -54,7 +54,7 @@ public class HomeUserFragment extends Fragment {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private SharedPreferences sharedpreferences;
-    private ImageView imageViewAvatar;
+    //private ImageView imageViewAvatar;
     private TextView textViewName;
     private TextView textViewRole;
     private TextView textViewSiteId;
@@ -93,7 +93,7 @@ public class HomeUserFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         sharedpreferences = getActivity().getSharedPreferences(Constant.SP_NAME, MODE_PRIVATE);
 
-        imageViewAvatar = root.findViewById(R.id.imageViewAvatar);
+        //imageViewAvatar = root.findViewById(R.id.imageViewAvatar);
         textViewName = root.findViewById(R.id.textViewName);
         textViewRole = root.findViewById(R.id.textViewRole);
         textViewSiteId = root.findViewById(R.id.textViewSiteId);
@@ -116,7 +116,7 @@ public class HomeUserFragment extends Fragment {
             // Put default data on screen
         } else {
 
-            Glide.with(this).load(mAuth.getCurrentUser().getPhotoUrl()).into(imageViewAvatar);
+            //Glide.with(this).load(mAuth.getCurrentUser().getPhotoUrl()).into(imageViewAvatar);
 
             getUserProfileFromFirestore(userId);
         }
