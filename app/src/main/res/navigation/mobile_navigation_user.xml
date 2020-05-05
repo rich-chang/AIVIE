@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_profile_user" />
 
     <fragment
+        android:id="@+id/navigation_adverse_events"
+        android:name="aivie.developer.aivie.ui.user.AdverseEventsUserFragment"
+        android:label="Adverse Events"
+        tools:layout="@layout/adverse_events_user_fragment" />
+
+    <fragment
         android:id="@+id/navigation_dashboard"
         android:name="aivie.developer.aivie.ui.user.dashboard.DashboardUserFragment"
         android:label="@string/title_dashboard"

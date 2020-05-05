@@ -12,6 +12,11 @@
         android:title="@string/title_profile" />
 
     <item
+        android:id="@+id/navigation_adverse_events"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="Adverse Events" />
+
+    <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_dashboard" />
