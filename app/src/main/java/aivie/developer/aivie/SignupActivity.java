@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import aivie.developer.aivie.presenter.account.LoginActivity;
 import aivie.developer.aivie.util.Constant;
 
 public class SignupActivity extends AppCompatActivity {

@@ -9,13 +9,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
 
+import aivie.developer.aivie.presenter.account.LoginActivity;
 import aivie.developer.aivie.util.Constant;
 
 public class MainActivity extends AppCompatActivity {
