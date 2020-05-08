@@ -47,7 +47,7 @@
             android:name=".HomeUserActivity"
             android:label="@string/title_activity_home" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".presentation.account.SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".presentation.account.LoginActivity"

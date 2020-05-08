@@ -8,7 +8,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import aivie.developer.aivie.HomeAdmActivity;
 import aivie.developer.aivie.HomeUserActivity;
 import aivie.developer.aivie.IcfActivity;
-import aivie.developer.aivie.SignupActivity;
 
 public class LoginPresenter implements LoginContract.LoginUserActions {
 

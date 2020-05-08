@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignupActivity">
+    tools:context=".presentation.account.SignupActivity">
 
     <TextView
         android:id="@+id/textViewCreateAccount"
@@ -107,7 +107,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="24dp"
-        android:onClick="signUp"
+        android:onClick="btnSignUp"
         android:text="@string/action_signup"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
