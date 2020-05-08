@@ -1,4 +1,4 @@
-package aivie.developer.aivie.presenter.account;
+package aivie.developer.aivie.presentation.account;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,7 +14,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
-import aivie.developer.aivie.R;
 import aivie.developer.aivie.util.Constant;
 
 class LoginRepository {

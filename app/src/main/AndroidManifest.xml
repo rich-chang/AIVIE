@@ -50,9 +50,9 @@
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".presenter.account.LoginActivity"
+            android:name=".presentation.account.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".presentation.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

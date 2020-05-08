@@ -1,4 +1,4 @@
-package aivie.developer.aivie.presenter.account;
+package aivie.developer.aivie.presentation.account;
 
 import android.content.Context;
 import android.content.Intent;

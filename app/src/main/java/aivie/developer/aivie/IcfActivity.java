@@ -34,7 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-import aivie.developer.aivie.presenter.account.LoginActivity;
+import aivie.developer.aivie.presentation.account.LoginActivity;
 import aivie.developer.aivie.util.Constant;
 import aivie.developer.aivie.util.FileDownloader;
 

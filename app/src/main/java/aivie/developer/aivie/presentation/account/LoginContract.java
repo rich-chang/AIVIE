@@ -1,4 +1,4 @@
-package aivie.developer.aivie.presenter.account;
+package aivie.developer.aivie.presentation.account;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 

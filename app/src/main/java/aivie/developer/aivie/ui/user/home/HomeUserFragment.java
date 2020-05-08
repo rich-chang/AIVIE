@@ -38,7 +38,7 @@ import java.util.Date;
 import java.util.List;
 
 import aivie.developer.aivie.util.Constant;
-import aivie.developer.aivie.presenter.account.LoginActivity;
+import aivie.developer.aivie.presentation.account.LoginActivity;
 import aivie.developer.aivie.R;
 import aivie.developer.aivie.util.NotificationPublisher;
 

@@ -1,4 +1,4 @@
-package aivie.developer.aivie.presenter.account;
+package aivie.developer.aivie.presentation.account;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
