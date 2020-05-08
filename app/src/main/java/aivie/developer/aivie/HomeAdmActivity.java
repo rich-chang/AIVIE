@@ -22,7 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
-import aivie.developer.aivie.presenter.account.LoginActivity;
+import aivie.developer.aivie.presentation.account.LoginActivity;
 
 public class HomeAdmActivity extends AppCompatActivity {
 

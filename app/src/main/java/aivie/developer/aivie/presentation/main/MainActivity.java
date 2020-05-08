@@ -1,4 +1,4 @@
-package aivie.developer.aivie;
+package aivie.developer.aivie.presentation.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -15,7 +15,9 @@ import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
 
-import aivie.developer.aivie.presenter.account.LoginActivity;
+import aivie.developer.aivie.BuildConfig;
+import aivie.developer.aivie.R;
+import aivie.developer.aivie.presentation.account.LoginActivity;
 import aivie.developer.aivie.util.Constant;
 
 public class MainActivity extends AppCompatActivity {
