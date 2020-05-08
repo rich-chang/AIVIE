@@ -1,18 +1,12 @@
 package aivie.developer.aivie;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -28,7 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
-import aivie.developer.aivie.util.Constant;
+import aivie.developer.aivie.presenter.account.LoginActivity;
 
 public class HomeAdmActivity extends AppCompatActivity {
 

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.SpannableString;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+import aivie.developer.aivie.presenter.account.LoginActivity;
 import aivie.developer.aivie.util.Constant;
 import aivie.developer.aivie.util.FileDownloader;
 
