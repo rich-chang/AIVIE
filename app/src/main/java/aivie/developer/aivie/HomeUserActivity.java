@@ -1,17 +1,22 @@
 package aivie.developer.aivie;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.auth.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import aivie.developer.aivie.domain.model.UserProfileDetail;
 
 public class HomeUserActivity extends AppCompatActivity {
     
@@ -41,6 +46,14 @@ public class HomeUserActivity extends AppCompatActivity {
         studyName = intent.getStringExtra("PatientOfStudy");
         visitPlan = getIntent().getStringArrayListExtra("VisitPlan");
         */
+
+        UserProfileDetail userProfileDetail = null;
+        userProfileDetail = (UserProfileDetail) getIntent().getParcelableExtra("UserProfileDetail");
+        if (userProfileDetail != null) {
+            Log.i("RICHC", userProfileDetail.getFirstName());
+        } else {
+            Log.i("RICHC", "userProfileDetail is null");
+        }
     }
 
     /*

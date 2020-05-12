@@ -42,8 +42,23 @@ public interface LoginContract {
         void onSuccess(DocumentSnapshot documentUser);
     }
 
-    interface GetUserRoleCallback {
+    interface GetUserGenderCallback {
+        void onSuccess();
+    }
 
+    interface GetUserRaceCallback {
+        void onSuccess();
+    }
+
+    interface GetUserEthnicityCallback {
+        void onSuccess();
+    }
+
+    interface GetUserStudyCallback {
+        void onSuccess();
+    }
+
+    interface GetUserRoleCallback {
         void onSuccess();
     }
 }
